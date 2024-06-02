@@ -86,7 +86,7 @@ public class submitOTP extends HttpServlet {
         Cookie cookie = new Cookie("token", token);
         cookie.setMaxAge(-1);
         res.addCookie(cookie);
-        res.sendRedirect("/views/client/pages/resetPassword.jsp");
+        req.getRequestDispatcher("/views/client/pages/resetPassword.jsp").forward(req, res);
     }
 
     /**

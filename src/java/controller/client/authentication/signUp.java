@@ -80,22 +80,25 @@ public class signUp extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        // check whether the account exist
+        // check whether the account detail is valid (already used)
         queryUser queryUs = queryUser.createQueryUSer();
         payload checkEmail = queryUs.checkEmail(email);
-        if (checkEmail.isIsSuccess() == true) {
-            
+        boolean checkUserNameExist = queryUser.createQueryUSer().checkUserNameExist(userName);
+        if (checkEmail.isIsSuccess() == true || checkUserNameExist == true) {
             HttpSession session = req.getSession();
-            session.setAttribute("error",  checkEmail.getDescription());
-            res.sendRedirect("/views/client/pages/authForm.jsp");
+            String messageError = checkEmail.isIsSuccess() == true ? "Email already exist" : "username already use";
+            session.setAttribute("error", messageError);
+            req.getRequestDispatcher("/views/client/pages/authForm.jsp").forward(req, res);
             return;
         }
 
+        // send OTP to gmail user
         queryOTP otp = queryOTP.createInstance();
         final String OTP = randomToken.generateRandomDigitString(8);
+        res.getWriter().print(userName);
         otp.addOtp(userName, email, password, OTP);
         sendMail.sendEmailTo(email, "Your OTP", "your OTP is " + OTP + " it will be exprired in 3 minutes");
-        res.sendRedirect("/views/client/pages/OTPFormSignUp.jsp");
+        req.getRequestDispatcher("/views/client/pages/OTPFormSignUp.jsp").forward(req, res);
     }
 
     /**

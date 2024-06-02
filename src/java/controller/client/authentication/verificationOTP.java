@@ -8,6 +8,7 @@ import helper.payload;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -77,29 +78,29 @@ public class verificationOTP extends HttpServlet {
             throws ServletException, IOException {
         //get session
         HttpSession session = req.getSession();
-        
+         // check OTP user send is correct
         String otp = req.getParameter("OTP"); // get otp
         queryOTP querytOTP = queryOTP.createInstance();
         queryUser queryUs = queryUser.createQueryUSer();
         payload checkOTP = querytOTP.compareOTP(otp);
-        if (checkOTP.isIsSuccess() == false) { // check otp is correct
-            // not correct
+        if (checkOTP.isIsSuccess() == false) { // OTP is not correct
             session.setAttribute("error", checkOTP.getDescription());
             res.sendRedirect("/views/client/pages/OTPFormSignUp.jsp");
             return;
         }
         OTP otpObj = (OTP) checkOTP.getObject();
-        // add user
-        payload addUser = queryUs.prepareBeforeInsert(otpObj.getEmail(), otpObj.getUserName(), otpObj.getPassword());
+        payload addUser = queryUs.prepareBeforeInsert(otpObj.getEmail(), otpObj.getEmail(), otpObj.getPassword());
         if (addUser.isIsSuccess() == false) { // check add user success
             // not success
             session.setAttribute("error", addUser.getDescription());
-            res.sendRedirect("/views/client/pages/OTPFormSignUp.jsp");
+            req.getRequestDispatcher("/views/client/pages/OTPFormSignUp.jsp").forward(req, res);
             return;
         }
-        account result = (account) addUser.getObject();
-        res.getWriter().print(result.getToken());
-        res.getWriter().print("homepage hereeeeeeeeeeeeee");
+        // get user detail and add token to the cookie
+        account accountDetail = (account)addUser.getObject();
+        Cookie cookie = new Cookie("token", accountDetail.getToken());
+        res.addCookie(cookie);
+        res.sendRedirect("/homepage");
     }
 
     /**

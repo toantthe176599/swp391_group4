@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="../../../public/client/css/loginForm.css"/>
-        <title>JSP Page</title>
+        <title>Confirm OTP</title>
 
     </head>
     <body>
@@ -52,7 +52,7 @@
 
 
                     <div class="notification">
-                        <p>Good job. An email containing information on how to reset your passworld was sent to
+                        <p>Good job. An email containing information was sent to
                             <span class="reset-mail"></span>. Please take the OTP in your email. Thanks!</p>
                         <form action="/confirmEmail" method="POST">
                             <input type="text" placeholder="Enter the OTP here" id="resetPassword" name="OTP" required> 

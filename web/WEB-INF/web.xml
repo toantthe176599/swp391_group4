@@ -16,6 +16,38 @@
         <filter-name>validateHomepage</filter-name>
         <filter-class>validate.validateHomepage</filter-class>
     </filter>
+    <filter>
+        <filter-name>filterWebJSP</filter-name>
+        <filter-class>validate.filterWebJSP</filter-class>
+    </filter>
+    <filter>
+        <filter-name>validateUserInAdmin</filter-name>
+        <filter-class>validate.ValidateCreateAccountAdmin</filter-class>
+    </filter>
+    <filter>
+        <filter-name>validateUpdateAccountAdmin</filter-name>
+        <filter-class>validate.validateUpdateAccountAdmin</filter-class>
+    </filter>
+    <filter>
+        <filter-name>privateRouterAdmin</filter-name>
+        <filter-class>validate.privateRouterAdmin</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>privateRouterAdmin</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>validateUpdateAccountAdmin</filter-name>
+        <url-pattern>/admin/account/edit/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>validateUserInAdmin</filter-name>
+        <url-pattern>/admin/createAccount</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>filterWebJSP</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>validateHomepage</filter-name>
         <url-pattern>/homepage</url-pattern>
@@ -72,6 +104,38 @@
         <servlet-name>homepage</servlet-name>
         <servlet-class>controller.client.homepage.folder.homepage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>controller.client.authentication.logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>creaetAccount</servlet-name>
+        <servlet-class>controller.admin.manageUser.creaetAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>renderDashboard</servlet-name>
+        <servlet-class>controller.admin.manageUser.renderDashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteAccount</servlet-name>
+        <servlet-class>controller.admin.manageUser.deleteAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>renderCreateForm</servlet-name>
+        <servlet-class>controller.admin.manageUser.renderCreateForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>rederEditFormAccount</servlet-name>
+        <servlet-class>controller.admin.manageUser.rederEditFormAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>editAccount</servlet-name>
+        <servlet-class>controller.admin.manageUser.editAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>changeStatusAccount</servlet-name>
+        <servlet-class>controller.admin.manageUser.changeStatusAccount</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>renderAuthForm</servlet-name>
         <url-pattern>/form</url-pattern>
@@ -112,4 +176,39 @@
         <servlet-name>homepage</servlet-name>
         <url-pattern>/homepage</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>creaetAccount</servlet-name>
+        <url-pattern>/admin/createAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>renderDashboard</servlet-name>
+        <url-pattern>/admin/account</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteAccount</servlet-name>
+        <url-pattern>/admin/account/delete/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>renderCreateForm</servlet-name>
+        <url-pattern>/admin/account/create/form</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>rederEditFormAccount</servlet-name>
+        <url-pattern>/admin/account/editform/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editAccount</servlet-name>
+        <url-pattern>/admin/account/edit/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changeStatusAccount</servlet-name>
+        <url-pattern>/admin/status/changeStatus/</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>renderAuthForm</welcome-file>
+    </welcome-file-list>
 </web-app>

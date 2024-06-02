@@ -43,10 +43,9 @@ public class GoogleAuthentication {
     public static GoogleUser getUserInfo(final String accesToken) throws ClientProtocolException, IOException {
         String link = GoogleInfomation.GOOGLE_LINK_GET_USER_INFOR + accesToken;
         String response = Request.Get(link).execute().returnContent().asString();
-        System.out.println("999999999999999999999999999999999");
+      
 
-        System.out.println(response);
-        System.out.println("999999999999999999999999999999999");
+  
         GoogleUser googlePjo = new Gson().fromJson(response, GoogleUser.class);
         return googlePjo;
     }
