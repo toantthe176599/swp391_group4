@@ -11,18 +11,50 @@ package schema;
  * @author LENOVO
  */
 public class account {
-    private String id, email, password, token;
+    private String id, email, username, password, token, role, status;
 
     public account() {
     }
 
-    public account(String id, String email, String password, String token) {
+    public account(String id, String email, String username, String password, String token, String role, String status) {
         this.id = id;
         this.email = email;
+        this.username = username;
         this.password = password;
         this.token = token;
+        this.role = role;
+        this.status = status;
     }
 
+    
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    
    
 
     public String getId() {

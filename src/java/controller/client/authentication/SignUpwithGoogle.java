@@ -70,7 +70,6 @@ public class SignUpwithGoogle extends HttpServlet {
             // Send google authentication
             String code = req.getParameter("code");
             String accessToken = GoogleAuthentication.getToken(code, GoogleInfomation.GOOGLE_REDIRECT_URL_SIGNUP);
-            System.out.println(accessToken);
             GoogleUser user = GoogleAuthentication.getUserInfo(accessToken);
 
             // check email exist
@@ -78,7 +77,7 @@ public class SignUpwithGoogle extends HttpServlet {
             payload checkEmail = queryUs.checkEmail(user.getEmail());
             if (checkEmail.isIsSuccess() == true) {
                 HttpSession session = req.getSession();
-                session.setAttribute("error", "account already used");
+                session.setAttribute("error", "Email đã được đăng ký!");
                 res.sendRedirect("/views/client/pages/authForm.jsp");
                 return;
             }
@@ -86,8 +85,8 @@ public class SignUpwithGoogle extends HttpServlet {
             queryOTP otp = queryOTP.createInstance();
             final String OTP = randomToken.generateRandomDigitString(8);
             otp.addOtp("", user.getEmail(), user.getId(), OTP);
-            sendMail.sendEmailTo(user.getEmail(), "Your OTP", "your OTP is " + OTP + " it will be exprired in 3 minutes");
-            res.sendRedirect("/views/client/pages/OTPFormSignUp.jsp");
+            sendMail.sendEmailTo(user.getEmail(), "Your OTP", "mã OTP của bạn là " + OTP + " và có hiệu lực trong vòng 3 phút");
+            req.getRequestDispatcher("/views/client/pages/OTPFormSignUp.jsp").forward(req, res);
         } catch (Exception e) {
             System.out.println(e);
         }

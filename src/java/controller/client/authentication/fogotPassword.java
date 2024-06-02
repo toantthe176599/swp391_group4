@@ -67,11 +67,11 @@ public class fogotPassword extends HttpServlet {
         payload insertOtpStatus = querOTP.inserOTPForgotPasword(email, OTP);
         if (insertOtpStatus.isIsSuccess() == false) {
             session.setAttribute("error", insertOtpStatus.getDescription());
-            res.sendRedirect("/views/client/pages/authForm.jsp");
+            res.sendRedirect("/form");
             return;
         }
         sendMail.sendEmailTo(email, "Your OTP", "Your OTP is " + OTP + " it will be expired in 3 minutes");
-        res.sendRedirect("/views/client/pages/OTPForm.jsp");
+        req.getRequestDispatcher("/views/client/pages/OTPForm.jsp").forward(req, res);
     }
 
     /**

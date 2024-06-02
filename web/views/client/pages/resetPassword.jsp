@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="../../../public/client/css/loginForm.css"/>
-        <title>JSP Page</title>
+        <title>Reset password</title>
 
     </head>
     <body>
@@ -25,7 +25,7 @@
                                                             <div class="content">Anyone with access can view your invited visitors.</div>
                                                     </div>
                                                     <span class="alink"><i class="fas fa-times"></i></span>
-                                            </li>-->
+                    </li>-->
 
                     <c:if test="${sessionScope.error != null}">
                         <li class="msg s_warning" style="margin-bottom: 0">

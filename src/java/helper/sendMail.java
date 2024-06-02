@@ -5,7 +5,7 @@
 package helper;
 
 //import java.net.Authenticator;
-import java.net.PasswordAuthentication;
+import config.GoogleInfomation;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -21,8 +21,8 @@ import javax.mail.internet.MimeMessage;
 public class sendMail {
 
     public static void sendEmailTo(String receiEmail, String header, String body) {
-        final String email = "toantthe176599@fpt.edu.vn";
-        final String password = "vfzm nrgn ggon ssqw";
+        final String email = GoogleInfomation.GOOGLE_EMAIL;
+        final String password = GoogleInfomation.GOOGLE_PASSWORD;
         final String toEmail = receiEmail;
 
         Properties prop = new Properties();

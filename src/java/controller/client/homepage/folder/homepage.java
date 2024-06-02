@@ -45,8 +45,8 @@ public class homepage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
     throws ServletException, IOException {
-        res.setContentType("text/html;charset=UTF-8");
-        res.sendRedirect("/views/client/pages/homepage/tickets.jsp");
+        res.sendRedirect("/views/client/homepage/tickets.html");
+//        req.getRequestDispatcher("/views/client/homepage/tickets.html").forward(req, res);
     } 
 
     /** 

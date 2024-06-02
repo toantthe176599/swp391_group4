@@ -72,23 +72,36 @@ public class loginWithGG extends HttpServlet {
             GoogleUser user = GoogleAuthentication.getUserInfo(accessToken);
             queryUser querUser = queryUser.createQueryUSer();
             payload checkEmailStatus = querUser.checkEmail(user.getEmail());
+            HttpSession session = req.getSession();
             if (checkEmailStatus.isIsSuccess() == false) {
-                HttpSession session = req.getSession();
-                session.setAttribute("error", "Account does not exist!");
-                res.sendRedirect("/views/client/pages/authForm.jsp");
+
+                session.setAttribute("error", "Tài khoản không tồn tại!");
+                res.sendRedirect("/form");
+                return;
+            }
+            account informationUser = (account) checkEmailStatus.getObject();
+            String token = informationUser.getToken();
+            // check email exist if not go back send message else go to home page
+            String status = querUser.checkStatusByToke(token);
+            if (status.equals("inactive")) {
+
+                session.setAttribute("error", "Tài khoản đã bị khóa!");
+                res.sendRedirect("/form");
                 return;
             }
 
-            // check email exist if not go back send message else go to home page
-            account informationUser = (account) checkEmailStatus.getObject();
-            Cookie cookie = new Cookie("token", informationUser.getToken());
+            Cookie cookie = new Cookie("token", token);
             cookie.setMaxAge(-1);
             res.addCookie(cookie);
+            String role = queryUser.createQueryUSer().checkRoleByToken(token);
+            if (role != null && !role.trim().equals("customer")) {
+                res.sendRedirect("/admin/account");
+                return;
+            }
             res.sendRedirect("/homepage");
 
         } catch (Exception e) {
             System.out.println(e);
-
         }
     }
 
@@ -99,14 +112,9 @@ public class loginWithGG extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
+     *
+     *
+     * /**
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description

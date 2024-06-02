@@ -114,19 +114,19 @@ public class validateHomepage implements Filter {
         Cookie cookie[] = req.getCookies();
        
         // check user login in the web? if not return back to login form 
-        String token = "";
-        for(Cookie i: cookie){
-            if(i.getName().equals("token")){
-                token = i.getValue();
-            }
-        }
-        
-        if(token == null || token.isBlank()){
-            HttpSession session = req.getSession();
-            session.setAttribute("error", "Please login first");
-            res.sendRedirect("/views/client/pages/authForm.jsp");
-            return;
-        }
+//        String token = "";
+//        for(Cookie i: cookie){
+//            if(i.getName().equals("token")){
+//                token = i.getValue();
+//            }
+//        }
+//        
+//        if(token == null || token.isBlank()){
+//            HttpSession session = req.getSession();
+//            session.setAttribute("error", "Please login first");
+//            req.getRequestDispatcher("/views/client/pages/authForm.jsp").forward(request, response);
+//            return;
+//        }
         
         
         
