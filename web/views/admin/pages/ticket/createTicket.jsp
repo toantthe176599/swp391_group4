@@ -10,10 +10,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="../../../public/admin/css/alert.css"/>
-        <link rel="stylesheet" href="../../../public/admin/css/createUserFormCss.css"/>
+        <link rel="stylesheet" href="../../../../public/admin/css/alert.css"/>
+        <link rel="stylesheet" href="../../../../public/admin/css/createUserFormCss.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="../../../public/admin/css/DashboarCss.css"/>
+        <link rel="stylesheet" href="../../../../public/admin/css/DashboarCss.css"/>
         <title>Tạo người dùng mới</title>
     </head>
     <body>
@@ -43,7 +43,7 @@
                             <div class="row align-items-center">
                                 <div class="col-sm-6 col-12 mb-4 mb-sm-0">
                                     <!-- Title -->
-                                    <h1 class="h2 mb-0 ls-tight">Application</h1>
+                                    <h1 class="h2 mb-0 ls-tight">Tạo 1 vé mới</h1>
                                 </div>
                                 <!-- Actions -->
                                 <div class="col-sm-6 col-12 text-sm-end">
@@ -56,47 +56,28 @@
 
                             <main style="margin-left: 200px">
                                 <div class="form-container">
-                                    <h1 class="title"><span>Please fill your information below</span></h1>
-                                    <form action="/admin/createAccount" method="post" autocomplete="off">
-
-                                        <label for="userName">Tên tài khoản</label>
+                                    <h1 class="title"><span>Điền thông tin về loại vé mới</span></h1>
+                                    <form action="/admin/ticket/create" method="post" autocomplete="off" enctype="multipart/form-data">
+                                        <label for="eventname">Tên sự kiện</label>
                                         <div class="row">
-                                            <input type="text" placeholder="Tên tài khoản" name="userName" id="userName">
-                                        </div>
-                                        <label for="password">Mật khẩu</label>
-                                        <div class="row">
-                                            <input type="password" placeholder="Mật khẩu" name="password" >
-                                        </div>
-                                        <label for="rePassword">Nhập lại mật khẩu</label>
-                                        <div class="row">
-                                            <input type="password" placeholder="Nhập lại mật khẩu" name="rePassword" >
+                                            <input type="text" placeholder="Nhập tên cho sự kiện" name="eventname" value="" id="eventname">
                                         </div>
 
-                                        <!--                    <label for="dateofbirth">Ngày sinh</label>
-                                                            <input type="date" value="dateOfBirth" id="dateofbirth">-->
-
-                                        <label for="email">Email</label>
-                                        <div class="row">
-                                            <input type="email" value="" placeholder="Email" name="email" id="email"> 
+                                        <label for="img">Ảnh</label>
+                                        <div>
+                                            <input type="file" name="file" value="" accept="image/*">
                                         </div>
-                                        <label for="role">Cấp quyền</label>
-                                        <div class="row">
-                                            <select name="role" >
-                                                <option disabled>-- Select --</option>
-                                                <option value="admin">Quản trị viên</option>
-                                                <option value="media">Quản lý media</option>
-                                                <option value="product">Quản lý sản phẩm</option>
-                                            </select>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary" style="margin-top: 10px">Tạo tài khoản</button>
+                                        <button type="submit" class="btn btn-primary" style="margin-top: 10px">Tạo sự kiện</button>
                                     </form>
-                                </div></main>
+                                </div>
+                                <img src="../../../../images/Screenshot 2022-12-27 162454.png" alt="alt"/>
+                            </main>
+
 
                         </div>
                     </div>>
 
-                    <script src="../../../public/admin/js/createAccount.js"></script>
+                    <script src="../../../../public/admin/js/createAccount.js"></script>
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
                     </body>
                     </html>

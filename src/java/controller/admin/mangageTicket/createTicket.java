@@ -2,24 +2,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin.manageUser;
+package controller.admin.mangageTicket;
 
-import helper.payload;
-import helper.sendMail;
-import java.io.IOException;
-import java.io.PrintWriter;
+import helper.CloudinaryConfig;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.queryUser;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author LENOVO
  */
-public class creaetAccount extends HttpServlet {
+@MultipartConfig
+public class createTicket extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +45,10 @@ public class creaetAccount extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet creaetAccount</title>");
+            out.println("<title>Servlet createTicket</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet creaetAccount at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet createTicket at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,34 +74,11 @@ public class creaetAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        String username = req.getParameter("userName");
-        String password = req.getParameter("password");
-        String email = req.getParameter("email");
-        String role = req.getParameter("role");
-        HttpSession session = req.getSession();
-        // check mail exist
-        queryUser queryUs = queryUser.createQueryUSer();
-        payload checkEmailExist = queryUs.checkEmail(email);
-        if (checkEmailExist.isIsSuccess()) {
-
-            session.setAttribute("error", "Email này đã được sử dụng");
-            res.sendRedirect("/admin/account/create/form");
-            return;
-        }
-        payload createAccount = queryUs.insertByAdmin(email, username, password, role);
-        if (!createAccount.isIsSuccess()) {
-            session.setAttribute("error", createAccount.getDescription());
-            res.sendRedirect("/admin/account/create/form");
-            return;
-        }
-        sendMail.sendEmailTo(email, "Your account was provied", "User name: " + username + " Password: " + password);
-        session.setAttribute("success", "Tạo tài khoản thành công");
-        res.sendRedirect("/admin/account/create/form");
-//        res.getWriter().print(role);
-//        res.getWriter().print(username);
-//        res.getWriter().print(password);
-//        res.getWriter().print(email);
-
+        String name = req.getParameter("eventname");
+        CloudinaryConfig cloudinary = CloudinaryConfig.createInstance();
+        File file = cloudinary.createFileToUpload(req, "file");
+        cloudinary.uploadImageToCloud(file);
+        res.getWriter().print("oke");
     }
 
     /**

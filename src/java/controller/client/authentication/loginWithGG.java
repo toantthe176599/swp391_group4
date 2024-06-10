@@ -7,6 +7,7 @@ package controller.client.authentication;
 import config.GoogleInfomation;
 import helper.GoogleAuthentication;
 import helper.payload;
+import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Arrays;
+import java.util.List;
+import model.queryPermission;
 import model.queryUser;
 import schema.GoogleUser;
 import schema.account;
@@ -95,6 +99,7 @@ public class loginWithGG extends HttpServlet {
             res.addCookie(cookie);
             String role = queryUser.createQueryUSer().checkRoleByToken(token);
             if (role != null && !role.trim().equals("customer")) {
+
                 res.sendRedirect("/admin/account");
                 return;
             }

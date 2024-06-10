@@ -4,6 +4,7 @@
  */
 package controller.client.authentication;
 
+import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+import model.queryPermission;
 import model.queryUser;
 
 /**
@@ -66,28 +71,34 @@ public class signIn extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+        // get data from client 
         String email = req.getParameter("Username");
         String password = req.getParameter("Password");
         String remember = req.getParameter("remember");
+        //end
+
+        // check username and password is correct
         queryUser qrUser = queryUser.createQueryUSer();
+        System.out.println(email);
         String token = qrUser.checkLogintWithRegularAccount(email, password);
         HttpSession session = req.getSession();
-        if (token.equals("")) {
-
+        if (token.equals("")) { // false redirect to login page with message
             session.setAttribute("error", "Tài khoản hoặc mật khẩu không chính xác!");
             res.sendRedirect("/form");
             return;
         }
 
+        //end
         // check account active
         String status = qrUser.checkStatusByToke(token);
-        if (status.equals("inactive")) {
+        if (status.equals("inactive")) { // inacvie redirect back
 
             session.setAttribute("error", "Tài khoản đã bị khóa!");
             res.sendRedirect("/form");
             return;
         }
 
+        // handle remember me
         Cookie cookie = new Cookie("token", token);
         if (remember == null) {
             cookie.setMaxAge(-1);
@@ -95,12 +106,25 @@ public class signIn extends HttpServlet {
             cookie.setMaxAge(2592000);
         }
         res.addCookie(cookie);
+        //end
+
+        // check status changepassowrd
+        if (status.equals("changePassword")) {
+            req.getRequestDispatcher("/views/client/pages/resetPassword.jsp").forward(req, res);
+            return;
+        }
+
+        //end
+        // check role
         String role = queryUser.createQueryUSer().checkRoleByToken(token);
+
         if (role != null && !role.trim().equals("customer")) {
+
             res.sendRedirect("/admin/account");
             return;
         }
-        
+        // end
+
         res.sendRedirect("/homepage");
     }
 
