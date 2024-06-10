@@ -10,17 +10,17 @@ import java.util.List;
  *
  * @author LENOVO
  */
-public class Role {
+public class Permissions {
 
-    private String role, description;
+    private String role;
+    private List<String> listPermission;
 
-    public Role() {
+    public Permissions() {
     }
 
-    public Role(String role, String description) {
+    public Permissions(String role, List<String> listPermission) {
         this.role = role;
-        this.description = description;
-
+        this.listPermission = listPermission;
     }
 
     public String getRole() {
@@ -31,12 +31,12 @@ public class Role {
         this.role = role;
     }
 
-    public String getDescription() {
-        return description;
+    public List<String> getListPermission() {
+        return listPermission;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setListPermission(List<String> listPermission) {
+        this.listPermission = listPermission;
     }
 
 }

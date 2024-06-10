@@ -11,24 +11,19 @@ import java.io.StringWriter;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.List;
 import model.queryPermission;
-import model.queryUser;
 
 /**
  *
  * @author LENOVO
  */
-public class privateRouterAdmin implements Filter {
+public class validateUpdatePermission implements Filter {
 
     private static final boolean debug = true;
 
@@ -37,13 +32,13 @@ public class privateRouterAdmin implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public privateRouterAdmin() {
+    public validateUpdatePermission() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("privateRouterAdmin:DoBeforeProcessing");
+            log("validateUpdatePermission:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -71,7 +66,7 @@ public class privateRouterAdmin implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("privateRouterAdmin:DoAfterProcessing");
+            log("validateUpdatePermission:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -107,7 +102,7 @@ public class privateRouterAdmin implements Filter {
             throws IOException, ServletException {
 
         if (debug) {
-            log("privateRouterAdmin:doFilter()");
+            log("validateUpdatePermission:doFilter()");
         }
 
         doBeforeProcessing(request, response);
@@ -115,49 +110,38 @@ public class privateRouterAdmin implements Filter {
         // start validate
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        Cookie[] cookies = req.getCookies();
 
-        // Duyệt qua mảng cookie
-        String token = "";
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")) {
-                // Lấy giá trị của cookie "token"
-                token = cookie.getValue();
+        // get data client submit
+        String role = req.getParameter("namerole");
+        String oldRole = req.getParameter("oldrole");
+        HttpSession session = req.getSession();
+        //end
 
-                break; // Thoát khỏi vòng lặp sau khi tìm thấy cookie "token"
+        // check name role valid
+        if (role.contains(" ") || role.isBlank()) {
+            session.setAttribute("error", "Tên quyền không được có khoảng trắng");
+            res.sendRedirect("/admin/role/edit/form/" + oldRole);
+            return;
+        }
+        //end
+
+        // check permission exist
+        if (!req.getParameter("permissionlist").isBlank()) {
+            queryPermission qpermission = queryPermission.getInstanceQueryPermision();
+            String[] permission = req.getParameter("permissionlist").trim().split(" ");
+            if (permission.length != 0) {
+                for (String i : permission) {
+                    if (!qpermission.checkPermissionExist(i)) {
+                        System.out.println(permission.length + "999999999999999999");
+                        res.sendRedirect("http://localhost:8080/views/client/404Page/404Page.html");
+                        return;
+                    }
+                }
             }
         }
 
-        if (token == null || token.isBlank()) {
-            HttpSession session = req.getSession();
-            session.setAttribute("error", "Hành động không hợp lệ");
-            res.sendRedirect("/form");
-            return;
-        }
-
-        // check role by token
-        queryUser qrUser = queryUser.createQueryUSer();
-        String role = qrUser.checkRoleByToken(token);
-        if (role == null || role.trim().isBlank() || role.equals("customer")) {
-            HttpSession session = req.getSession();
-            session.setAttribute("error", "Hành động không hợp lệ");
-            res.sendRedirect("/form");
-            return;
-        }
-        //end 
-
-        //get all premission
-        queryPermission qPermission = queryPermission.getInstanceQueryPermision();
-        String permission = qPermission.getAllPermissionARole(role);
-        ///end
-
-        // set global permission
-        ServletContext servletContext = filterConfig.getServletContext();
-        List<String> listPermission = Arrays.asList(permission.split(" "));
-        servletContext.setAttribute("permission", listPermission);
         //end
-        
-        
+        // end
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
@@ -213,7 +197,7 @@ public class privateRouterAdmin implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("privateRouterAdmin:Initializing filter");
+                log("validateUpdatePermission:Initializing filter");
             }
         }
     }
@@ -224,9 +208,9 @@ public class privateRouterAdmin implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("privateRouterAdmin()");
+            return ("validateUpdatePermission()");
         }
-        StringBuffer sb = new StringBuffer("privateRouterAdmin(");
+        StringBuffer sb = new StringBuffer("validateUpdatePermission(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

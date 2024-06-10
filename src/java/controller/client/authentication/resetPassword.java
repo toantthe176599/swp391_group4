@@ -58,12 +58,6 @@ public class resetPassword extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -75,8 +69,12 @@ public class resetPassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+        // get new password 
         String newPassword = req.getParameter("password");
         HttpSession session = req.getSession();
+        //end
+
+        //get token from cookie and check exist toke(false back to login page)
         Cookie[] cookie = req.getCookies();
         Cookie token = Arrays.stream(cookie).filter(item -> item.getName().equals("token")).findFirst().orElse(null);
         if (token == null) {
@@ -84,19 +82,31 @@ public class resetPassword extends HttpServlet {
             res.sendRedirect("views/client/pages/authForm.jsp");
             return;
         }
+        // end
+
+        // change password in db
         queryUser querUser = queryUser.createQueryUSer();
-        payload changePasswordStatus = querUser.chagenPassword(token.getValue(), newPassword);
-        if (changePasswordStatus.isIsSuccess() == false) {
-            session.setAttribute("error", changePasswordStatus.getDescription());
+        boolean changePasswordStatus = querUser.chagenPassword(token.getValue(), newPassword);
+        if (changePasswordStatus == false) {
+            session.setAttribute("error", "Đổi mật khẩu thất bại");
             res.sendRedirect("views/client/pages/resetPassword.jsp");
             return;
         }
-
         session.setAttribute("message", "Đổi mật khẩu thành công, vui lòng đăng nhập lại");
+        //end 
+
+        // change status if account provide by admin
+        String status = querUser.checkStatusByToke(token.getValue());
+        if (status.equals("changePassword")) {
+            querUser.changeStatusByToken(token.getValue(), "active");
+        }
+        //end
+
         // delete token immediately after change password
         token = new Cookie("token", "");
         token.setMaxAge(0);
         res.addCookie(token);
+        //end
 
         res.sendRedirect("/form");
     }

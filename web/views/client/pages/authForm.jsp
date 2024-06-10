@@ -49,8 +49,8 @@
 
                 <div class="login">
                     <div class="title">
-                        <span>Sign In</span>
-                        <
+                        <span>Đăng nhập</span>
+
                         <p>Welcome back, please login to your account. You can login with Google or by your regular
                             user login.</p>
                     </div>
@@ -65,8 +65,8 @@
                     <div class="or"><span>OR</span></div>
 
                     <form action="/signIn" method="post" id="loginForm">
-                        <input type="text" placeholder="Username" name="Username" required>
-                        <input type="password" placeholder="Password" name="Password" required  pattern="^\S{6,}$">
+                        <input type="text" placeholder="Tên tài khoản" name="Username" required>
+                        <input type="password" placeholder="Mật khẩu" name="Password" required  pattern="^\S{6,}$">
                         <input type="checkbox" id="remember" name="remember" value="remember">
                         <label for="remember">Keep me sign in</label>
 
@@ -74,16 +74,16 @@
                         <!--                        <input type="submit" value="Submit" class="btn-signin">-->
 
 
-                        <a href="javascript:void(0)" class="btn-reset btn-fade">Recover your password <i class="fa fa-long-arrow-right"
-                                                                                                         aria-hidden="true"></i></a>
-                        <a href="javascript:void(0)" class="btn-member btn-fade">Not a member yet? <i class="fa fa-long-arrow-right"
-                                                                                                      aria-hidden="true"></i></a>
+                        <a href="javascript:void(0)" class="btn-reset btn-fade">Quên mật khẩu<i class="fa fa-long-arrow-right"
+                                                                                                aria-hidden="true"></i></a>
+                        <a href="javascript:void(0)" class="btn-member btn-fade">Đăng ký <i class="fa fa-long-arrow-right"
+                                                                                            aria-hidden="true"></i></a>
                     </form>
                 </div>
                 <!--                ----------------------------------------------------------------------------------------------------------->
                 <div class="signup">
                     <div class="title">
-                        <span>Sign Up</span>
+                        <span>Đăng ký</span>
                         <p>Create a new account. You can sign up with your Google accunt. Or your regular user
                             login.</p>
                     </div>
@@ -110,8 +110,8 @@
 
                 <div class="recover-password">
                     <div class="title">
-                        <span>Recover Password</span>
-                        <p>Enter in the username or email associated with your account</p>
+                        <span>Quên mật khẩu</span>
+                        <p>Nhập email</p>
                     </div>
 
                     <form action="/fogotPassword">
@@ -119,8 +119,7 @@
                         <span class="error"></span>
 
                         <input type="submit" value="Send" style="background-color: #ec581e; color: white">
-                        <a href="javascript:void(0)" class="btn-login btn-fade"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancel
-                            and go back to Login page </a>
+                        <a href="javascript:void(0)" class="btn-login btn-fade"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Quay lại đăng nhập </a>
                     </form>
 
 

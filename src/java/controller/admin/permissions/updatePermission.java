@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin.manageUser;
+package controller.admin.permissions;
 
-import helper.payload;
-import helper.sendMail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,13 +11,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.queryUser;
+import model.queryPermission;
+import model.queryRole;
 
 /**
  *
  * @author LENOVO
  */
-public class creaetAccount extends HttpServlet {
+public class updatePermission extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +37,10 @@ public class creaetAccount extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet creaetAccount</title>");
+            out.println("<title>Servlet updatePermission</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet creaetAccount at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet updatePermission at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,33 +66,37 @@ public class creaetAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        String username = req.getParameter("userName");
-        String password = req.getParameter("password");
-        String email = req.getParameter("email");
-        String role = req.getParameter("role");
-        HttpSession session = req.getSession();
-        // check mail exist
-        queryUser queryUs = queryUser.createQueryUSer();
-        payload checkEmailExist = queryUs.checkEmail(email);
-        if (checkEmailExist.isIsSuccess()) {
+        try {
+            // get data from client
+            String[] permission = req.getParameter("permissionlist").split(" ");
+            String newrole = req.getParameter("namerole");
+            String description = req.getParameter("description");
+            String oldRole = req.getParameter("oldrole");
 
-            session.setAttribute("error", "Email này đã được sử dụng");
-            res.sendRedirect("/admin/account/create/form");
-            return;
+            //end
+            // get db query and session
+            queryPermission qPermission = queryPermission.getInstanceQueryPermision();
+            queryRole qRole = queryRole.createInstanceQueryRole();
+            HttpSession session = req.getSession();
+            //
+            // check newrole exist
+            if (!oldRole.equalsIgnoreCase(newrole)) {
+                if (qRole.checkRoleExist(newrole)) {
+                    session.setAttribute("error", "Tên nhóm quyền đã tồn tại");
+                    res.sendRedirect("/admin/role/edit/form/" + oldRole);
+                    return;
+                }
+            }
+            //end
+
+            // update permission to database
+            qPermission.updatePermission(newrole, oldRole, description, permission);
+            session.setAttribute("success", "Cập nhật thành công!");
+            res.sendRedirect("/admin/role/edit/form/" + newrole);
+            //end
+        } catch (Exception e) {
+            res.sendRedirect("http://localhost:8080/views/client/404Page/404Page.html");
         }
-        payload createAccount = queryUs.insertByAdmin(email, username, password, role);
-        if (!createAccount.isIsSuccess()) {
-            session.setAttribute("error", createAccount.getDescription());
-            res.sendRedirect("/admin/account/create/form");
-            return;
-        }
-        sendMail.sendEmailTo(email, "Your account was provied", "User name: " + username + " Password: " + password);
-        session.setAttribute("success", "Tạo tài khoản thành công");
-        res.sendRedirect("/admin/account/create/form");
-//        res.getWriter().print(role);
-//        res.getWriter().print(username);
-//        res.getWriter().print(password);
-//        res.getWriter().print(email);
 
     }
 

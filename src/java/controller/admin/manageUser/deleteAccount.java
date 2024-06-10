@@ -48,20 +48,23 @@ public class deleteAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+        // get id on the url
         String pathInfo = req.getPathInfo();
         String[] pathSegments = pathInfo.split("/");
         String id = pathSegments[pathSegments.length - 1];
+        //end
 
+        // find user and delete 
         queryUser queryUS = queryUser.createQueryUSer();
         boolean deleteAccount = queryUS.deleteAccountById(id);
         HttpSession session = req.getSession();
-        if (!deleteAccount) {
+        if (!deleteAccount) { // account does not exist
             session.setAttribute("error", "Không thể xóa tài khoản này!");
             res.sendRedirect("/admin/account");
             return;
         }
-        
-        session.setAttribute("success", "Xóa tài khoản thành công!");
+        session.setAttribute("success", "Xóa tài khoản thành công!"); // delete success
+        //end
         res.sendRedirect("/admin/account");
 
     }

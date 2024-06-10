@@ -6,13 +6,8 @@ package model;
 
 import helper.DBContext;
 import helper.payload;
-import helper.randomToken;
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import schema.OTP;
 import schema.account;
 
@@ -27,7 +22,7 @@ public class queryOTP extends DBContext {
     private queryOTP() {
     }
 
-    public static queryOTP createInstance() {
+    public static synchronized queryOTP createInstance() {
         if (otp == null) {
             otp = new queryOTP();
             return otp;
@@ -155,10 +150,10 @@ public class queryOTP extends DBContext {
 //   
     public static void main(String[] args) {
         queryOTP test = queryOTP.createInstance();
-        
+
         payload temp = test.compareOtpForgotPass("1111111");
         System.out.println(temp.getDescription());
-        System.out.println((String)temp.getObject());
+        System.out.println((String) temp.getObject());
 //        payload temp = test.inserOTPForgotPasword("vipboyxu2k3@gmail.com");
 //        System.out.println(temp.isIsSuccess());
     }

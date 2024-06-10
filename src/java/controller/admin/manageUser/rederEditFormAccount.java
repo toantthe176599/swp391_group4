@@ -83,7 +83,7 @@ public class rederEditFormAccount extends HttpServlet {
         //end get all role
         req.setAttribute("role", role);
         req.setAttribute("account", (account) findAccountById.getObject());
-        req.getRequestDispatcher("/views/admin/account/editUserForm.jsp").forward(req, res);
+        req.getRequestDispatcher("/views/admin/pages/account/editUserForm.jsp").forward(req, res);
     }
 
     /**
