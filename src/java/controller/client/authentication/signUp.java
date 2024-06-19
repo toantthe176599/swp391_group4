@@ -86,7 +86,7 @@ public class signUp extends HttpServlet {
         boolean checkUserNameExist = queryUser.createQueryUSer().checkUserNameExist(userName);
         if (checkEmail.isIsSuccess() == true || checkUserNameExist == true) {
             HttpSession session = req.getSession();
-            String messageError = checkEmail.isIsSuccess() == true ? "Email already exist" : "username already use";
+            String messageError = checkEmail.isIsSuccess() == true ? "Email đã được sử dụng" : "Tên tài khoản đã được sử dụng";
             session.setAttribute("error", messageError);
             req.getRequestDispatcher("/views/client/pages/authForm.jsp").forward(req, res);
             return;

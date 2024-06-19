@@ -107,7 +107,7 @@
                                 <div class="row">
                                     <select name="role" >
                                         <c:forEach var="item" items="${requestScope.role}">
-                                            <option value="${item.role}">${item.role}</option>
+                                            <option value="${item.role}">${item.role}: ${item.description}</option>
                                         </c:forEach>
 
 

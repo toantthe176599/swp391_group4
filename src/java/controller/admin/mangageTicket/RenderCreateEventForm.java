@@ -10,12 +10,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Locale;
+import model.queryCategory;
+import schema.CategoryEvent;
 
 /**
  *
  * @author LENOVO
  */
-public class renderCreateTicketForm extends HttpServlet {
+public class RenderCreateEventForm extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,15 +30,17 @@ public class renderCreateTicketForm extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/views/admin/pages/ticket/createTicket.jsp").forward(req, res);
+
+        // get all category
+        queryCategory qCategory = queryCategory.createInstanceCategory();
+        List<CategoryEvent> category = qCategory.getAllCategory();
+        req.setAttribute("category", category);
+        //end
+
+        req.getRequestDispatcher("/views/admin/pages/event/createTicket.jsp").forward(req, res);
     }
 
     @Override

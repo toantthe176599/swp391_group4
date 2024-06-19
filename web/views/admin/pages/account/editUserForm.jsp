@@ -92,11 +92,11 @@
 
                                                 <c:forEach var="entry" items="${requestScope.role}">
                                                     <c:if test="${entry.key == account.role}">
-                                                        <option value=${account.role} selected>Vai trò hiện tại ${entry.value}</option>
+                                                        <option value=${account.role} selected>Vai trò hiện tại ${entry.key}: ${entry.value}</option>
                                                     </c:if>
 
                                                     <c:if test="${account.role != entry.key}">
-                                                        <option value=${entry.key} > ${entry.value} </option>
+                                                        <option value=${entry.key} > ${entry.key}: ${entry.value} </option>
                                                     </c:if>
                                                 </c:forEach>
 

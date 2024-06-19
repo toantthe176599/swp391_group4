@@ -39,7 +39,7 @@ public class CloudinaryConfig {
                 "api_key", "958121127785261",
                 "api_secret", "_K9fTlWCcnIIAO5ZKvbqPGcgBkk"));
         cloudinary.config.secure = true;
-        System.out.println(cloudinary.config.cloudName);
+
         try {
 
             Map uploadResult = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());

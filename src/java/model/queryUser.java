@@ -145,12 +145,13 @@ public class queryUser extends DBContext {
 
     // insert an account
     private String[] insertAnAccount(String email, String username, String password, String role) {
-        String token = randomToken.generateToken(30);
+
+        String token = randomToken.generateToken(55);
         String id = randomToken.generateToken(30);
 
         String format = " insert into account values ('%s', '%s', '%s', '%s', '%s', '%s', 'active')";
         String sql = String.format(format, id, email, username, password, token, role);
-
+        System.out.println(sql);
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.execute();
@@ -332,7 +333,6 @@ public class queryUser extends DBContext {
 
     public static void main(String[] args) {
         queryUser test = queryUser.createQueryUSer();
-        payload temp = test.insertByAdmin("abc@gmail", "123456", "123456", "admin");
-        System.out.println(temp.getDescription());
+        test.insertAnAccount("ajkjfd", "1231", "123", "admin");
     }
 }

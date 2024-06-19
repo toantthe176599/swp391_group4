@@ -4,18 +4,22 @@
  */
 package controller.admin.mangageTicket;
 
+import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.queryEvent;
+import schema.Event;
 
 /**
  *
  * @author LENOVO
  */
-public class rederListTicket extends HttpServlet {
+public class RenderListEvent extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,7 +59,23 @@ public class rederListTicket extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/views/admin/pages/ticket/dashboard.jsp").forward(req, res);
+
+        // check permission go here
+        ServletContext context = getServletContext();
+        List<String> permisson = (List<String>) context.getAttribute("permission");
+        if (!permisson.contains("view_ticket")) {
+            res.sendRedirect("http://localhost:8080/views/client/404Page/404Page.html");
+            return;
+        }
+        //end
+
+        // get all data from db ticket
+        queryEvent qEvent = queryEvent.createInstance();
+        List<Event> listEvent = qEvent.getAPartEvent();
+        req.setAttribute("event", listEvent);
+        //end
+//         / views / admin / pages / event / dashboard.js
+        req.getRequestDispatcher("/views/admin/pages/event/dashboard.jsp").forward(req, res);
     }
 
     /**
