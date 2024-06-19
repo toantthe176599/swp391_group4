@@ -36,6 +36,22 @@
         <filter-name>validateUpdatePermission</filter-name>
         <filter-class>validate.validateUpdatePermission</filter-class>
     </filter>
+    <filter>
+        <filter-name>validateCreatEvent</filter-name>
+        <filter-class>validate.validateCreatEvent</filter-class>
+    </filter>
+    <filter>
+        <filter-name>validateDataEditEvent</filter-name>
+        <filter-class>validate.validateDataEditEvent</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>validateDataEditEvent</filter-name>
+        <url-pattern>/admin/event/edit</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>validateCreatEvent</filter-name>
+        <url-pattern>/admin/event/create</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>validateUpdatePermission</filter-name>
         <url-pattern>/admin/role/edit</url-pattern>
@@ -149,16 +165,8 @@
         <servlet-class>controller.admin.permissions.RenderAllPermission</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>rederListTicket</servlet-name>
-        <servlet-class>controller.admin.mangageTicket.rederListTicket</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>renderCreateTicketForm</servlet-name>
-        <servlet-class>controller.admin.mangageTicket.renderCreateTicketForm</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>createTicket</servlet-name>
-        <servlet-class>controller.admin.mangageTicket.createTicket</servlet-class>
+        <servlet-name>renderListEvent</servlet-name>
+        <servlet-class>controller.admin.mangageTicket.RenderListEvent</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>renderCreateRoleForm</servlet-name>
@@ -179,6 +187,26 @@
     <servlet>
         <servlet-name>updatePermission</servlet-name>
         <servlet-class>controller.admin.permissions.updatePermission</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>createEvent</servlet-name>
+        <servlet-class>controller.admin.mangageTicket.createEvent</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RenderCreateEventForm</servlet-name>
+        <servlet-class>controller.admin.mangageTicket.RenderCreateEventForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RenderDetailEvent</servlet-name>
+        <servlet-class>controller.admin.mangageTicket.RenderDetailEvent</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>editEventForm</servlet-name>
+        <servlet-class>controller.admin.mangageTicket.editEventForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditEvent</servlet-name>
+        <servlet-class>controller.admin.mangageTicket.EditEvent</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>renderAuthForm</servlet-name>
@@ -249,24 +277,12 @@
         <url-pattern>/admin/account/edit/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>changeStatusAccount</servlet-name>
-        <url-pattern>/admin/status/changeStatus/</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>rederAllPermission</servlet-name>
         <url-pattern>/admin/permission</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>rederListTicket</servlet-name>
-        <url-pattern>/admin/ticket</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>renderCreateTicketForm</servlet-name>
-        <url-pattern>/admin/ticket/create/form</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>createTicket</servlet-name>
-        <url-pattern>/admin/ticket/create</url-pattern>
+        <servlet-name>renderListEvent</servlet-name>
+        <url-pattern>/admin/event</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>renderCreateRoleForm</servlet-name>
@@ -287,6 +303,30 @@
     <servlet-mapping>
         <servlet-name>updatePermission</servlet-name>
         <url-pattern>/admin/role/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>createEvent</servlet-name>
+        <url-pattern>/admin/event/create</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changeStatusAccount</servlet-name>
+        <url-pattern>/admin/status/changeStatus/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RenderCreateEventForm</servlet-name>
+        <url-pattern>/admin/event/create/form</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RenderDetailEvent</servlet-name>
+        <url-pattern>/admin/event/detail/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editEventForm</servlet-name>
+        <url-pattern>/admin/event/edit/form/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditEvent</servlet-name>
+        <url-pattern>/admin/event/edit</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>views/client/pages/authForm.jsp</welcome-file>

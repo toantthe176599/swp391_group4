@@ -59,7 +59,7 @@
                             </div>
 
 
-                            <main style="margin-left: 200px">
+                            <main style="margin-left: 200px; ">
                                 <div class="form-container">
                                     <h1 class="title"><span>Nhập thông tin bạn muốn thay đổi</span></h1>
                                     <form action="/admin/role/edit" method="post" form-permisson autocomplete="on">

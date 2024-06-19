@@ -4,29 +4,27 @@
  */
 package controller.admin.mangageTicket;
 
-import helper.CloudinaryConfig;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
-
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import model.queryAreaPosition;
+import model.queryCategory;
+import model.queryEvent;
+import schema.AreaEvent;
+import schema.CategoryEvent;
+import schema.Event;
 
 /**
  *
  * @author LENOVO
  */
 @MultipartConfig
-public class createTicket extends HttpServlet {
+public class editEventForm extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,23 +35,6 @@ public class createTicket extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet createTicket</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet createTicket at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -63,6 +44,37 @@ public class createTicket extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        
+        
+        //get idevent
+        String pathInfo = req.getPathInfo();
+        String[] pathSegments = pathInfo.split("/");
+        String eventId = pathSegments[pathSegments.length - 1];
+        //end
+
+        queryEvent qEvent = queryEvent.createInstance();
+        Event event = qEvent.getAnEventById(eventId);
+        req.setAttribute("event", event);
+
+        // get all category event
+        queryCategory qCategory = queryCategory.createInstanceCategory();
+        List<CategoryEvent> category = qCategory.getAllCategory();
+        req.setAttribute("category", category);
+        //end
+
+        //get all area of event
+        queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();
+        List<AreaEvent> listArea = qAreaPosition.getAllAreaOfAnEventById(eventId);
+        req.setAttribute("area", listArea);
+        //end
+
+        req.getRequestDispatcher("/views/admin/pages/event/editEvent.jsp").forward(req, res);
+    }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -71,16 +83,6 @@ public class createTicket extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        String name = req.getParameter("eventname");
-        CloudinaryConfig cloudinary = CloudinaryConfig.createInstance();
-        File file = cloudinary.createFileToUpload(req, "file");
-        cloudinary.uploadImageToCloud(file);
-        res.getWriter().print("oke");
-    }
-
     /**
      * Returns a short description of the servlet.
      *

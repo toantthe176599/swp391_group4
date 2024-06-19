@@ -59,27 +59,30 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/ticket">
+                    <a class="nav-link" href="#">
                         <i class="bi bi-house"></i> Trang chủ
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-bar-chart"></i> Báo cáo 
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-chat"></i> Truyền thông
-                    </a>
-                </li>
-                <c:if test="${fn:contains(permission, 'view_role')}">
+
+                <c:if test="${fn:contains(permission, 'view_ticket')}">
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/permission">
-                            <i class="bi bi-bookmarks"></i> Nhóm quyền
+                        <a class="nav-link" href="/admin/event">
+                            <i class="bi bi-bar-chart"></i> Các sự kiện 
                         </a>
                     </li>
                 </c:if>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/category">
+                        <i class="bi bi-collection"></i> Loại sự kiện
+                    </a>
+                </li>
+
+
+
+
+
+
 
                 <c:if test="${fn:contains(permission, 'view_account')}">
                     <li class="nav-item">
@@ -88,6 +91,26 @@
                         </a>
                     </li>
                 </c:if>
+
+
+                <c:if test="${fn:contains(permission, 'view_role')}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/permission">
+                            <i class="bi bi-bookmarks"></i> Nhóm quyền
+                        </a>
+                    </li>
+                </c:if>
+
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-newspaper"></i> Truyền thông
+                    </a>
+                </li>
+
+
+
 
             </ul>
             <!-- Divider -->

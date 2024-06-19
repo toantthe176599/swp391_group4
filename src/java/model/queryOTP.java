@@ -25,7 +25,6 @@ public class queryOTP extends DBContext {
     public static synchronized queryOTP createInstance() {
         if (otp == null) {
             otp = new queryOTP();
-            return otp;
         }
         return otp;
     }

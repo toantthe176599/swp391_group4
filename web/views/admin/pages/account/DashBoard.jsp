@@ -109,7 +109,7 @@
                                     <table class="table table-hover table-nowrap">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th scope="col"></th>
+                                            
                                                 <th scope="col">Tên tài khoản</th>
                                                 <th scope="col">Ngày tạo tài khoản</th>
                                                 <th scope="col">Email</th>
@@ -123,11 +123,11 @@
                                                 <c:forEach var="item" items="${account}">  
                                                     <c:if test="${item.role ne 'customer'}">
                                                         <tr>
-                                                            <td>
-                                                                <input type="checkbox" id="id" name="name" value="${item
+                                                            <!--                                                            <td>
+                                                                                                                            <input type="checkbox" id="id" name="name" value="${item
                                                                                                                     .id}">
-
-                                                            </td>
+                                                            
+                                                                                                                        </td>-->
                                                             <td>
                                                                 <img alt="..." src="https://scontent.fhan14-4.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?stp=cp0_dst-png_p40x40&_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_ohc=RgLVRluimRUQ7kNvgFhbIaS&_nc_ht=scontent.fhan14-4.fna&oh=00_AYCch0edJ9aVBi2xxFILcKP8hQbx-4dh8wXhRFnwQI6yRQ&oe=668333F8" class="avatar avatar-sm rounded-circle me-2">
                                                                 <a class="text-heading font-semibold" href="#">
@@ -208,7 +208,7 @@
                                     <table class="table table-hover table-nowrap">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th scope="col"></th>
+
                                                 <th scope="col">Tên tài khoản</th>
                                                 <th scope="col">Ngày tạo tài khoản</th>
                                                 <th scope="col">Email</th>
@@ -222,11 +222,11 @@
                                                 <c:forEach var="item" items="${account}">  
                                                     <c:if test="${item.role eq 'customer'}">
                                                         <tr>
-                                                            <td>
-                                                                <input type="checkbox" id="id" name="name" value="${item
-                                                                                                                    .id}">
+                                                            <!--                                                            <td>
+                                                                                                                            <input type="checkbox" id="id" name="name" value="${item
+                                                                                                                .id}">
 
-                                                            </td>
+                                                        </td>-->
                                                             <td>
                                                                 <img alt="..." src="https://scontent.fhan14-4.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?stp=cp0_dst-png_p40x40&_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_ohc=RgLVRluimRUQ7kNvgFhbIaS&_nc_ht=scontent.fhan14-4.fna&oh=00_AYCch0edJ9aVBi2xxFILcKP8hQbx-4dh8wXhRFnwQI6yRQ&oe=668333F8" class="avatar avatar-sm rounded-circle me-2">
                                                                 <a class="text-heading font-semibold" href="#">
