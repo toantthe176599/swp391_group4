@@ -50,6 +50,22 @@ public class queryTicket extends DBContext {
         }
 
     }
+    
+    public String addTicket(String eventId, String areaId) {
+        String sql = "INSERT INTO Ticket (ticket_id, event_id, area_id) VALUES (?, ?, ?)";
+        String idTicket = randomToken.generateToken(25);
+
+        try (PreparedStatement pt = connection.prepareStatement(sql)) {
+            pt.setString(1, idTicket);
+            pt.setString(2, eventId);
+            pt.setString(3, areaId);
+            pt.executeUpdate();
+            return idTicket;
+        } catch (Exception e) {
+            System.out.println(e + " lỗi tại queryticket hàm insert ticket");
+        }
+        return null;
+    }
     //end
 
     // delete ticket by event id

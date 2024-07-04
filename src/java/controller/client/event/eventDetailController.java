@@ -2,31 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin.manageUser;
+package controller.client.event;
 
-import helper.payload;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import model.queryBooking;
-import model.queryPermission;
-import model.queryUser;
-import schema.account;
+import model.queryAreaPosition;
+import model.queryEvent;
+import schema.AreaEvent;
+import schema.Event;
 
 /**
  *
- * @author LENOVO
+ * @author Admin
  */
-public class renderDashboard extends HttpServlet {
+public class eventDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +39,10 @@ public class renderDashboard extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet renderDashboard</title>");
+            out.println("<title>Servlet eventDetailController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet renderDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet eventDetailController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,25 +58,35 @@ public class renderDashboard extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // get all account
-        queryUser queryUs = queryUser.createQueryUSer();
-        List<account> account = queryUs.getAll();
-        req.setAttribute("account", account);
+//       String pathInfo = request.getPathInfo();
+//            String[] pathSegments = pathInfo.split("/");
+//            Stringe eventId = pathSegments[pathSegments.length - 1];
         //end
-//        static total
-        queryBooking qBooking = queryBooking.createInstanceBooking();
-        Map<Date, Double> revenuePerDay = qBooking.getRevenuePerDay();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Map<String, Double> formattedRevenuePerDay = new TreeMap<>();
-        for (Map.Entry<Date, Double> entry : revenuePerDay.entrySet()) {
-            formattedRevenuePerDay.put(sdf.format(entry.getKey()), entry.getValue());
-        }
-        req.setAttribute("revenuePerDay", formattedRevenuePerDay);
-        req.getRequestDispatcher("/views/admin/pages/account/DashBoard.jsp").forward(req, res);
 
+        //get detail event from db
+        // Lấy eventId từ request parameter
+        String eventId = request.getParameter("eventId");
+
+      
+
+            //get detail event from db
+            queryEvent qEvent = queryEvent.createInstance();
+            Event event = qEvent.getAnEventById(eventId);
+            request.setAttribute("event", event);
+            response.getWriter().print(event.getImg_event());
+            response.getWriter().print(event.getImg_position());
+            
+
+            //get all area of event
+            queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();
+            List<AreaEvent> listArea = qAreaPosition.getAllAreaOfAnEventById(eventId);
+            request.setAttribute("area", listArea);
+            //end
+
+        // Chuyển tiếp yêu cầu tới JSP để hiển thị thông tin sự kiện và vùng
+        request.getRequestDispatcher("/views/client/homepage/eventDetailClient.jsp").forward(request, response);
     }
 
     /**
@@ -93,6 +97,12 @@ public class renderDashboard extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
     /**
      * Returns a short description of the servlet.
      *

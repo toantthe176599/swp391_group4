@@ -27,7 +27,7 @@ public class queryEvent extends DBContext {
     private static queryEvent otp;
 
     //-------------------------------
-    private queryEvent() {
+    public queryEvent() {
     }
 
     public static synchronized queryEvent createInstance() {
@@ -129,6 +129,7 @@ public class queryEvent extends DBContext {
                         .setStatus(rs.getString("status"))
                         .setCategory(rs.getString("category_name"))
                         .setOrganizer(rs.getString("organizer"))
+                        
                         .build();
             }
         } catch (Exception e) {
@@ -205,6 +206,7 @@ public class queryEvent extends DBContext {
             st.setString(9, newEvent.getCategory());
             st.setString(10, newEvent.getOrganizer());
             st.setString(11, newEvent.getId());
+            
             st.execute();
 
             // update image if exist
@@ -225,10 +227,17 @@ public class queryEvent extends DBContext {
     
     
     public static void main(String[] args) throws ParseException {
-        queryEvent test = queryEvent.createInstance();
-        test.updateImageEvent("RksxbGVqZHB6bnRuSWQ2OE9UazdvTk5JWg==", "111111111111", "event");
+//        queryEvent test = queryEvent.createInstance();
+//        test.updateImageEvent("RksxbGVqZHB6bnRuSWQ2OE9UazdvTk5JWg==", "111111111111", "event");
 
 //        System.out.println(String.join("/", Collections.reverse(Arrays.asList(date.split("-")))));
-//    
+       queryEvent main = new queryEvent();
+        String id = "1"; // Thay thế bằng ID sự kiện thực tế bạn muốn truy vấn
+        Event event = main.getAnEventById(id);
+        if (event != null) {
+            System.out.println(event);
+        } else {
+            System.out.println("Event not found.");
+        }
     }
 }

@@ -18,12 +18,12 @@ import java.sql.ResultSet;
  * @author LENOVO
  */
 public class queryAreaPosition extends DBContext {
-    
-    private static queryAreaPosition qAreaPosition;
-    
-    private queryAreaPosition() {
+
+    public static queryAreaPosition qAreaPosition;
+
+    public queryAreaPosition() {
     }
-    
+
     public static synchronized queryAreaPosition createInstanceAreaPosition() {
         if (qAreaPosition == null) {
             qAreaPosition = new queryAreaPosition();
@@ -33,9 +33,9 @@ public class queryAreaPosition extends DBContext {
 
     // insert area 
     public List<String> insertArea(List<AreaEvent> areas, String event_id) {
-        
+
         List<String> areaId = new ArrayList<>();
-        
+
         String sql = "insert into Area_position values";
         String format = "('%s', '%s', N'%s', '%s', '%s', '%s'),";
 
@@ -55,8 +55,21 @@ public class queryAreaPosition extends DBContext {
         } catch (Exception e) {
             System.out.println(e + " Lỗi tại queryAreaposition hàm insertArea");
         }
-        
+
         return areaId;
+    }
+
+    public boolean decreaseQuantity(String areaId, int quantity) {
+        String sql = "UPDATE Area_position SET quantity = quantity - ? WHERE area_id = ? AND quantity >= ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, quantity);
+            statement.setString(2, areaId);
+            statement.setInt(3, quantity);
+            return statement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Decrease quantity: " + e);
+        }
+        return false;
     }
 
     //end
@@ -64,7 +77,7 @@ public class queryAreaPosition extends DBContext {
     public List<AreaEvent> getAllAreaOfAnEventById(String idEvent) {
         String sql = "select * from Area_position where event_id = ?";
         List<AreaEvent> listArea = new ArrayList<>();
-        
+
         try {
             PreparedStatement pt = connection.prepareStatement(sql);
             pt.setString(1, idEvent);
@@ -74,14 +87,15 @@ public class queryAreaPosition extends DBContext {
                         rs.getString("area_name"),
                         rs.getString("price"),
                         rs.getString("quantity"),
-                        rs.getString("origin_quantity"));
+                        null);
+//                        rs.getString("origin_quantity"));
                 listArea.add(area);
             }
         } catch (Exception e) {
             System.out.println(e + "lỗi tại getAllAreaOfanevent queryArea");
         }
         return listArea;
-        
+
     }
     //end
 
@@ -96,10 +110,36 @@ public class queryAreaPosition extends DBContext {
             System.out.println(e + "error at deleteAreaByEventID queryArea");
         }
     }
-    
+
+    public AreaEvent getAreaById(String areaId) {
+        String sql = "SELECT * FROM [dbo].[Area_position] WHERE area_id = ?";
+        AreaEvent areaPosition = null;
+        try {
+            PreparedStatement pt = connection.prepareStatement(sql);
+            pt.setString(1, areaId);
+            ResultSet rs = pt.executeQuery();
+            if (rs.next()) {
+                areaPosition = new AreaEvent();
+                areaPosition.setId(rs.getString("area_id"));
+                areaPosition.setNameArea(rs.getString("Area_name"));
+                areaPosition.setPrice(rs.getString("price"));
+                // Add other fields as necessary
+            }
+        } catch (Exception e) {
+            System.out.println(e + " error at getAreaById");
+        }
+        return areaPosition;
+    }
+
     public static void main(String[] args) {
-        queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();
-        qAreaPosition.deleteAreaByEventId("RksxbGVqZHB6bnRuSWQ2OE9UazdvTk5JWg==");
+
+        queryAreaPosition area = new queryAreaPosition();
+        String idEvent = "1"; // Replace with the actual event ID you want to query
+        List<AreaEvent> areaEvents = area.getAllAreaOfAnEventById(idEvent);
+        for (AreaEvent areaEvent : areaEvents) {
+            System.out.println(areaEvent);
+//        queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();
+//        qAreaPosition.deleteAreaByEventId("RksxbGVqZHB6bnRuSWQ2OE9UazdvTk5JWg==");
 //        AreaEvent a1 = new AreaEvent("a1", "100", "200", "200");
 //        AreaEvent a2 = new AreaEvent("a1", "100", "200", "200");
 //        AreaEvent a3 = new AreaEvent("a1", "100", "200", "200");
@@ -107,5 +147,6 @@ public class queryAreaPosition extends DBContext {
 //        Collections.addAll(list, a1, a2, a3);
 //        qAreaPosition.insertArea(list, "V1lKd1RhSFhDMTIzdk84OTR4NmxIRDY0MGtDbmg4Rm5XRGg5RXkxUHViZXZFNnhuQVA=");
 
+        }
     }
 }

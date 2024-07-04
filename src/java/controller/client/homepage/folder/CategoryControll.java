@@ -2,100 +2,77 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin.manageUser;
 
-import helper.payload;
+package controller.client.homepage.folder;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import model.queryBooking;
-import model.queryPermission;
-import model.queryUser;
-import schema.account;
 
 /**
  *
- * @author LENOVO
+ * @author ADMIN
  */
-public class renderDashboard extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="CategoryControll", urlPatterns={"/category"})
+public class CategoryControll extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet renderDashboard</title>");
+            out.println("<title>Servlet CategoryControll</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet renderDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CategoryControll at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
 
-        // get all account
-        queryUser queryUs = queryUser.createQueryUSer();
-        List<account> account = queryUs.getAll();
-        req.setAttribute("account", account);
-        //end
-//        static total
-        queryBooking qBooking = queryBooking.createInstanceBooking();
-        Map<Date, Double> revenuePerDay = qBooking.getRevenuePerDay();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Map<String, Double> formattedRevenuePerDay = new TreeMap<>();
-        for (Map.Entry<Date, Double> entry : revenuePerDay.entrySet()) {
-            formattedRevenuePerDay.put(sdf.format(entry.getKey()), entry.getValue());
-        }
-        req.setAttribute("revenuePerDay", formattedRevenuePerDay);
-        req.getRequestDispatcher("/views/admin/pages/account/DashBoard.jsp").forward(req, res);
-
-    }
-
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    /**
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

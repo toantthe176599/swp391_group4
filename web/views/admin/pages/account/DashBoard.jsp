@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
+<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,15 +16,10 @@
         <link rel="stylesheet" href="../../../../public/admin/css/alert.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <title>Tài khoản</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     </head>
     <body>
-
-
-
-
-
-
 
         <c:set var="account" scope="page" value="${requestScope.account}"/>  
 
@@ -109,7 +105,7 @@
                                     <table class="table table-hover table-nowrap">
                                         <thead class="thead-light">
                                             <tr>
-                                            
+
                                                 <th scope="col">Tên tài khoản</th>
                                                 <th scope="col">Ngày tạo tài khoản</th>
                                                 <th scope="col">Email</th>
@@ -125,9 +121,9 @@
                                                         <tr>
                                                             <!--                                                            <td>
                                                                                                                             <input type="checkbox" id="id" name="name" value="${item
-                                                                                                                    .id}">
-                                                            
-                                                                                                                        </td>-->
+                                                                                                                .id}">
+                                                        
+                                                                                                                    </td>-->
                                                             <td>
                                                                 <img alt="..." src="https://scontent.fhan14-4.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?stp=cp0_dst-png_p40x40&_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_ohc=RgLVRluimRUQ7kNvgFhbIaS&_nc_ht=scontent.fhan14-4.fna&oh=00_AYCch0edJ9aVBi2xxFILcKP8hQbx-4dh8wXhRFnwQI6yRQ&oe=668333F8" class="avatar avatar-sm rounded-circle me-2">
                                                                 <a class="text-heading font-semibold" href="#">
@@ -307,12 +303,47 @@
                             </div>
                         </div>
                     </main>
+                    <h1>Revenue Per Day</h1>
+                    <canvas id="revenueChart" width="400" height="200"></canvas>
                 </div>
+                <script>
+                    const ctx = document.getElementById('revenueChart').getContext('2d');
+                    const revenueData = {
+                        labels: [],
+                        datasets: [{
+                                label: 'Revenue',
+                                data: [],
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                    };
+
+                    <c:forEach var="entry" items="${revenuePerDay}">
+                        <c:set var="date" value="${entry.key}" />
+                        <c:set var="revenue" value="${entry.value}" />
+                    revenueData.labels.push('${date}');
+                    revenueData.datasets[0].data.push(${revenue});
+                    </c:forEach>
+
+                    const revenueChart = new Chart(ctx, {
+                        type: 'line',
+                        data: revenueData,
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                </script>
             </c:if>
 
             <c:if test="${!fn:contains(permission, 'view_account')}">
                 <h1>Bạn không có quyền tại đây</h1>
             </c:if>
+
 
 
         </div>

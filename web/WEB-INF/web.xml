@@ -208,6 +208,34 @@
         <servlet-name>EditEvent</servlet-name>
         <servlet-class>controller.admin.mangageTicket.EditEvent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>eventDetailController</servlet-name>
+        <servlet-class>controller.client.event.eventDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryControll</servlet-name>
+        <servlet-class>controller.client.homepage.folder.CategoryControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EventSearchServlet</servlet-name>
+        <servlet-class>controller.client.homepage.folder.EventSearchServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>areaDetailController</servlet-name>
+        <servlet-class>controller.client.event.areaDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>config</servlet-name>
+        <servlet-class>controller.client.payment.config</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Blogpage</servlet-name>
+        <servlet-class>controller.client.homepage.folder.Blogpage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Blog_detail</servlet-name>
+        <servlet-class>controller.client.homepage.folder.Blog_detail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>renderAuthForm</servlet-name>
         <url-pattern>/form</url-pattern>
@@ -327,6 +355,34 @@
     <servlet-mapping>
         <servlet-name>EditEvent</servlet-name>
         <url-pattern>/admin/event/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eventDetailController</servlet-name>
+        <url-pattern>/eventDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryControll</servlet-name>
+        <url-pattern>/CategoryControll</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EventSearchServlet</servlet-name>
+        <url-pattern>/EventSearchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>areaDetailController</servlet-name>
+        <url-pattern>/areaDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>config</servlet-name>
+        <url-pattern>/config</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Blogpage</servlet-name>
+        <url-pattern>/blog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Blog_detail</servlet-name>
+        <url-pattern>/blogdetail</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>views/client/pages/authForm.jsp</welcome-file>
