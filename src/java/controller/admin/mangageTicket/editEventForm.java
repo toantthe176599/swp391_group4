@@ -15,6 +15,7 @@ import java.util.List;
 import model.queryAreaPosition;
 import model.queryCategory;
 import model.queryEvent;
+import model.queryReportEvent;
 import schema.AreaEvent;
 import schema.CategoryEvent;
 import schema.Event;
@@ -48,17 +49,23 @@ public class editEventForm extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        
-        
         //get idevent
         String pathInfo = req.getPathInfo();
         String[] pathSegments = pathInfo.split("/");
         String eventId = pathSegments[pathSegments.length - 1];
         //end
 
+        // get event
         queryEvent qEvent = queryEvent.createInstance();
         Event event = qEvent.getAnEventById(eventId);
         req.setAttribute("event", event);
+        //end
+
+        //get  money for artist
+        queryReportEvent qReportEvent = queryReportEvent.createInstanceReportEvent();
+        String money = qReportEvent.getMoneyForArtist(eventId);
+        req.setAttribute("money", money);
+        //end
 
         // get all category event
         queryCategory qCategory = queryCategory.createInstanceCategory();

@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -44,7 +45,7 @@
                                     </div>
                                 </div>
 
-                                <main style="margin-left: 200px; width: 1800px" >
+                                <main style="margin-left: 200px; width: 1600px" >
                                     <div class="form-container">
 
 
@@ -77,17 +78,23 @@
                                         <label for="start_time"  style="margin-top: 30px"><b><h4>Thời gian diễn ra sự kiện: ${formattedTime}</h4></b></label>
 
                                         <br/>
-                                        <!--start date-->
-                                        <label for="start_date"  style="margin-top: 30px"><b><h4>Ngày diễn ra sự kiện: ${event.startDate}</h4></b></label>
+
+                                        <!--- format date-->
+                                        <c:set var="originalDateString" value="${event.startDate}" />
+
+                                        <fmt:parseDate value="${originalDateString}" pattern="yyyy-MM-dd" var="dateObject" />
+
+                                        <fmt:formatDate value="${dateObject}" pattern="dd/MM/yyyy" var="formattedDate" />
+
+                                        <!----->
+                                        <label for="start_date"  style="margin-top: 30px"><b><h4>Ngày diễn ra sự kiện: ${formattedDate}</h4></b></label>
 
 
                                         <br/>
                                         <!--start date-->
-                                        <label for="destination" style="margin-top: 30px"><b><h4>Địa điểm diễn ra sự kiện</h4></b></label>
-                                        <br/>
-                                        <div class="row">
-                                            <c:out value="${event.destination}"  escapeXml="false"/>
-                                        </div>
+                                        <label for="destination" style="margin-top: 30px"><b><h4>Địa điểm diễn ra sự kiện: <b>${event.destination}</b></h4></b></label>
+
+
 
                                         <br/>
 
@@ -159,6 +166,8 @@
                                             <a href="/admin/event/edit/form/${event.id}" class="btn btn-success">Chỉnh sửa</a>
 
                                         </c:if>
+                                        <a href="/admin/event/history/${event.id}" class="btn btn-dark">Lịch sử thay đổi</a>
+
                                 </main>
                             </div>
                         </div>

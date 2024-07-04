@@ -1,0 +1,282 @@
+
+
+
+
+.content {
+    margin: 30px;
+    box-sizing: border-box;
+}
+
+.content1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.content1_1 {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+#content1_2_select {
+    font-family: 'Inter', sans-serif;
+    background-color: white;
+    padding: 8px 43px 8px 13px;
+    box-sizing: border-box;
+    border: 1px #d2d4d9 solid;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #4c4c4c;
+    appearance: none;
+
+}
+
+.content1_2_arrow {
+    position: absolute;
+    color: #1e2640;
+    right: 270px;
+}
+
+.content1_2 {
+    display: flex;
+    align-items: center;
+}
+
+.content2 {
+    display: flex;
+    gap: 20px;
+    box-sizing: border-box;
+    margin: 30px 0px;
+}
+
+.online_orders {
+    flex-grow: 1;
+}
+
+.amount_recieved {
+    flex-grow: 1;
+}
+
+.online_orders_1,
+.amount_recieved_1 {
+    font-size: 0.95rem;
+    color: #4c4c4c;
+    margin: 15px;
+    box-sizing: border-box;
+}
+
+.online_orders_2,
+.amount_recieved_2 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 15px;
+    box-sizing: border-box;
+}
+
+.shadow {
+    box-shadow: 1px 1px #f3f3f3;
+    border-radius: 5px;
+
+}
+
+
+
+#navbar4_1_input {
+    border: 1px solid #d2d4d9;
+    background-color: #ffffff;
+    width: 260px;
+    font-size: 0.9rem;
+    padding: 10px 15px 10px 35px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+}
+
+.content4 {
+    box-sizing: border-box;
+    margin: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content4_1 {
+    display: flex;
+    align-items: center;
+}
+
+
+.content4_1>.content4_1_searchicon {
+    position: absolute;
+    left: 485px;
+}
+
+.content4_2_sort_2>.material-symbols-outlined {
+    color: #353c53;
+}
+
+.content4_2_download>.material-symbols-outlined {
+    color: #353c53;
+}
+
+.content4_2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+
+}
+
+.content4_2_sort {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    box-sizing: border-box;
+    border: 1px solid #d2d4d9;
+    padding: 5px 5px 5px 10px;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    color: #4c4c4c;
+}
+
+.content4_2_sort_2 {
+    width: 24px;
+    height: 24px;
+}
+
+.content4_2_download {
+    width: 24px;
+    height: 24px;
+    border: 1px solid #d2d4d9;
+    padding: 5px 4px;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    color: #4c4c4c;
+}
+
+.content5>table {
+
+    box-sizing: border-box;
+    font-size: 0.9rem;
+    border-collapse: collapse;
+    min-width: 1160px;
+    margin: 10px;
+}
+
+td,
+th {
+    padding: 0;
+    border: 0;
+
+}
+
+thead {
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    text-align: center;
+
+}
+
+td {
+    font-weight: 400;
+    padding: 13px 10px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #d2d4d9;
+}
+
+th {
+    font-weight: 500;
+    padding: 10px;
+    box-sizing: border-box;
+    color: #4c4c4c;
+}
+
+th:nth-child(1) {
+    text-align: left;
+}
+
+th:nth-child(4),
+th:nth-child(3) {
+    text-align: right;
+}
+
+tr>td:nth-child(1) {
+    text-align: left;
+    color: #146eb4;
+    font-weight: 500;
+
+}
+
+tr>td:nth-child(4),
+tr>td:nth-child(3) {
+    text-align: right;
+}
+
+tr>td:nth-child(2) {
+    text-align: center;
+}
+
+.content6 {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    box-sizing: border-box;
+    margin-top: 40px;
+    color: #4c4c4c;
+    font-size: 0.9rem;
+}
+
+.content6_2 {
+    display: flex;
+    gap: 5px;
+}
+
+.pageno {
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.pageno:hover {
+    background-color: #146eb4;
+    color: white;
+}
+
+.content6_1 {
+    display: flex;
+    align-items: center;
+    padding: 2px 2px 3px 0px;
+    box-sizing: border-box;
+    border: 1px solid #d2d4d9;
+    border-radius: 5px;
+
+}
+
+.content6_3 {
+    display: flex;
+    align-items: center;
+    padding: 2px 2px 3px 2px;
+    box-sizing: border-box;
+    border: 1px solid #d2d4d9;
+    border-radius: 5px;
+
+}
+
+.content6_1_1,
+.content6_3_2 {
+    width: 24px;
+    height: 24px;
+}
+
+.content6_1_1>.material-symbols-outlined,
+.content6_3_2>.material-symbols-outlined {
+    color: #4c4c4c;
+}
+
+.shadowforlastbox {
+    box-shadow: 1px 1px #f3f3f3;
+    padding-bottom: 20px;
+}

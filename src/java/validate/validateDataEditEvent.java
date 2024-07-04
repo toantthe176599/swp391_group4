@@ -101,7 +101,7 @@ public class validateDataEditEvent implements Filter {
         }
         //end
         String id = req.getParameter("id");
-        String redirect = "/admin/edit/form/" + id;
+        String redirect = "/admin/event/edit/form/" + id;
 
         // check validate data
         String namevent = req.getParameter("eventname");
@@ -114,52 +114,41 @@ public class validateDataEditEvent implements Filter {
         String status = req.getParameter("status");
         String category = req.getParameter("category");
         String areaQuantity = req.getParameter("area_quantity");
+        String money = req.getParameter("money");
         HttpSession session = req.getSession();
-        System.out.println(namevent);
-        // data is  null
-        if (namevent == null || title == null || artist == null || description == null || startDate == null || startTime == null || destination == null || category == null) {
-            session.setAttribute("error", "Dữ liệu không được để trống!");
-            res.sendRedirect(redirect);
-            return;
-        }
-        //end 
-        String typeBug = "";
-        if (!isValidString(namevent)) {
-            typeBug = "Tên sự kiện không hợp lệ";
 
-        } else if (!isValidString(title)) {
-            typeBug = "Tiêu đề sự kiện không hợp lệ (phải có ít nhất 1 chữ cái)";
-        }
-        if (!typeBug.isBlank()) {
-            session.setAttribute("error", typeBug);
+        // data is  null
+        System.out.println(namevent + title + artist + description);
+        System.out.println(startDate);
+        if (namevent == null
+                || title == null
+                || artist == null
+                || description == null
+                || startDate == null
+                || startTime == null
+                || destination == null
+                || category == null
+                || money == null) {
+            session.setAttribute("error", "Dữ liệu không được để trống!");
             res.sendRedirect(redirect);
             return;
         }
 
         //data is empty
-        if (namevent.isBlank() || title.isBlank() || artist.isBlank() || description.isBlank() || startDate.isBlank() || startTime.isBlank() || destination.isBlank()) {
+        if (namevent.isBlank()
+                || title.isBlank()
+                || artist.isBlank()
+                || description.isBlank()
+                || startDate.isBlank()
+                || startTime.isBlank()
+                || destination.isBlank()
+                || money.isBlank()) {
             session.setAttribute("error", "Dữ liệu không hợp lệ!");
             res.sendRedirect(redirect);
             return;
         }
-
         //end
-        // status != active and inactive
-        if (!status.equals("active") && !status.equals("inactive")) {
-            session.setAttribute("error", "Dữ liệu không hợp lệ!");
-            res.sendRedirect(redirect);
-            return;
-        }
 
-        //end
-        // status != active and inactive
-        if (!status.equals("active") && !status.equals("inactive")) {
-            session.setAttribute("error", "Dữ liệu không hợp lệ!");
-            res.sendRedirect(redirect);
-            return;
-        }
-
-        //end
         // area is not correct
         try {
             int area = Integer.parseInt(areaQuantity);
@@ -175,6 +164,21 @@ public class validateDataEditEvent implements Filter {
         }
         //end
 
+        // handle money for artist
+        try {
+            double moneyForArtist = Double.parseDouble(money);
+            if (moneyForArtist <= 0 || moneyForArtist > 100000000000.0) {
+                session.setAttribute("error", "Số tiền cho nghệ sĩ phải lớn hơn 0 và nhỏ hơn 100 tỉ");
+                res.sendRedirect(redirect);
+                return;
+            }
+        } catch (Exception e) {
+            session.setAttribute("error", "Số tiền cho nghệ sĩ không hợp lệ");
+            res.sendRedirect(redirect);
+            return;
+        }
+        //end
+
         // check date is correct
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -183,13 +187,53 @@ public class validateDataEditEvent implements Filter {
         LocalDate today = LocalDate.now();
 
         long daysBetween = ChronoUnit.DAYS.between(today, futureDate);
-        if (daysBetween < 3 || daysBetween > 60) {
-            session.setAttribute("error", "Ngày diễn ra ít nhất sau 3 ngày nhiều nhất sau 2 tháng");
-            res.sendRedirect(redirect);
-            return;
+        if (status.equals("inactive")) {
+            if (daysBetween <= 0 || daysBetween > 60) {
+                session.setAttribute("error", "Ngày diễn ra ít nhất sau 3 ngày nhiều nhất sau 2 tháng");
+                res.sendRedirect(redirect);
+                return;
+            }
         }
         //enc check date
 
+        if (namevent == null || title == null || artist == null || description == null || destination == null || category == null) {
+            session.setAttribute("error", "Dữ liệu không được để trống!");
+            res.sendRedirect(redirect);
+            return;
+        }
+
+        //data is empty
+        if (namevent.isBlank() || title.isBlank() || artist.isBlank() || description.isBlank() || destination.isBlank()) {
+            session.setAttribute("error", "Dữ liệu không hợp lệ!");
+            res.sendRedirect(redirect);
+            return;
+        }
+        //end
+
+        //end 
+        // check name event
+        String typeBug = "";
+        if (!isValidString(namevent)) {
+            typeBug = "Tên sự kiện không hợp lệ";
+
+        } else if (!isValidString(title)) {
+            typeBug = "Tiêu đề sự kiện không hợp lệ (phải có ít nhất 1 chữ cái)";
+        }
+        if (!typeBug.isBlank()) {
+            session.setAttribute("error", typeBug);
+            res.sendRedirect(redirect);
+            return;
+        }
+        //end
+
+        // status != active and inactive
+        if (!status.equals("active") && !status.equals("inactive") && !status.equals("expired")) {
+            session.setAttribute("error", "Dữ liệu không hợp lệ!");
+            res.sendRedirect(redirect);
+            return;
+        }
+
+        //end
         // end ------------------------------------------------------------------
         Throwable problem = null;
         try {

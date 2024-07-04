@@ -23,8 +23,7 @@
         </c:if>
         <!---tab to print html code          -->
 
-        <c:set var="message" value="<h1>get code html hể</h1>" />
-        <c:out value="${message}"  escapeXml="false"/>
+
         <!----->
 
         <c:if test="${sessionScope.success != null}">
@@ -58,7 +57,7 @@
                                     </div>
                                 </div>
 
-                                <main style="margin-left: 100px; width: 1800px">
+                                <main style="margin-left: 100px; width: 1600px">
                                     <div class="form-container">
                                         <h1 class="title"><span><h3>Điền thông tin sự kiện mới</h3></span></h1>
                                         <form action="/admin/event/create" method="post" formCreate autocomplete="on" enctype="multipart/form-data">
@@ -79,6 +78,12 @@
                                             <label for="artist"  style="margin-top: 30px"><b><h4>Nghệ sĩ tham gia</h4></b></label>
                                             <div class="row">
                                                 <input type="text" placeholder="Nhập tên nghệ sĩ" name="artist" value="" id="artist" required="true">
+                                            </div>
+
+                                            <!--- artist-->
+                                            <label for="money"  style="margin-top: 30px"><b><h4>Số tiền trả cho nghệ sĩ</h4></b></label>
+                                            <div class="row">
+                                                <input type="number" placeholder="Số tiền trả cho nghệ sĩ" name="money" min="1"  value="" id="money" required="true">
                                             </div>
 
                                             <!--- organizer--> 
@@ -108,11 +113,10 @@
                                             </div>
 
 
-                                            <!--start date-->
+                                            <!--destination-->
                                             <label for="destination" style="margin-top: 30px"><b><h4>Địa điểm diễn ra sự kiện</h4></b></label>
                                             <div class="row">
-
-                                                <textarea  name="destination" id="destination" class="default" rows="5" placeholder="Nhập địa điểm" cols="10"></textarea>
+                                                <input type="text"  name="destination" id="destination" class="default" rows="5" placeholder="Nhập địa điểm" cols="10">
                                             </div>
 
 
@@ -167,8 +171,8 @@
                                                 <div class="card">
                                                     <div class="title" ><b><h4>Trạng thái sự kiện</h4></b></div>
                                                     <div class="form">  
-                                                        <label><input type="radio" class="input-radio on" checked name="status" value="active"> ON</label>
-                                                        <label><input type="radio" class="input-radio off" name="status" value="inactive"> OFF</label>
+                                                        <label><input type="radio" class="input-radio on"  onButton name="status" value="active"> Bắt đầu</label>
+                                                        <label><input type="radio" class="input-radio off" checked name="status" offButton value="inactive"> Chờ </label>
 
                                                     </div>
                                                 </div>
@@ -177,7 +181,7 @@
 
 
 
-                                            <button type="button" submitBtn class="btn btn-primary" style="margin-top: 10px">Tạo sự kiện</button>
+                                            <button type="submit"  class="btn btn-primary" style="margin-top: 10px">Tạo sự kiện</button>
                                             <button type="button" cancelBtn class="btn btn-danger" style="margin-top: 10px">Hủy</button>
                                         </form>
                                     </div>

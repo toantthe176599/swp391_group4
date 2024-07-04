@@ -6,6 +6,7 @@ package controller.admin.mangageTicket;
 
 import helper.CloudinaryConfig;
 import helper.payload;
+import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,9 +21,13 @@ import java.util.Collections;
 import java.util.List;
 import model.queryAreaPosition;
 import model.queryEvent;
+import model.queryLogHistory;
+import model.queryReportEvent;
 import model.queryTicket;
+import model.queryUser;
 import schema.AreaEvent;
 import schema.Event;
+import schema.LogHistory;
 
 /**
  *
@@ -70,10 +75,10 @@ public class createEvent extends HttpServlet {
             String startTime = req.getParameter("start_time");
             String startDate = req.getParameter("start_date");
             String destination = req.getParameter("destination");
-            String status = req.getParameter("status");
             String category = req.getParameter("category");
             String area_quantity = req.getParameter("area_quantity");
-
+            String status = req.getParameter("status");
+            String moneyForArtist = req.getParameter("money");
             //upimg to cloudinary 
             CloudinaryConfig cloudinary = CloudinaryConfig.createInstance();
             File imageEvent = cloudinary.createFileToUpload(req, "image_event");
@@ -123,16 +128,28 @@ public class createEvent extends HttpServlet {
             // insert ticket 
             queryTicket qTicket = queryTicket.createInstance();
             qTicket.insertTicket(listIdArea, eventId);
-
             //end
+
+            // insert money for artsit
+            queryReportEvent qReportEvent = queryReportEvent.createInstanceReportEvent();
+            qReportEvent.insertMoneyForArtist(eventId, moneyForArtist);
+            //end
+
             //send message and redirect
             HttpSession session = req.getSession();
             if (resultCreateEvent.isIsSuccess()) {
+                // add log history
+                ServletContext servletContext = getServletContext();
+                String token = (String) servletContext.getAttribute("token");
+                queryLogHistory qHistory = queryLogHistory.createInstance();
+                queryUser qUser = queryUser.createQueryUSer();
+                qHistory.insertLogHistory(new LogHistory(eventId, qUser.getIdByToken(token), "create"));
+                //end
                 session.setAttribute("success", resultCreateEvent.getDescription());
                 res.sendRedirect("/admin/event/create/form");
                 return;
             }
-
+            
             session.setAttribute("error", resultCreateEvent.getDescription());
             res.sendRedirect("/admin/event/create/form");
             //end

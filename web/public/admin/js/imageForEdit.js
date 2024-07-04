@@ -204,18 +204,27 @@ const checkDuplicate = (areaData) => {
 
 //end 
 
+
+
+// submit btn 
+
 const submitBtn = document.querySelector("[submitBtn]");
-const submitForm = document.querySelector("[formCreate]");
+const submitForm = document.querySelector("[formEdit]");
 if (submitBtn) {
     submitBtn.addEventListener("click", () => {
+
         const areaData = productTable.querySelectorAll("input");
         if (checkDuplicate(areaData)) {
             alert("Bạn đã nhập trùng tên khu vực vui lòng chọn tên khác nhau");
+
+
         } else {
+
+            console.log(submitForm);
             if (submitForm) {
                 const isConfirm = confirm("Những thông trên sẽ được thay đổi bạn có muốn tiếp tục?")
                 if (isConfirm) {
-                    submitBtn.type = "submit";
+                    submitForm.submit();
                 }
 
             }
@@ -334,6 +343,16 @@ if (imageposition) {
 }
 //end
 
+
+// on button and off button
+
+const onButton = document.querySelector("[onButton]");
+if (onButton) {
+    onButton.addEventListener("click", () => {
+        alert("Bạn sẽ không thể chỉnh sửa thời gian diễn ra sự kiện và giá cũng như số lượng vé của sự kiện khi sự kiện bắt đầu");
+    });
+}
+//end
 
 
 

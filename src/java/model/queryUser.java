@@ -12,6 +12,7 @@ import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import schema.InformationUser;
 import schema.account;
 
 /**
@@ -331,8 +332,92 @@ public class queryUser extends DBContext {
         return true;
     }
 
+    // get id account by token
+    public String getIdByToken(String token) {
+        String sql = "select id from account where token = ?";
+        try {
+            PreparedStatement pt = connection.prepareStatement(sql);
+            pt.setString(1, token);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                return rs.getString("id");
+            }
+        } catch (Exception e) {
+            System.out.println(e + "error at getIdByToken in queryUser");
+        }
+        return "";
+    }
+    //end
+
+    //get all information user by id
+    public InformationUser getInforByID(String accountId) {
+
+        String sql = "select * from account_information where account_id = ?";
+        try {
+            PreparedStatement pt = connection.prepareStatement(sql);
+            pt.setString(1, accountId);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                // create information object
+                String fullName = rs.getString("fullname");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String dateOfBirth = rs.getString("dateofbirth");
+                String imgUrl = rs.getString("account_image");
+                //end
+                return new InformationUser(accountId, fullName, phone, address, dateOfBirth, imgUrl);
+
+            }
+        } catch (Exception e) {
+            System.out.println(e + "error at getInforByID in queryUser");
+        }
+        return null;
+    }
+    //end
+
+    public void updateUserInformation(InformationUser inforUser) {
+        // setup update sql query
+        String sql = "update account_information "
+                + "set "
+                + "fullname = ?,"
+                + "phone = ?,"
+                + "address = ?,"
+                + "dateofbirth = ?";
+        if (!inforUser.getAccountImg().isBlank()) {
+            sql += ", account_image = '" + inforUser.getAccountImg() + "' ";
+        }
+        sql += " where account_id = ?";
+        //end
+
+        try {
+            PreparedStatement pt = connection.prepareStatement(sql);
+            pt.setString(1, inforUser.getFullName());
+            pt.setString(2, inforUser.getPhone());
+            pt.setString(3, inforUser.getAddress());
+            pt.setString(4, inforUser.getDateOfBirth());
+            pt.setString(5, inforUser.getAccId());
+            System.out.println(sql);
+            prepareBeforUpdateInfo(inforUser.getAccId()); // insert row if not exist
+            pt.execute();
+        } catch (Exception e) {
+            System.out.println(e + "error at updateUserInformation in queryUser");
+        }
+    }
+
+    private void prepareBeforUpdateInfo(String idUser) {
+        String sql = "insert into account_information (account_id) values ( ? )";
+        try {
+            PreparedStatement pt = connection.prepareStatement(sql);
+            pt.setString(1, idUser);
+            pt.execute();
+        } catch (Exception e) {
+            System.out.println("Tài khoản đã có thông tin sẵn");
+        }
+    }
+
     public static void main(String[] args) {
         queryUser test = queryUser.createQueryUSer();
-        test.insertAnAccount("ajkjfd", "1231", "123", "admin");
+        InformationUser t = test.getInforByID("");
+
     }
 }

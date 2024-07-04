@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import schema.Event;
 import java.sql.ResultSet;
+import schema.History;
 
 /**
  *
@@ -78,16 +79,56 @@ public class queryEvent extends DBContext {
             System.out.println(e + "lỗi tại queryEvent hàm insert event");
             return new payload(false, "Không thể tạo sự kiện đã có lỗi hệ thống", null);
         }
-        return new payload(true, "tạo sự kiên thành công!", idEvent);
+        return new payload(true, "tạo sự kiên thành công! Để bắt đầu sự kiện vui lòng vào phần chỉnh sửa", idEvent);
     }
     //end
 
     // get a part of detail ticket
     public List<Event> getAPartEvent() {
-        String sql = "select e.*, c.category_name from event e left join category c on e.category = c.category_id ";
+
+        // update event status
+        updateStatusEventExpired();
+        //end
+
+        String sql = "select e.*, c.category_name from event e left join category c on e.category = c.category_id order by start_date desc";
         List<Event> listEvent = new ArrayList<>();
         try {
             PreparedStatement pt = connection.prepareStatement(sql);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                Event event = new Event.buildEvent().setId(rs.getString("event_id"))
+                        .setName(rs.getString("name"))
+                        .setCategory(rs.getString("category_name"))
+                        .setImgEvent(rs.getString("image_event"))
+                        .setStartDate(rs.getString("start_date"))
+                        .setStatus(rs.getString("status"))
+                        .setOrganizer(rs.getString("organizer"))
+                        .build();
+                listEvent.add(event);
+            }
+        } catch (Exception e) {
+            System.out.println(e + "lỗi tại getApartEvent queryevent");
+        }
+        return listEvent;
+    }
+
+    //end
+    // get all event by creator Id 
+    public List<Event> getEventByCreator(String creatorId) {
+
+        // update event status
+        updateStatusEventExpired();
+        //end
+
+        String sql = "select e.*, c.category_name from event e left join category c on e.category = c.category_id where event_id in (select event_id from"
+                + " logHistory where account_id = ? "
+                + " and type = 'create')\n"
+                + " order by start_date desc";
+        List<Event> listEvent = new ArrayList<>();
+        try {
+            PreparedStatement pt = connection.prepareStatement(sql);
+            pt.setString(1, creatorId);
+            System.out.println(sql);
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {
                 Event event = new Event.buildEvent().setId(rs.getString("event_id"))
@@ -167,6 +208,10 @@ public class queryEvent extends DBContext {
     // update event
     public void updateEvent(Event newEvent) throws ParseException {
 
+        // update event status
+        updateStatusEventExpired();
+        //end
+
         // convert date and time to correct format
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         List<String> list = Arrays.asList(newEvent.getStartDate().split("-"));
@@ -221,14 +266,49 @@ public class queryEvent extends DBContext {
         }
     }
     //end
-    
-    
-    
+
+    // query loghistory of an event
+    public List<History> getHistoryEvent(String idEvent) {
+        String sql = "  select * from logHistory l join account a on l.account_id = a.id where l.event_id = ?  ORDER BY logTime ASC";
+        List<History> listHistory = new ArrayList<>();
+        try {
+            PreparedStatement pt = connection.prepareStatement(sql);
+            pt.setString(1, idEvent);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                History history = new History(rs.getString("email"), rs.getString("type"), rs.getString("logTime"));
+                listHistory.add(history);
+            }
+        } catch (Exception e) {
+            System.out.println(e + " error in getHistoryEvent query event");
+        }
+        return listHistory;
+    }
+
+    //end
+    // update event when event expired
+    public void updateStatusEventExpired() {
+        String sql = "  UPDATE event\n"
+                + "SET status = 'expired'\n"
+                + "WHERE start_date <= CAST(GETDATE() - 1 AS DATE)";
+        try {
+            PreparedStatement pt = connection.prepareStatement(sql);
+            pt.execute();
+        } catch (Exception e) {
+            System.out.println(e + " error in updateStatusEventExpired query event");
+        }
+    }
+
+    // end
     public static void main(String[] args) throws ParseException {
         queryEvent test = queryEvent.createInstance();
         test.updateImageEvent("RksxbGVqZHB6bnRuSWQ2OE9UazdvTk5JWg==", "111111111111", "event");
 
 //        System.out.println(String.join("/", Collections.reverse(Arrays.asList(date.split("-")))));
 //    
+        List<History> list = test.getHistoryEvent("WmdycmFIeGxkVWQ0ZU9Qb1ZLVUVwV3BxUg==");
+        for (History i : list) {
+            System.out.println(i.getEmail());
+        }
     }
 }

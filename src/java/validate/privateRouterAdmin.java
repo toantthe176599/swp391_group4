@@ -29,17 +29,17 @@ import model.queryUser;
  * @author LENOVO
  */
 public class privateRouterAdmin implements Filter {
-
+    
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-
+    
     public privateRouterAdmin() {
     }
-
+    
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -67,7 +67,7 @@ public class privateRouterAdmin implements Filter {
 	}
          */
     }
-
+    
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -105,11 +105,11 @@ public class privateRouterAdmin implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-
+        
         if (debug) {
             log("privateRouterAdmin:doFilter()");
         }
-
+        
         doBeforeProcessing(request, response);
 
         // start validate
@@ -123,11 +123,11 @@ public class privateRouterAdmin implements Filter {
             if (cookie.getName().equals("token")) {
                 // Lấy giá trị của cookie "token"
                 token = cookie.getValue();
-
+                
                 break; // Thoát khỏi vòng lặp sau khi tìm thấy cookie "token"
             }
         }
-
+        
         if (token == null || token.isBlank()) {
             HttpSession session = req.getSession();
             session.setAttribute("error", "Hành động không hợp lệ");
@@ -155,8 +155,8 @@ public class privateRouterAdmin implements Filter {
         ServletContext servletContext = filterConfig.getServletContext();
         List<String> listPermission = Arrays.asList(permission.split(" "));
         servletContext.setAttribute("permission", listPermission);
+        servletContext.setAttribute("token", token);
         //end
-        
         
         Throwable problem = null;
         try {
@@ -168,7 +168,7 @@ public class privateRouterAdmin implements Filter {
             problem = t;
             t.printStackTrace();
         }
-
+        
         doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
@@ -231,10 +231,10 @@ public class privateRouterAdmin implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-
+    
     private void sendProcessingError(Throwable t, ServletResponse response) {
         String stackTrace = getStackTrace(t);
-
+        
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
@@ -261,7 +261,7 @@ public class privateRouterAdmin implements Filter {
             }
         }
     }
-
+    
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -275,9 +275,9 @@ public class privateRouterAdmin implements Filter {
         }
         return stackTrace;
     }
-
+    
     public void log(String msg) {
         filterConfig.getServletContext().log(msg);
     }
-
+    
 }
