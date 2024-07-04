@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,26 +18,25 @@
 
         <c:if test="${sessionScope.error != null}">
             <div class="message info">
-                <div class="alert alert-danger" show-alert data-time="3000"> ${sessionScope.error}  <span close-alert>x</span> </div>
+                <div class="alert alert-danger" show-alert data-time="3000"> ${sessionScope.error}  <span close-alert><b>X</b></span> </div>
             </div>
             ${sessionScope.remove("error")}
         </c:if>
-        <!---tab to print html code          -->
+        <!---tab to print html code   <c:out value="${message}"  escapeXml="false"/>        -->
 
         <c:set var="message" value="<h1>get code html hể</h1>" />
-        <c:out value="${message}"  escapeXml="false"/>
+
 
         <!----->
 
         <c:if test="${sessionScope.success != null}">
             <div class="message info">
-                <div class="alert alert-success" show-alert data-time="3000"> ${sessionScope.success}  <span close-alert>x</span> </div>
+                <div class="alert alert-success" show-alert data-time="3000"> ${sessionScope.success}  <span close-alert><b>X</b></span> </div>
             </div>
             ${sessionScope.remove("success")}
         </c:if>
 
-        <h1>${permission}</h1>
-        <h1>${event.category}</h1>
+
 
         <c:if test="${fn:contains(permission, 'edit_ticket')}">
             <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
@@ -61,10 +61,10 @@
                                     </div>
                                 </div>
 
-                                <main style="margin-left: 100px; width: 1800px">
+                                <main style="margin-left: 100px; width: 1600px">
                                     <div class="form-container" >
                                         <h1 class="title"><span><h3>Điền thông tin sự kiện</h3></span></h1>
-                                        <form action="/admin/event/edit" method="post" formCreate autocomplete="on" enctype="multipart/form-data">
+                                        <form action="/admin/event/edit" method="post" formEdit autocomplete="on" enctype="multipart/form-data">
 
                                             <input type="hidden" name="id" value="${event.id}">
 
@@ -86,6 +86,21 @@
                                                 <input type="text" placeholder="Nhập tên nghệ sĩ" name="artist" value="${event.artist}" id="artist" required="true">
                                             </div>
 
+                                            <!---money for artist-->
+                                            <c:if test="${event.status == 'inactive'}">  
+                                                <label for="money"  style="margin-top: 30px"><b><h4>Số tiền trả cho nghệ sĩ</h4></b></label>
+                                                <div class="row">
+                                                    <input type="text" placeholder="Nhập số tiền trả cho nghệ sĩ" name="money" value=<fmt:formatNumber value="${money}" pattern="########" /> id="money" required="true">
+
+                                                </div>
+
+                                            </c:if>
+
+                                            <c:if test="${event.status != 'inactive'}">  
+                                                <input type="hidden"  name="money" value=<fmt:formatNumber value="${money}" pattern="########" /> id="money" required="true">
+
+                                            </c:if>
+
                                             <!--- organizer--> 
                                             <label for="organizer"  style="margin-top: 30px"><b><h4>Người đứng ra tổ chức(cá nhân hoặc 1 tổ chức)</h4></b></label>
                                             <div class="row">
@@ -103,28 +118,50 @@
 
 
                                             <!--start time-->
-                                            <c:set var="formattedTime" value="${fn:substring(event.startTime, 0, 5)}" />
+                                            <c:if test="${event.status == 'inactive'}">   
+                                                <c:set var="formattedTime" value="${fn:substring(event.startTime, 0, 5)}" />
+                                                <label for="start_time"  style="margin-top: 30px"><b><h4>Thời gian diễn ra sự kiện</h4></b></label>
+                                                <div class="row">
+                                                    <input type="time" placeholder="Nhập thời gian diễn ra sự kiện" name="start_time" value="${formattedTime}" id="start_time" required="true">
+                                                </div>
+                                            </c:if>
 
-                                            <label for="start_time"  style="margin-top: 30px"><b><h4>Thời gian diễn ra sự kiện</h4></b></label>
-                                            <div class="row">
-                                                <input type="time" placeholder="Nhập thời gian diễn ra sự kiện" name="start_time" value="${formattedTime}" id="start_time" required="true">
-                                            </div>
+
+                                            <c:if test="${event.status != 'inactive'}">   
+                                                <c:set var="formattedTime" value="${fn:substring(event.startTime, 0, 5)}" />
+
+                                                <div class="row">
+                                                    <input type="hidden" placeholder="Nhập thời gian diễn ra sự kiện" name="start_time" value="${formattedTime}" id="start_time" required="true">
+                                                </div>
+                                            </c:if>
+
+
 
                                             <!--start date-->
-                                            <label for="start_date"  style="margin-top: 30px"><b><h4>Ngày diễn ra sự kiện</h4></b></label>
-                                            <div class="row">
-                                                <input type="date" placeholder="Nhập ngày bắt đầu sự kiện " name="start_date" value="${event.startDate}" id="start_date" required="true">
-                                            </div>
+                                            <c:if test="${event.status == 'inactive'}">   
+                                                <label for="start_date"  style="margin-top: 30px"><b><h4>Ngày diễn ra sự kiện</h4></b></label>
+                                                <div class="row">
+                                                    <input type="date" placeholder="Nhập ngày bắt đầu sự kiện " name="start_date" value="${event.startDate}" id="start_date" required="true">
+                                                </div>   
+                                            </c:if>
+
+                                            <c:if test="${event.status != 'inactive'}">   
+                                                <div class="row">
+                                                    <input type="hidden" placeholder="Nhập ngày bắt đầu sự kiện " name="start_date" value="${event.startDate}" id="start_date" required="true">
+                                                </div>   
+                                            </c:if>
 
 
-                                            <!--start date-->
+
+                                            <!--destination-->
+
                                             <label for="destination" style="margin-top: 30px"><b><h4>Địa điểm diễn ra sự kiện</h4></b></label>
                                             <div class="row">
+                                                <input type="text"  name="destination" id="destination" class="default" rows="5" value='${event.destination}' placeholder="Nhập địa điểm" cols="10" >
 
-                                                <textarea  name="destination" id="destination" class="default" rows="5" placeholder="Nhập địa điểm" cols="10">
-                                                    <c:out value="${event.destination}"  escapeXml="false"/>
-                                                </textarea>
                                             </div>
+
+
 
 
                                             <!-- Loại sự kiện-->
@@ -164,55 +201,96 @@
                                             </div>
 
                                             <!---Type of ticket-->
-                                            <input type="hidden" name="originLength" value="${fn:length(area)}">
-                                            <label for="number-area"   style="margin-top: 20px"><b><h4>Số khu vực</h4></b></label>
-                                            <div class="row">
-                                                <input type="number" number-area min="1"  max="100" name="area_quantity" value="${fn:length(area)}" placeholder="Nhập số khu"required="true">
-                                            </div>
-                                            <table id="table" style="width: 100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="area">Tên khu vực</th>
-                                                        <th class="area">Giá vé tại khu vực</th>
-                                                        <th class="area">Số lượng vé</th>
-                                                    </tr>
-                                                </thead>
-
-                                                <c:forEach var="item" items="${area}" varStatus="status">
-                                                    <tr index="${status.index + 1}">
-                                                        <td> <input type="text" value="${item.nameArea}" name="name_area_${status.index + 1}"></td>
-                                                        <td><input type="number" value="${item.price}" name="price_${status.index + 1}"></td>
-                                                        <td><input type="number" value="${item.quantityTicketOrigin}" name="quantity_${status.index + 1}"></td>
-                                                        <td> <button deleteButton="${status.index + 1}" class="btn-danger" type="button">Xóa</button></td>
-                                                    </tr>
-                                                </c:forEach>
-
-
-
-
-                                            </table>
-                                            <a class="btn btn-success" addAnewArea style="text-align: center" >thêm 1 khu vực mới</a>
-
-
-
-                                            <!---status event-->
-
-                                            <div class="main" style="margin-top: 20px">
-                                                <div class="card">
-                                                    <div class="title" ><b><h4>Trạng thái sự kiện</h4></b></div>
-                                                    <div class="form">  
-                                                        <label><input type="radio" class="input-radio on"  name="status" value="active" ${event.status == "active" ? 'checked' : ""} > ON</label>
-                                                        <label><input type="radio" class="input-radio off" name="status" value="inactive" ${event.status == "inactive" ? 'checked' : ""}> OFF</label>
-
-                                                    </div>
+                                            <c:if test="${event.status == 'inactive'}">
+                                                <input type="hidden" name="originLength" value="${fn:length(area)}">
+                                                <label for="number-area"   style="margin-top: 20px"><b><h4>Số khu vực</h4></b></label>
+                                                <div class="row">
+                                                    <input type="number" number-area min="1"  max="100" name="area_quantity" value="${fn:length(area)}" placeholder="Nhập số khu"required="true">
                                                 </div>
-                                            </div>
+                                                <table id="table" style="width: 100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="area">Tên khu vực</th>
+                                                            <th class="area">Giá vé tại khu vực</th>
+                                                            <th class="area">Số lượng vé</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <c:forEach var="item" items="${area}" varStatus="status">
+                                                        <tr index="${status.index + 1}">
+                                                            <td> <input type="text" value="${item.nameArea}" name="name_area_${status.index + 1}"></td>
+                                                            <td><input type="number" value="${item.price}" name="price_${status.index + 1}"></td>
+                                                            <td><input type="number" value="${item.quantityTicketOrigin}" name="quantity_${status.index + 1}"></td>
+                                                            <td> <button deleteButton="${status.index + 1}" class="btn-danger" type="button">Xóa</button></td>
+                                                        </tr>
+                                                    </c:forEach>
 
 
 
 
-                                            <button type="button" submitBtn class="btn btn-primary" style="margin-top: 10px">Cập nhật</button>
-                                            <button type="button" cancelBtn idEvent="${event.id}" class="btn btn-danger" style="margin-top: 10px">Hủy</button>
+                                                </table>
+                                                <a class="btn btn-success" addAnewArea style="text-align: center" >thêm 1 khu vực mới</a>
+
+                                            </c:if>
+
+
+                                            <c:if test="${event.status != 'inactive'}">
+                                                <input type="hidden" name="originLength" value="${fn:length(area)}">
+
+                                                <div class="row">
+                                                    <input type="hidden" number-area min="1"  max="100" name="area_quantity" value="${fn:length(area)}" placeholder="Nhập số khu"required="true">
+                                                </div>
+                                                <table id="table" style="display: none">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="area">Tên khu vực</th>
+                                                            <th class="area">Giá vé tại khu vực</th>
+                                                            <th class="area">Số lượng vé</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <c:forEach var="item" items="${area}" varStatus="status">
+                                                        <tr index="${status.index + 1}">
+                                                            <td> <input type="text" value="${item.nameArea}" name="name_area_${status.index + 1}"></td>
+                                                            <td><input type="number" value="${item.price}" name="price_${status.index + 1}"></td>
+                                                            <td><input type="number" value="${item.quantityTicketOrigin}" name="quantity_${status.index + 1}"></td>
+
+                                                        </tr>
+                                                    </c:forEach>
+
+
+
+
+
+
+                                                </c:if>
+
+
+
+                                                <!---status event-->
+                                                <c:if test="${event.status == 'inactive'}">
+                                                    <div class="main" style="margin-top: 20px">
+                                                        <div class="card">
+                                                            <div class="title" ><b><h4>Trạng thái sự kiện</h4></b></div>
+                                                            <div class="form">  
+                                                                <label><input type="radio" class="input-radio on"  onButton name="status" value="active" ${event.status == "active" ? 'checked' : ""} > Hoạt động</label>
+                                                                <label><input type="radio" class="input-radio off" offButton name="status" value="inactive" ${event.status == "inactive" ? 'checked' : ""}> Chờ </label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>  
+                                                </c:if>
+
+                                                <c:if test="${event.status != 'inactive'}">
+                                                    <div class="main" style="margin-top: 20px; display: none">
+                                                        <input type="hidden" name='status' value='${event.status}'>
+                                                    </div>  
+                                                </c:if>
+
+
+
+                                                <button type="button" submitBtn class="btn btn-primary" style="margin-top: 10px">Cập nhật</button>
+                                                <button type="button" cancelBtn idEvent="${event.id}" class="btn btn-danger" style="margin-top: 10px">Hủy</button>
                                         </form>
                                     </div>
 
@@ -234,8 +312,6 @@
         <script src="../../../../tinymce/tinymce.min.js"></script>
         <script src="../../../../public/admin/js/tinyMceConfig.js"></script>
         <script src="../../../../public/admin/js/alert.js"></script>
-        <!----->
-
         <script src="../../../../public/admin/js/imageForEdit.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

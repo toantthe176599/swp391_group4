@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,7 +36,7 @@
 
         <c:if test="${sessionScope.error != null}">
             <div class="message info">
-                <div class="alert alert-danger" show-alert data-time="3000"> ${sessionScope.error}  <span close-alert>x</span> </div>
+                <div class="alert alert-danger" show-alert data-time="3000"> ${sessionScope.error}  <span close-alert><b>X</b></span> </div>
             </div>
             ${sessionScope.remove("error")}
         </c:if>
@@ -46,7 +47,7 @@
 
         <c:if test="${sessionScope.success != null}">
             <div class="message info">
-                <div class="alert alert-success" show-alert data-time="3000"> ${sessionScope.success}  <span close-alert>x</span> </div>
+                <div class="alert alert-success" show-alert data-time="3000"> ${sessionScope.success}  <span close-alert><b>X</b></span> </div>
             </div>
             ${sessionScope.remove("success")}
         </c:if>
@@ -130,33 +131,65 @@
 
                                                         <c:forEach var="item" items="${event}">
                                                             <tr>
+                                                                <!--- convert date-->
+                                                                <c:set var="originalDateString" value="${item.startDate}" />
+
+
+                                                                <fmt:parseDate value="${originalDateString}" pattern="yyyy-MM-dd" var="dateObject" />
+
+
+                                                                <fmt:formatDate value="${dateObject}" pattern="dd/MM/yyyy" var="formattedDate" />
+                                                                <!----->
 
                                                                 <td >${item.name}</td>
                                                                 <td>${item.category}</td>
                                                                 <td><img img-demo idEvent="${item.id }" src="${item.img_event}" style="width: 400px; height: 300" alt="alt"/></td>
-                                                                <td>${item.startDate}</td>
-                                                                <td><span class="label label-success"> ${item.status == "active" ? "Đang hoạt động" : "Không hoạt động"} </span></td>
-                                                                <td>${item.organizer}</td>
-                                                                <td>
-
-                                                                    <c:if test="${fn:contains(permission, 'view_ticket')}">
-                                                                        <a href="/admin/event/detail/${item.id}" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
-                                                                            <span class=" pe-2">
-                                                                                <i class="bi bi-info-circle"></i>
-                                                                            </span>
-                                                                            <span>Chi tiết</span>
-                                                                        </a>
+                                                                <td>${formattedDate}</td>
+                                                                <td> 
+                                                                    <c:if test="${item.status == 'active'}">
+                                                                        <div class="alert-success"> <b>Đang hoạt động</b> </div> 
                                                                     </c:if>
+                                                                    <c:if test="${item.status == 'inactive'}">
+                                                                        <div class="alert-danger"> <b>Không hoạt động</b> </div> 
+                                                                    </c:if>
+                                                                    <c:if test="${item.status == 'expired'}">
+                                                                        <div class="alert-secondary"> <b>Đã kết thúc</b> </div> 
+                                                                    </c:if>
+                                                                </td>
+                                                                <td> <p style="white-space: normal">${item.organizer} </p> </td>
+                                                                <td>
+                                                                    <table>
 
-                                                                    <c:if test="${fn:contains(permission, 'edit_ticket')}">
-                                                                        <a href="/admin/event/edit/form/${item.id}" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
-                                                                            <span class=" pe-2">
-                                                                                <i class="bi bi-pencil"></i>
-                                                                            </span>
-                                                                            <span>Chỉnh sửa</span>
-                                                                        </a>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <c:if test="${fn:contains(permission, 'view_ticket')}">
+                                                                                    <a href="/admin/event/detail/${item.id}" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
+                                                                                        <span class=" pe-2">
+                                                                                            <i class="bi bi-info-circle"></i>
+                                                                                        </span>
+                                                                                        <span>Chi tiết</span>
+                                                                                    </a>
+                                                                                </c:if>
+                                                                            </td>
 
-                                                                    </c:if> 
+
+
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td> <c:if test="${fn:contains(permission, 'edit_ticket')}">
+                                                                                    <a href="/admin/event/edit/form/${item.id}" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
+                                                                                        <span class=" pe-2">
+                                                                                            <i class="bi bi-pencil"></i>
+                                                                                        </span>
+                                                                                        <span>Chỉnh sửa</span>
+                                                                                    </a>
+                                                                                </c:if> </td>
+                                                                        </tr>
+
+                                                                    </table>
+
+
+
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>

@@ -55,13 +55,14 @@ public class updatePermission extends HttpServlet {
             String newrole = req.getParameter("namerole");
             String description = req.getParameter("description");
             String oldRole = req.getParameter("oldrole");
-
             //end
+            
             // get db query and session
             queryPermission qPermission = queryPermission.getInstanceQueryPermision();
             queryRole qRole = queryRole.createInstanceQueryRole();
             HttpSession session = req.getSession();
             //
+            
             // check newrole exist
             if (!oldRole.equalsIgnoreCase(newrole)) {
                 if (qRole.checkRoleExist(newrole)) {

@@ -44,6 +44,22 @@
         <filter-name>validateDataEditEvent</filter-name>
         <filter-class>validate.validateDataEditEvent</filter-class>
     </filter>
+    <filter>
+        <filter-name>ValidateCreateBLog</filter-name>
+        <filter-class>validate.ValidateCreateBLog</filter-class>
+    </filter>
+    <filter>
+        <filter-name>validateEditBlog</filter-name>
+        <filter-class>validate.validateEditBlog</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>validateEditBlog</filter-name>
+        <url-pattern>/admin/blog/edit</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ValidateCreateBLog</filter-name>
+        <url-pattern>/admin/blog/create</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>validateDataEditEvent</filter-name>
         <url-pattern>/admin/event/edit</url-pattern>
@@ -208,6 +224,86 @@
         <servlet-name>EditEvent</servlet-name>
         <servlet-class>controller.admin.mangageTicket.EditEvent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RenderAllCategory</servlet-name>
+        <servlet-class>controller.admin.Category.RenderAllCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateCategoryForm</servlet-name>
+        <servlet-class>controller.admin.Category.CreateCategoryForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateCategory</servlet-name>
+        <servlet-class>controller.admin.Category.CreateCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditCategoryForm</servlet-name>
+        <servlet-class>controller.admin.Category.EditCategoryForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditCategory</servlet-name>
+        <servlet-class>controller.admin.Category.EditCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteCategory</servlet-name>
+        <servlet-class>controller.admin.Category.DeleteCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RenderDashboardBlog</servlet-name>
+        <servlet-class>controller.admin.Blog.RenderDashboardBlog</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RenderCreateBlogForm</servlet-name>
+        <servlet-class>controller.admin.Blog.RenderCreateBlogForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateBlog</servlet-name>
+        <servlet-class>controller.admin.Blog.CreateBlog</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailBlog</servlet-name>
+        <servlet-class>controller.admin.Blog.DetailBlog</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditBlogForm</servlet-name>
+        <servlet-class>controller.admin.Blog.EditBlogForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditBlog</servlet-name>
+        <servlet-class>controller.admin.Blog.EditBlog</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteBlog</servlet-name>
+        <servlet-class>controller.admin.Blog.DeleteBlog</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HistoryLog</servlet-name>
+        <servlet-class>controller.admin.mangageTicket.HistoryLog</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>dashboard</servlet-name>
+        <servlet-class>controller.admin.dashboard.dashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>detailEventReport</servlet-name>
+        <servlet-class>controller.admin.dashboard.detailEventReport</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RenderProfile</servlet-name>
+        <servlet-class>controller.admin.Profile.RenderProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>renderUpdateProfileForm</servlet-name>
+        <servlet-class>controller.admin.Profile.renderUpdateProfileForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateProfile</servlet-name>
+        <servlet-class>controller.admin.Profile.updateProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>renderTransactionDashboard</servlet-name>
+        <servlet-class>controller.admin.dashboard.renderTransactionDashboard</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>renderAuthForm</servlet-name>
         <url-pattern>/form</url-pattern>
@@ -327,6 +423,86 @@
     <servlet-mapping>
         <servlet-name>EditEvent</servlet-name>
         <url-pattern>/admin/event/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RenderAllCategory</servlet-name>
+        <url-pattern>/admin/category</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateCategoryForm</servlet-name>
+        <url-pattern>/admin/category/create/form</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateCategory</servlet-name>
+        <url-pattern>/admin/category/create</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditCategoryForm</servlet-name>
+        <url-pattern>/admin/category/edit/form/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditCategory</servlet-name>
+        <url-pattern>/admin/category/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCategory</servlet-name>
+        <url-pattern>/admin/category/delete/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RenderDashboardBlog</servlet-name>
+        <url-pattern>/admin/blog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RenderCreateBlogForm</servlet-name>
+        <url-pattern>/admin/blog/create/form</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateBlog</servlet-name>
+        <url-pattern>/admin/blog/create</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailBlog</servlet-name>
+        <url-pattern>/admin/blog/detail/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditBlogForm</servlet-name>
+        <url-pattern>/admin/blog/edit/form/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditBlog</servlet-name>
+        <url-pattern>/admin/blog/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBlog</servlet-name>
+        <url-pattern>/admin/blog/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoryLog</servlet-name>
+        <url-pattern>/admin/event/history/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dashboard</servlet-name>
+        <url-pattern>/admin/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>detailEventReport</servlet-name>
+        <url-pattern>/admin/dashboard/detail/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RenderProfile</servlet-name>
+        <url-pattern>/admin/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>renderUpdateProfileForm</servlet-name>
+        <url-pattern>/admin/profile/update/form</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateProfile</servlet-name>
+        <url-pattern>/admin/profile/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>renderTransactionDashboard</servlet-name>
+        <url-pattern>/admin/dashboard/transaction/*</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>views/client/pages/authForm.jsp</welcome-file>

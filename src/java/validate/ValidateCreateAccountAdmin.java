@@ -11,30 +11,31 @@ import java.io.StringWriter;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import java.util.List;
 
 /**
  *
  * @author LENOVO
  */
 public class ValidateCreateAccountAdmin implements Filter {
-    
+
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    
+
     public ValidateCreateAccountAdmin() {
-    }    
-    
+    }
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -61,8 +62,8 @@ public class ValidateCreateAccountAdmin implements Filter {
 	    log(buf.toString());
 	}
          */
-    }    
-    
+    }
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -100,37 +101,43 @@ public class ValidateCreateAccountAdmin implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        
+
         if (debug) {
             log("validateUserInAdmin:doFilter()");
         }
-        
+
         doBeforeProcessing(request, response);
-        
-        
-        HttpServletRequest req = (HttpServletRequest)request;
-        HttpServletResponse res = (HttpServletResponse)response;
+
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+
+        // check permission
+        ServletContext servletContext = filterConfig.getServletContext();
+        List<String> permission = (List<String>) servletContext.getAttribute("permission");
+        if (!permission.contains("add_account")) {
+            res.sendRedirect("http://localhost:8080/views/client/404Page/404Page.html");
+            return;
+        }
+        //end
+
         String userName = req.getParameter("userName");
         String password = req.getParameter("password");
         String rePassword = req.getParameter("rePassword");
         String email = req.getParameter("email");
         String role = req.getParameter("role");
         HttpSession session = req.getSession();
-        if(userName.isBlank() || password.isBlank() || rePassword.isBlank() || email.isBlank() || role.isBlank()){
+        if (userName.isBlank() || password.isBlank() || rePassword.isBlank() || email.isBlank() || role.isBlank()) {
             session.setAttribute("error", "Vui lòng nhập tất cả các trường");
             res.sendRedirect("/admin/account/create/form");
             return;
         }
-        
-        if(!password.equals(rePassword)){
+
+        if (!password.equals(rePassword)) {
             session.setAttribute("error", "Mật khẩu không khớp!");
             res.sendRedirect("/admin/account/create/form");
             return;
         }
-        
-     
-        
-        
+
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
@@ -141,7 +148,7 @@ public class ValidateCreateAccountAdmin implements Filter {
             problem = t;
             t.printStackTrace();
         }
-        
+
         doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
@@ -176,16 +183,16 @@ public class ValidateCreateAccountAdmin implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
+            if (debug) {
                 log("validateUserInAdmin:Initializing filter");
             }
         }
@@ -204,20 +211,20 @@ public class ValidateCreateAccountAdmin implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -234,7 +241,7 @@ public class ValidateCreateAccountAdmin implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -248,9 +255,9 @@ public class ValidateCreateAccountAdmin implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
-    
+
 }

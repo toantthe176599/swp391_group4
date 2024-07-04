@@ -59,7 +59,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="/admin/dashboard">
                         <i class="bi bi-house"></i> Trang chủ
                     </a>
                 </li>
@@ -72,17 +72,13 @@
                     </li>
                 </c:if>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/category">
-                        <i class="bi bi-collection"></i> Loại sự kiện
-                    </a>
-                </li>
-
-
-
-
-
-
+                <c:if test="${fn:contains(permission, 'view_category')}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/category">
+                            <i class="bi bi-collection"></i> Loại sự kiện
+                        </a>
+                    </li>
+                </c:if>
 
                 <c:if test="${fn:contains(permission, 'view_account')}">
                     <li class="nav-item">
@@ -102,15 +98,22 @@
                 </c:if>
 
 
+                <c:if test="${fn:contains(permission, 'view_blog')}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/blog">
+                            <i class="bi bi-newspaper"></i> Bài viết
+                        </a>
+                    </li>
+                </c:if>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-newspaper"></i> Truyền thông
-                    </a>
-                </li>
+                <c:if test="${fn:contains(permission, 'view_inforwebsite')}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-envelope"></i> Thông tin website
+                        </a>
 
-
-
+                    </li>
+                </c:if>
 
             </ul>
             <!-- Divider -->
@@ -122,7 +125,7 @@
             <!-- User (md) -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="/admin/profile">
                         <i class="bi bi-person-square"></i> Tài khoản của tôi
                     </a>
                 </li>

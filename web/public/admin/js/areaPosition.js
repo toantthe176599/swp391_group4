@@ -145,7 +145,7 @@ const checkDuplicate = (areaData) => {
     return false;
 };
 
-
+// submitbtn
 const submitBtn = document.querySelector("[submitBtn]");
 const submitForm = document.querySelector("[formCreate]");
 if (submitBtn) {
@@ -155,7 +155,10 @@ if (submitBtn) {
             alert("Bạn đã nhập trùng tên khu vực vui lòng chọn tên khác nhau");
         } else {
             if (submitForm) {
-                submitBtn.type = "submit";
+                const isConfirm = confirm("Bạn có chắc chắn tạo sự kiện? (Lưu ý: khi sự kiện để ở chế độ bắt đầu bạn sẽ không thể thay đổi giá vé và thời gian sự kiện)");
+                if (isConfirm) {
+                    submitBtn.type = "submit";
+                }
             }
         }
     });
@@ -173,8 +176,18 @@ if (cancelBtnCreateEvent) {
             window.location.href = "/admin/event";
         }
     }
-    )
+    );
 }
 
 //end
 
+
+// on button and off button
+const onButton = document.querySelector("[onButton]");
+if (onButton) {
+    onButton.addEventListener("click", () => {
+        alert("Bạn sẽ không thể chỉnh sửa thời gian diễn ra sự kiện và giá cũng như số lượng vé của sự kiện khi sự kiện ở trạng thái bắt đầu");
+    });
+}
+
+//end

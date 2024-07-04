@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.queryEvent;
+import model.queryUser;
 import schema.Event;
 
 /**
@@ -30,23 +31,6 @@ public class RenderListEvent extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet rederListTicket</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet rederListTicket at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -71,7 +55,10 @@ public class RenderListEvent extends HttpServlet {
 
         // get all data from db ticket
         queryEvent qEvent = queryEvent.createInstance();
-        List<Event> listEvent = qEvent.getAPartEvent();
+        ServletContext servletContext = getServletContext();
+        String token = (String) servletContext.getAttribute("token");
+        queryUser qUser = queryUser.createQueryUSer();
+        List<Event> listEvent = qEvent.getEventByCreator(qUser.getIdByToken(token));
         req.setAttribute("event", listEvent);
         //end
 //         / views / admin / pages / event / dashboard.js

@@ -148,15 +148,23 @@ public class validateCreatEvent implements Filter {
         String startTime = req.getParameter("start_time");
         String startDate = req.getParameter("start_date");
         String destination = req.getParameter("destination");
-        String status = req.getParameter("status");
+        String money = req.getParameter("money");
         String category = req.getParameter("category");
         String areaQuantity = req.getParameter("area_quantity");
         HttpSession session = req.getSession();
-
+        String rediect = "/admin/event/create/form";
         // data is  null
-        if (namevent == null || title == null || artist == null || description == null || startDate == null || startTime == null || destination == null || category == null) {
+        if (namevent == null
+                || title == null
+                || artist == null
+                || description == null
+                || startDate == null
+                || startTime == null
+                || destination == null
+                || category == null
+                || money == null) {
             session.setAttribute("error", "Dữ liệu không được để trống!");
-            res.sendRedirect("/admin/event/create/form");
+            res.sendRedirect(rediect);
             return;
         }
         //end 
@@ -169,22 +177,21 @@ public class validateCreatEvent implements Filter {
         }
         if (!typeBug.isBlank()) {
             session.setAttribute("error", typeBug);
-            res.sendRedirect("/admin/event/create/form");
+            res.sendRedirect(rediect);
             return;
         }
 
         //data is empty
-        if (namevent.isBlank() || title.isBlank() || artist.isBlank() || description.isBlank() || startDate.isBlank() || startTime.isBlank() || destination.isBlank()) {
+        if (namevent.isBlank()
+                || title.isBlank()
+                || artist.isBlank()
+                || description.isBlank()
+                || startDate.isBlank()
+                || startTime.isBlank()
+                || destination.isBlank()
+                || money.isBlank()) {
             session.setAttribute("error", "Dữ liệu không hợp lệ!");
-            res.sendRedirect("/admin/event/create/form");
-            return;
-        }
-
-        //end
-        // status != active and inactive
-        if (!status.equals("active") && !status.equals("inactive")) {
-            session.setAttribute("error", "Dữ liệu không hợp lệ!");
-            res.sendRedirect("/admin/event/create/form");
+            res.sendRedirect(rediect);
             return;
         }
 
@@ -194,12 +201,28 @@ public class validateCreatEvent implements Filter {
             int area = Integer.parseInt(areaQuantity);
             if (area < 1 || area > 100) {
                 session.setAttribute("error", "Số khu vực phải lớn hơn 0 và nhỏ hơn 100");
-                res.sendRedirect("/admin/event/create/form");
+                res.sendRedirect(rediect);
+                return;
+            }
+
+        } catch (Exception e) {
+            session.setAttribute("error", "Số khu vực ít nhất là 1 và phải là dạng số");
+            res.sendRedirect(rediect);
+            return;
+        }
+        //end
+
+        // handle money for artist
+        try {
+            double moneyForArtist = Double.parseDouble(money);
+            if (moneyForArtist <= 0 || moneyForArtist > 100000000000.0) {
+                session.setAttribute("error", "Số tiền cho nghệ sĩ phải lớn hơn 0 và nhỏ hơn 100 tỉ");
+                res.sendRedirect(rediect);
                 return;
             }
         } catch (Exception e) {
-            session.setAttribute("error", "Số khu vực ít nhất là 1 và phải là dạng số");
-            res.sendRedirect("/admin/event/create/form");
+            session.setAttribute("error", "Số tiền cho nghệ sĩ không hợp lệ");
+            res.sendRedirect(rediect);
             return;
         }
         //end
@@ -214,7 +237,7 @@ public class validateCreatEvent implements Filter {
         long daysBetween = ChronoUnit.DAYS.between(today, futureDate);
         if (daysBetween < 3 || daysBetween > 60) {
             session.setAttribute("error", "Ngày diễn ra ít nhất sau 3 ngày nhiều nhất sau 2 tháng");
-            res.sendRedirect("/admin/event/create/form");
+            res.sendRedirect(rediect);
             return;
         }
         //enc check date
