@@ -374,7 +374,48 @@ public class queryEvent extends DBContext {
 
 
 
-  // query loghistory of an event
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // query loghistory of an event
     public List<History> getHistoryEvent(String idEvent) {
         String sql = "  select * from logHistory l join account a on l.account_id = a.id where l.event_id = ?  ORDER BY logTime ASC";
         List<History> listHistory = new ArrayList<>();
