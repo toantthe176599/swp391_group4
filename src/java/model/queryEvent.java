@@ -301,14 +301,6 @@ public class queryEvent extends DBContext {
 
     // end
     public static void main(String[] args) throws ParseException {
-        queryEvent test = queryEvent.createInstance();
-        test.updateImageEvent("RksxbGVqZHB6bnRuSWQ2OE9UazdvTk5JWg==", "111111111111", "event");
-
-//        System.out.println(String.join("/", Collections.reverse(Arrays.asList(date.split("-")))));
-//    
-        List<History> list = test.getHistoryEvent("WmdycmFIeGxkVWQ0ZU9Qb1ZLVUVwV3BxUg==");
-        for (History i : list) {
-            System.out.println(i.getEmail());
-        }
+      
     }
 }
