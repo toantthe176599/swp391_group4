@@ -155,6 +155,9 @@
                                                                     <c:if test="${item.status == 'expired'}">
                                                                         <div class="alert-secondary"> <b>Đã kết thúc</b> </div> 
                                                                     </c:if>
+                                                                    <c:if test="${item.status == 'cancel'}">
+                                                                        <div class="alert-danger"> <b>Đã hủy</b> </div> 
+                                                                    </c:if>
                                                                 </td>
                                                                 <td> <p style="white-space: normal">${item.organizer} </p> </td>
                                                                 <td>

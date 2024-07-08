@@ -23,11 +23,12 @@ public class ReportEvent {
     private int ticketLeft;
     private String img;
     private String nameEvent;
+    private String status;
 
     public ReportEvent() {
     }
 
-    public ReportEvent(String idEvent, int ticketSold, int totalTicket, List<ReportArea> listArea, int dayLeft, String nameEvent) {
+    public ReportEvent(String idEvent, int ticketSold, int totalTicket, List<ReportArea> listArea, int dayLeft, String nameEvent, String status) {
         this.idEvent = idEvent;
         this.ticketSold = ticketSold;
         this.totalTicket = totalTicket;
@@ -43,9 +44,10 @@ public class ReportEvent {
 
         double roundedNumber = bd.doubleValue();
         this.percentSold = roundedNumber;
+        this.status = status;
     }
 
-    public ReportEvent(String idEvent, int ticketSold, int totalTicket, int dayLeft, String img, String nameEvent) {
+    public ReportEvent(String idEvent, int ticketSold, int totalTicket, int dayLeft, String img, String nameEvent, String status) {
         this.idEvent = idEvent;
         this.ticketSold = ticketSold;
         this.totalTicket = totalTicket;
@@ -66,6 +68,7 @@ public class ReportEvent {
         this.dayLeft = dayLeft;
         this.img = img;
         this.nameEvent = nameEvent;
+        this.status = status;
     }
 
     public String getIdEvent() {
@@ -102,6 +105,10 @@ public class ReportEvent {
 
     public String getNameEvent() {
         return nameEvent;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
 }

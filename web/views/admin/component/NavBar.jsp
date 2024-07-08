@@ -53,7 +53,7 @@
         <c:set var="permission" value="${applicationScope.permission}"  />
 
 
-
+      
         <!-- Collapse -->
         <div class="collapse navbar-collapse" id="sidebarCollapse">
             <!-- Navigation -->
@@ -63,7 +63,6 @@
                         <i class="bi bi-house"></i> Trang chủ
                     </a>
                 </li>
-
                 <c:if test="${fn:contains(permission, 'view_ticket')}">
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/event">
@@ -106,6 +105,7 @@
                     </li>
                 </c:if>
 
+                    
                 <c:if test="${fn:contains(permission, 'view_inforwebsite')}">
                     <li class="nav-item">
                         <a class="nav-link" href="#">

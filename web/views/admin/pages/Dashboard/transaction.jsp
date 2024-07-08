@@ -21,7 +21,9 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="../../../../public/admin/css/transactionCss.css"/>
     </head>
+
     <body>
+
         <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
             <!-- Vertical Navbar -->
             <c:import url="/views/admin/component/NavBar.jsp" />
@@ -64,11 +66,17 @@
                                         <div class="content2">
                                             <div class="online_orders shadow">
                                                 <div class="online_orders_1">Số giao dịch</div>
-                                                <div class="online_orders_2">232</div>
+                                                <div class="online_orders_2">${fn:length(report)}</div>
                                             </div>
                                             <div class="amount_recieved shadow">
+                                                <c:set var="sum" value="0" />
+
+                                                <c:forEach var="item" items="${report}">
+                                                    <c:set var="num" value="${item.total + 0}" />
+                                                    <c:set var="sum" value="${sum + num}" />
+                                                </c:forEach>
                                                 <div class="amount_recieved_1">Tổng tiền hiện tại</div>
-                                                <div class="amount_recieved_2"> 2,392,312.19 đ</div>
+                                                <div class="amount_recieved_2"><fmt:formatNumber value="${sum}" type="currency" currencySymbol="₫" currencyCode="VND" /></div>
                                             </div>
                                         </div>
 
@@ -80,140 +88,38 @@
                                             <div class="content5">
                                                 <table>
                                                     <thead>
+
                                                         <tr>
-                                                            <th>Order ID</th>
+                                                            <th>Email</th>
                                                             <th>Ngày giao dịch</th>
                                                             <th>Tổng số tiền</th>
-                                                            <th>Phí giao dịch</th>
+                                                            <th>Phương thức thanh toán</th>
+                                                            <th>loại vé</th>
+                                                            <th>giá</th>
+                                                            <th>Số lượng mua</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#281209</td>
-                                                            <td>7 July, 2023</td>
-                                                            <td>&#8377;1,278.23</td>
-                                                            <td>&#8377;22</td>
-                                                        </tr>
+                                                        <c:forEach var="item" items="${report}">
+                                                            <tr>
+
+                                                                <td>${item.email}</td>
+                                                                <!-- Chuyển đổi chuỗi thành đối tượng Date -->
+                                                                <fmt:parseDate var="parsedDate" value="${item.date}" pattern="yyyy-MM-dd HH:mm:ss.S" />
+
+                                                                <!-- Định dạng đối tượng Date thành chuỗi mới -->
+                                                                <fmt:formatDate value="${parsedDate}" pattern="HH:mm dd/MM/yyyy" var="formattedDate" />
+
+                                                                <td>${formattedDate}</td>
+                                                                <td><fmt:formatNumber value="${item.total}" type="currency" currencySymbol="₫" currencyCode="VND" /></td>
+                                                                <td style="text-align: center"> ${item.paymentMethod}</td>
+                                                                <td style="text-align: center">${item.areaName}</td>
+                                                                <td style="text-align: center"><fmt:formatNumber value="${item.price}" type="currency" currencySymbol="₫" currencyCode="VND" /></td>
+                                                                <td style="text-align: center">${item.quantity}</td>
+                                                            </tr>
+
+                                                        </c:forEach>
+
 
                                                     </tbody>
                                                 </table>

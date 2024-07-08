@@ -56,6 +56,44 @@ public class sendMail {
             System.out.println(e);
         }
     }
+    
+    
+    public void sendEmailToTicket(String receiEmail, String header, String body) {
+        final String email = GoogleInfomation.GOOGLE_EMAIL;
+        final String password = GoogleInfomation.GOOGLE_PASSWORD;
+        final String toEmail = receiEmail;
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com"); //SMTP host
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true"); // 
+        prop.put("mail.smtp.starttls.enable", "true");
+
+        Authenticator auth = new Authenticator() {
+            @Override
+            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                return new javax.mail.PasswordAuthentication(email, password);
+            }
+        };
+
+        Session session = Session.getInstance(prop, auth);
+        MimeMessage msg = new MimeMessage(session);
+        try {
+            // kieu noi dung
+            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+            // nguoi gui
+            msg.setFrom(email);
+            //nguoi nhan
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+            // tieu de
+            msg.setSubject(header);
+            // noi dung
+            msg.setContent(body, "text/HTML; charset=UTF-8");
+            Transport.send(msg);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     public static void main(String[] args) {
 //        final String email = "toantthe176599@fpt.edu.vn";

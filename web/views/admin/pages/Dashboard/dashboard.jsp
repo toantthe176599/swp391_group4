@@ -84,10 +84,7 @@
                                                                 <option value="second">Ngày diễn ra (tăng dần)</option>
                                                                 <option value="third">Ngày diễn ra (giảm dần)</option>
                                                             </select>
-
                                                         </div>
-
-
                                                     </div>
 
                                                 </header>
@@ -104,23 +101,32 @@
                                                                                                                         </div>-->
 
                                                                 <div class="progress-row">
+
                                                                     <h6>Số vé đã bán: <b>${item.ticketSold}</b> </h6>
                                                                     <h6>Số vé còn lại: <b>${item.ticketLeft}</b></h6>
                                                                     <h6>Tổng số lượng vé: <b>${item.totalTicket}</b></h6>
                                                                     <h6>Tiến độ bán vé</h6>
+
                                                                     <p class="value-label" style="width:${item.percentSold}%" data-value="${item.percentSold}"></p>
                                                                     <progress max="${item.totalTicket}" value="${item.ticketSold}" data-value="${item.ticketSold}"> ${item.percentSold}% </progress>
                                                                 </div>
                                                                 <div class="footer-row">
-                                                                    <c:if test="${item.dayLeft < 0}">
-                                                                        <div class="alert-dark"> <i class="fa fa-clock-o icon" aria-hidden="true"></i> Đã kết thúc ${item.dayLeft * -1} ngày trước </div>    
+
+                                                                    <c:if test="${item.status != 'cancel'}">
+                                                                        <c:if test="${item.dayLeft < 0}">
+                                                                            <div class="alert-dark"> <i class="fa fa-clock-o icon" aria-hidden="true"></i> Đã kết thúc ${item.dayLeft * -1} ngày trước </div>    
+                                                                        </c:if>
+                                                                        <c:if test="${item.dayLeft == 0}">
+                                                                            <div class="alert-success"> <i class="fa fa-clock-o icon" aria-hidden="true"></i> Diễn ra trong ngày hôm nay  </div>    
+                                                                        </c:if>
+                                                                        <c:if test="${item.dayLeft > 0}">
+                                                                            <div class="alert-success"> <i class="fa fa-clock-o icon" aria-hidden="true"></i> Diễn ra sau ${item.dayLeft} ngày </div>    
+                                                                        </c:if>
                                                                     </c:if>
-                                                                    <c:if test="${item.dayLeft == 0}">
-                                                                        <div class="alert-success"> <i class="fa fa-clock-o icon" aria-hidden="true"></i> Diễn ra trong ngày hôm nay  </div>    
-                                                                    </c:if>
-                                                                    <c:if test="${item.dayLeft > 0}">
-                                                                        <div class="alert-success"> <i class="fa fa-clock-o icon" aria-hidden="true"></i> Diễn ra sau ${item.dayLeft} ngày </div>    
-                                                                    </c:if>
+                                                                    <c:if test="${item.status == 'cancel'}">
+                                                                        <div class="alert-danger">  Hủy </div>    
+                                                                    </c:if> 
+
 
                                                                     <div class="users">
                                                                         <button type="button" class="btn btn-default btn-sm" idEvent="${item.idEvent}" detailBtn style="border: solid 1px black">
