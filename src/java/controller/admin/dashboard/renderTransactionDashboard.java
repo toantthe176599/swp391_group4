@@ -10,6 +10,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.queryBooking;
+import schema.ReportTransaction;
 
 /**
  *
@@ -38,6 +41,17 @@ public class renderTransactionDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+        // get id event from url
+        String pathInfo = req.getPathInfo();
+        String[] pathSegments = pathInfo.split("/");
+        String eventId = pathSegments[pathSegments.length - 1];
+        //end  
+
+        // get detail transaction
+        queryBooking qBooking = queryBooking.createInstanceBooking();
+        List<ReportTransaction> reportTran = qBooking.getBookingByEvent(eventId);
+        req.setAttribute("report", reportTran);
+        //end
         req.getRequestDispatcher("/views/admin/pages/Dashboard/transaction.jsp").forward(req, res);
     }
 

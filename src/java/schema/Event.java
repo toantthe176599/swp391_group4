@@ -20,6 +20,7 @@ public class Event {
     }
 
     private Event(buildEvent build) {
+        
         this.id = build.id;
         this.name = build.name;
         this.title = build.title;
@@ -35,7 +36,10 @@ public class Event {
         this.areas = build.areas;
         this.img_event = build.img_event;
         this.img_position = build.img_position;
+     
     }
+
+
 
     public String getId() {
         return id;
@@ -183,5 +187,8 @@ public class Event {
         }
 
     }
-
+ @Override
+        public String toString() {
+            return "buildEvent{" + "id=" + id + ", name=" + name + ", title=" + title + ", artist=" + artist + ", organizer=" + organizer + ", description=" + description + ", startTime=" + startTime + ", startDate=" + startDate + ", destination=" + destination + ", status=" + status + ", category=" + category + ", area_quantity=" + area_quantity + ", img_event=" + img_event + ", img_position=" + img_position + ", areas=" + areas + '}';
+        }
 }

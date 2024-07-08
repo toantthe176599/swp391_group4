@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="../../../../public/admin/css/DashboarCss.css"/>
         <link rel="stylesheet" href="../../../../public/admin/css/detailDashboard.css"/>
         <link rel="stylesheet" href="../../../../public/admin/css/chartCss.css"/>
-
+        <link rel="stylesheet" href="../../../../public/admin/css/alert.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <title>Báo cáo chi tiết</title>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -149,15 +149,40 @@
 
     <body>
 
+        <form action="/admin/event/cancel" cancelForm method="POST">
+            <input type="hidden" name="eventID" value="${report.idEvent}">
+        </form>
 
 
         <aside>
             <c:import url="/views/admin/component/NavBar.jsp" />
         </aside>
-        <main><h2>Báo cáo sự kiện: ${report.nameEvent} </h2>
+
+        <main>
+            <c:if test="${sessionScope.error != null}">
+                <div class="message info">
+                    <div class="alert alert-danger" show-alert data-time="3000"> ${sessionScope.error}  <span close-alert>x</span> </div>
+                </div>
+                ${sessionScope.remove("error")}
+            </c:if>
+
+
+
+            <c:if test="${sessionScope.success != null}">
+                <div class="message info">
+                    <div class="alert alert-success" show-alert data-time="3000"> ${sessionScope.success}  <span close-alert>x</span> </div>
+                </div>
+                ${sessionScope.remove("success")}
+            </c:if>
+
+            <h2>Báo cáo sự kiện: ${report.nameEvent} </h2>
             <header  style="display: flex; justify-content: end; align-items: center;">
 
                 <button type="button" class="btn btn-primary" detailBtn >Chi tiết doanh thu</button>
+                <c:if test="${report.status != 'cancel'}">
+                    <button type="button" class="btn btn-danger mx-1" cancelBtn >Hủy sự kiện</button>
+                </c:if>
+
                 <a href="/admin/dashboard" type="button" class="btn btn-dark">Quay lại</a>
             </header>
 
@@ -268,8 +293,23 @@
                 window.location.href = "/admin/dashboard/transaction/" + idEvent;
             })
         }
+
+
+        const cancelBtn = document.querySelector("[cancelBtn]");
+        if (cancelBtn) {
+            cancelBtn.addEventListener("click", () => {
+                const form = document.querySelector("[cancelForm]");
+                const isConfirm = confirm('Bạn có chắc muốn hủy sự kiện này không ');
+                if (isConfirm && form) {
+                    form.submit()
+                }
+            }
+            )
+
+
+        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
+    <script src="../../../../public/admin/js/alert.js"></script>
 </html>

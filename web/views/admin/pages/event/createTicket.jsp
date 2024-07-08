@@ -181,7 +181,7 @@
 
 
 
-                                            <button type="submit"  class="btn btn-primary" style="margin-top: 10px">Tạo sự kiện</button>
+                                            <button type="submit" submitBtn  class="btn btn-primary" style="margin-top: 10px">Tạo sự kiện</button>
                                             <button type="button" cancelBtn class="btn btn-danger" style="margin-top: 10px">Hủy</button>
                                         </form>
                                     </div>

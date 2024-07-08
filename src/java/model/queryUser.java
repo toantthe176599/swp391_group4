@@ -414,6 +414,25 @@ public class queryUser extends DBContext {
             System.out.println("Tài khoản đã có thông tin sẵn");
         }
     }
+    
+     public account getUserByToken(String token) {
+        String format = "select * from account where token = '%s'";
+        String sql = String.format(format, token);
+        String status = "";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                account s = new account(rs.getString("id"), rs.getString("email"), rs.getString("username"), rs.getString("password"), rs.getString("token"), rs.getString("role"), rs.getString("status"));
+                s.setPassword("");
+                return s;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+
+    }
 
     public static void main(String[] args) {
         queryUser test = queryUser.createQueryUSer();

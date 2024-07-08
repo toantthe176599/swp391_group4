@@ -78,8 +78,8 @@ public class verificationOTP extends HttpServlet {
             throws ServletException, IOException {
         //get session
         HttpSession session = req.getSession();
-         // check OTP user send is correct
-        String otp = req.getParameter("OTP"); // get otp
+        // check OTP user send is correct
+        String otp = req.getParameter("OTP").trim(); // get otp
         queryOTP querytOTP = queryOTP.createInstance();
         queryUser queryUs = queryUser.createQueryUSer();
         payload checkOTP = querytOTP.compareOTP(otp);
@@ -97,7 +97,7 @@ public class verificationOTP extends HttpServlet {
             return;
         }
         // get user detail and add token to the cookie
-        account accountDetail = (account)addUser.getObject();
+        account accountDetail = (account) addUser.getObject();
         Cookie cookie = new Cookie("token", accountDetail.getToken());
         res.addCookie(cookie);
         res.sendRedirect("/homepage");

@@ -1,0 +1,57 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 17, 2024, 8:52:53 PM
+    Author     : ADMIN
+*/
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-search {
+    display: flex;
+    align-items: center;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; /* Cách lề từ logo */
+}
+
+.search-box input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.search-box button {
+    padding: 8px 15px;
+    background-color: #ffffff;
+    color: #656c74;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-box button:hover {
+    background-color: #ccc;
+}
+
+@media (max-width: 767px) {
+    .search-box {
+        margin-left: 0; /* Điều chỉnh lề khi trên điện thoại di động */
+    }
+}
+.logo {
+    color: #656c74;
+    text-decoration: none; /* Để loại bỏ gạch chân khi hover */
+    font-size: 32px; /* Kích thước chữ lớn hơn */
+    font-weight: bold; /* Chữ đậm hơn */
+}

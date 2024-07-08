@@ -290,7 +290,7 @@ public class queryEvent extends DBContext {
     public void updateStatusEventExpired() {
         String sql = "  UPDATE event\n"
                 + "SET status = 'expired'\n"
-                + "WHERE start_date <= CAST(GETDATE() - 1 AS DATE)";
+                + "WHERE start_date <= CAST(GETDATE() - 1 AS DATE) and status = 'active'";
         try {
             PreparedStatement pt = connection.prepareStatement(sql);
             pt.execute();
@@ -300,15 +300,44 @@ public class queryEvent extends DBContext {
     }
 
     // end
+    // check event belong to a staff
+    public boolean checkBelongEvent(String eventId, String accountId) {
+        String sql = "select event_id from logHistory where account_id = ?  and event_id = ? and type = 'create'";
+        try {
+            PreparedStatement pt = connection.prepareStatement(sql);
+            pt.setString(1, accountId);
+            pt.setString(2, eventId);
+            ResultSet rs = pt.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e + " error at checkBelongEvent in queryEvent");
+        }
+        return false;
+    }
+    //end
+
+    // cancel event 
+    public boolean cancelEvent(String eventId) {
+        String sql = "update event set status = 'cancel' where event_id = ? and status = 'active'";
+        try {
+            PreparedStatement pt = connection.prepareStatement(sql);
+            pt.setString(1, eventId);
+            int rowEffected = pt.executeUpdate();
+            if (rowEffected > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e + " error at cancelEvent in queryEvent");
+        }
+        return false;
+    }
+    //end
+
     public static void main(String[] args) throws ParseException {
         queryEvent test = queryEvent.createInstance();
-        test.updateImageEvent("RksxbGVqZHB6bnRuSWQ2OE9UazdvTk5JWg==", "111111111111", "event");
+        System.out.println(test.checkBelongEvent("QjloTHVOVTRKWkld1RRc1pCdjB1T2tHRA==", "d2RwVzdKZWV6UXFOZzBYMXdjeVFtYXY3OVdPRDZj"));
 
-//        System.out.println(String.join("/", Collections.reverse(Arrays.asList(date.split("-")))));
-//    
-        List<History> list = test.getHistoryEvent("WmdycmFIeGxkVWQ0ZU9Qb1ZLVUVwV3BxUg==");
-        for (History i : list) {
-            System.out.println(i.getEmail());
-        }
     }
 }
