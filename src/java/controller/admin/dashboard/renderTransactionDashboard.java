@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.queryBooking;
 import schema.ReportTransaction;
+
 /**
  *
  * @author LENOVO
@@ -55,7 +56,8 @@ public class renderTransactionDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-   
+
+        // get id event from url
       String pathInfo = req.getPathInfo();
         String[] pathSegments = pathInfo.split("/");
         String eventId = pathSegments[pathSegments.length - 1];

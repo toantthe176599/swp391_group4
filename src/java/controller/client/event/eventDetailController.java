@@ -17,6 +17,8 @@ import model.queryFooter;
 import schema.AreaEvent;
 import schema.Event;
 import schema.Footer_client;
+import schema.AreaEvent;
+import schema.Event;
 
 /**
  *
@@ -83,6 +85,7 @@ public class eventDetailController extends HttpServlet {
              queryFooter query = new queryFooter();
             List<Footer_client> footers = query.getAllFooter();
             request.setAttribute("footers", footers);
+
             //get all area of event
             queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();
             List<AreaEvent> listArea = qAreaPosition.getAllAreaOfAnEventById(eventId);

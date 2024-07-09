@@ -130,8 +130,6 @@ const checkDuplicate = (areaData) => {
     if (areaData) {
         for (let i of areaData) {
             if (i.name.startsWith('name_area')) {
-
-
                 result.push(i.value.trim().toLowerCase());
             }
         }
@@ -157,7 +155,7 @@ if (submitBtn) {
             if (submitForm) {
                 const isConfirm = confirm("Bạn có chắc chắn tạo sự kiện? (Lưu ý: khi sự kiện để ở chế độ bắt đầu bạn sẽ không thể thay đổi giá vé và thời gian sự kiện)");
                 if (isConfirm) {
-                    submitBtn.type = "submit";
+                    submitForm.submit();
                 }
             }
         }

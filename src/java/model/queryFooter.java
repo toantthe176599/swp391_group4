@@ -41,7 +41,9 @@ public class queryFooter {
                 String email = rs.getString("email");
                 String facebook = rs.getString("facebook");
                 String zalo = rs.getString("zalo");
+
                 Footer_client footer = new Footer_client(id, address, useful_links, working_hours, phone_number, email, facebook, zalo);
+
                 list.add(footer);
             }
         } catch (SQLException ex) {
@@ -65,6 +67,7 @@ public class queryFooter {
 
         return list;
     }
+
     public void updateFooter(String id, String address, String useful_links, String working_hours, String phone_number, String email, String facebook, String zalo) {
     String query = "UPDATE footer_info SET address=?, useful_links=?, working_hours=?, phone_number=?, email=?, facebook=?, zalo=? WHERE id=?";
     
@@ -102,6 +105,7 @@ public class queryFooter {
         }
     }
 }
+
 
     public void printAllFooter() {
         List<Footer_client> footers = getAllFooter();

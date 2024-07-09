@@ -17,6 +17,9 @@ import model.queryFooter;
 import schema.AreaEvent;
 import schema.Event;
 import schema.Footer_client;
+import schema.AreaEvent;
+import schema.Event;
+
 
 /**
  *
@@ -63,7 +66,6 @@ public class areaDetailController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String eventId = request.getParameter("eventId");
-                
         //get detail event from db
         queryEvent qEvent = queryEvent.createInstance();
         Event event = qEvent.getAnEventById(eventId);
@@ -78,6 +80,7 @@ public class areaDetailController extends HttpServlet {
                         queryFooter query = new queryFooter();
             List<Footer_client> footers = query.getAllFooter();
             request.setAttribute("footers", footers);
+
   
         // Chuyển tiếp yêu cầu tới JSP để hiển thị thông tin sự kiện và vùng
         request.getRequestDispatcher("/views/client/homepage/areaDetailClient.jsp").forward(request, response);

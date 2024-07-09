@@ -96,6 +96,7 @@
 
             }
         </style>
+
         <style>
             .pagination {
                 display: flex;
@@ -122,6 +123,7 @@
                 background-color: #ddd;
             }
         </style>
+
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/bootstrap.min.css">
 
         <!-- Font Awesome CSS -->
@@ -134,14 +136,15 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/tooplate-artxibition.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/your-stylesheet.css">
 
-
     </head>
 
     <body>
 
         <!-- ***** Preloader Start ***** -->
         <!-- ***** Header Area Start ***** -->
+
         <jsp:include page="../component/Header.jsp" />
+
         <!-- ***** Header Area End ***** -->
 
         <!-- ***** About Us Page ***** -->
@@ -161,8 +164,10 @@
                     <h2 class="anh">Bài viết</h2>
                     <div class="blog-posts">
                         <c:choose>
+
                             <c:when test="${not empty blogsPage}">
                                 <c:forEach var="blog" items="${blogsPage}">
+
                                     <div class="blog-post">
                                         <h3>${blog.title}</h3>
                                         <p><strong>Author:</strong> ${blog.author}</p>
@@ -177,6 +182,7 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
+
                     <div class="pagination">
                         <a href="blog?page=${currentPage - 1}" class="${currentPage == 1 ? 'disabled' : ''}">Previous</a>
                         <c:forEach var="i" begin="1" end="${totalPages}">
@@ -184,6 +190,7 @@
                         </c:forEach>
                         <a href="blog?page=${currentPage + 1}" class="${currentPage == totalPages ? 'disabled' : ''}">Next</a>
                     </div>
+
                 </div>
             </div>
         </div>

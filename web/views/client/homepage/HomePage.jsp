@@ -13,6 +13,7 @@
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
         <title>Book Show Tickets</title>
+
         <script>
             window.addEventListener('load', function () {
                 var eventItems = document.querySelectorAll('.event-item');
@@ -30,6 +31,7 @@
                 });
             });
         </script>
+
         <style>
 
             /* Định dạng cho phân trang */
@@ -117,6 +119,7 @@
             }
         </style>
         <style>
+
             .event-list {
                 display: flex;
                 flex-wrap: wrap;
@@ -184,10 +187,63 @@
             }
 
             .event-item .main-dark-button .purchase-button {
+
+            .event-item {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                border: 1px solid #ddd;
+                border-radius: 8px; /* Ví dụ: sử dụng giá trị radius tùy chỉnh */
+                overflow: hidden; /* Đảm bảo nội dung không bị tràn ra ngoài */
+
+            }
+            .thumb {
+                width: 100%;
+                height: 200px;
+                overflow: hidden;
+                border-bottom: 1px solid #ddd; /* Thêm đường viền phân cách giữa hình ảnh và nội dung */
+            }
+
+            .down-content {
+                padding: 15px;
+            }
+
+            .ticket-item {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            .event-item:not(:last-child) {
+                margin-bottom: 20px;
+            }
+            .event-item {
+                margin-bottom: 30px; /* Khoảng cách giữa các sự kiện */
+            }
+
+            .event-list {
+                padding-bottom: 30px; /* Khoảng cách phía dưới danh sách sự kiện */
+            }
+
+            .col-lg-4 {
+                margin-bottom: 20px; /* Khoảng cách giữa các cột chứa sự kiện */
+            }
+        </style>
+
+        <style>
+            .thumb img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+        </style>
+        <style>
+            .purchase-button {
                 display: inline-block;
                 padding: 10px 20px;
                 background-color: #333;
                 color: #fff;
+
                 text-decoration: none;
                 border-radius: 4px;
                 transition: background-color 0.3s ease;
@@ -305,6 +361,7 @@
 
         <div class="tickets-page">
             <div class="container">
+
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
                         <div class="filter-box text-center bg-dark p-4">
@@ -335,6 +392,7 @@
                                 </div>
                             </form>
                         </div>
+
                     </div>
                 </div>
 

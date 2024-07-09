@@ -145,11 +145,15 @@ public class createEvent extends HttpServlet {
                 queryUser qUser = queryUser.createQueryUSer();
                 qHistory.insertLogHistory(new LogHistory(eventId, qUser.getIdByToken(token), "create"));
                 //end
-                session.setAttribute("success", resultCreateEvent.getDescription());
+                if (status.equals("inactive")) {
+                    session.setAttribute("success", resultCreateEvent.getDescription());
+                } else {
+                    session.setAttribute("success", "Tạo sự kiện thành công");
+                }
                 res.sendRedirect("/admin/event/create/form");
                 return;
             }
-            
+
             session.setAttribute("error", resultCreateEvent.getDescription());
             res.sendRedirect("/admin/event/create/form");
             //end

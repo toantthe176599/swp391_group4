@@ -8,7 +8,18 @@
             </div>
             <div class="col-lg-6 col-sm-6">
                 <div class="text-button">
-                    <a href="/logout">Đăng xuất <i class="fa fa-arrow-right"></i></a>
+
+                 
+
+                    <%-- Check if user is logged in --%>
+                    <c:if test="${empty sessionScope.username}">
+                        <a href="/login">Đăng nhập <i class="fa fa-arrow-right"></i></a>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.username}">
+                        Logged in as: ${sessionScope.username} 
+                        <a href="/logout">Đăng xuất <i class="fa fa-arrow-right"></i></a>
+                    </c:if>
+
                 </div>
             </div>
         </div>
@@ -27,11 +38,25 @@
                         <ul class="nav">
                             <li><a href="/homepage" class="active">Trang chủ</a></li>
                             <li><a href="/blog">Bài viết</a></li>
+
                             <li><a href="rent-venue.html">Các vé đã mua</a></li>
                             <li><a href="shows-events.html">Thông tin tài khoản</a></li>
                         </ul>
-                        <%-- Display different menu options based on login status --%>
                       
+                        <%-- Display different menu options based on login status --%>
+                        <c:choose>
+                            <c:when test="${empty sessionScope.username}">
+                                <a href="/login" class='menu-trigger'>
+                                    <span>Login</span>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="/user-profile" class='menu-trigger'>
+                                    <span>${sessionScope.username}</span>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+
                     </nav>
                 </div>
             </div>

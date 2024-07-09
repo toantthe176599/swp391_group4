@@ -340,7 +340,51 @@ https://www.tooplate.com/view/2125-artxibition
         <!-- ***** Preloader End ***** -->
 
         <!-- ***** Pre HEader ***** -->
+
         <jsp:include page="../component/Header.jsp" />
+
+        <div class="pre-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6">
+                        <span>Hey! The Show Is Starting In 5 Days.</span>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="text-button">
+                            <a href="rent-venue.html">Contact Us Now! <i class="fa fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ***** Header Area Start ***** -->
+        <header class="header-area header-sticky">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="main-nav">
+                            <!-- ***** Logo Start ***** -->
+                            <a href="index.html" class="logo">Art<em>Xibition</em></a>
+                            <!-- ***** Logo End ***** -->
+                            <!-- ***** Menu Start ***** -->
+                            <ul class="nav">
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="about.html">About Us</a></li>
+                                <li><a href="rent-venue.html">Rent Venue</a></li>
+                                <li><a href="shows-events.html">Shows & Events</a></li> 
+                                <li><a href="tickets.html" class="active">Tickets</a></li> 
+                            </ul>        
+                            <a class='menu-trigger'>
+                                <span>Menu</span>
+                            </a>
+                            <!-- ***** Menu End ***** -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
         <!-- ***** Header Area End ***** -->
 
         <!-- ***** About Us Page ***** -->
@@ -418,32 +462,15 @@ https://www.tooplate.com/view/2125-artxibition
                 <div id="content" class="style__Content-sc-12c1ml7-2 digqDr">
                     <div class="style__WrapperIntro-sc-e7oelh-0 giRCXh" style="height: auto;">
                         <div class="style__ContentIntro-sc-e7oelh-1 czloHV">
-                            <p class="ql-align-justify"><strong>Hạng vé/giá bán:</strong>
+
+
+
+
+                            <p class="ql-align-justify"> 
+                                <c:out value="${event.description}"  escapeXml="false"/>
                             </p>
-                            <ul>
-                                <li class="ql-align-justify">Trót Yêu:&nbsp;&nbsp;4.000.000 VND</li>
-                                <li class="ql-align-justify">Dấu Mưa:&nbsp;3.300.000 VND</li>
-                                <li class="ql-align-justify">Tự Tình:&nbsp;&nbsp;2.700.000 VND</li>
-                                <li class="ql-align-justify">Chuyện mưa:&nbsp;2.200.000 VND</li>
-                                <li class="ql-align-justify">Chưa bao giờ:&nbsp;1.800.000 VND</li>
-                                <li class="ql-align-justify">Gọi mưa:&nbsp;1.000.000 VND</li>
-                            </ul>
-                            <p class="ql-align-center"><img src="${event.img_position}"></p>
-                            <p class="ql-align-justify">&nbsp;</p>
-                            <ul>
-                                <li class="ql-align-justify">Trong quá trình mua vé, đối với hạng vé ngồi, khách hàng không được chọn vị trí ngồi chính xác. BTC sẽ xuất vé có số ghế ngồi cụ thể cho khách hàng và khách hàng bắt buộc phải ngồi theo đúng số ghế trên vé.</li>
-                                <li class="ql-align-justify">Mỗi Vé tương ứng với 01 khách tham gia (không bao gồm trẻ em).</li>
-                                <li class="ql-align-justify">Người Mua kiểm tra lại thông tin Vé (tổng số vé, loại vé, số vé từng loại) và số tiền trước khi xác nhận Đơn hàng mua Vé.</li>
-                                <li class="ql-align-justify">Vé Sự Kiện là Vé không được đổi hoặc trả lại dưới mọi hình thức, khách hàng vui lòng cân nhắc kỹ trước khi mua.</li>
-                                <li class="ql-align-justify">Thời gian giữ Vé: 15 PHÚT/ lượt.</li>
-                                <li class="ql-align-justify">Khách hàng được mua tối đa 10 Vé/ 1 loại vé/ 1 giao dịch.</li>
-                                <li class="ql-align-justify">Khách hàng có trách nhiệm bảo mật tuyệt đối mã Vé điện tử của mình. Trường hợp có nhiều hơn 1 người check-in bằng 1 mã Vé điện tử thì BTC sẽ chấp nhận người đầu tiên check-in mã Vé đó được tham gia chương trình.</li>
-                                <li class="ql-align-justify">Đối với Người Mua đặt qua Ticketbox, sau khi hoàn thành thanh toán tiền mua Vé (Giao dịch thành công), hệ thống sẽ thực hiện gửi Mã Đặt Chỗ thành công cho Người Mua qua email. Chậm nhất trong vòng 5 (năm) ngày làm việc trước ngày sự kiện diễn ra (Hồ Chí Minh - 13/07/2023) BTC sẽ thực hiện gửi (các) Mã Vé QR (dùng để checkin vào cổng) cho Người Mua qua email Người Mua đã cung cấp.&nbsp;</li>
-                                <li class="ql-align-justify">Để đảm bảo nhận được Mã Đặt Chỗ và Mã Vé QR, trước khi thực hiện việc đặt mua Vé theo quy trình giao dịch tại Quy chế này, Người Mua nên chủ động kiểm tra và điền đầy đủ, chính xác thông tin email trên các nền tảng bán Vé.</li>
-                                <li class="ql-align-justify">Nếu trong vòng 24 giờ kể từ khi mua Vé mà Người Mua vẫn chưa nhận được Mã Đặt Chỗ (đối với Vé đặt qua Ticketbox) thì Người Mua vui lòng liên hệ Hotline: 1900.6408 hoặc email support@ticketbox.vn và Fanpage Facebook https://www.facebook.com/ticketbox.vn</li>
-                            </ul>
-                            <p class="ql-align-justify">&nbsp;</p>
-                            <p class="ql-align-justify"> ${event.description}</p>
+
+
 
 
                         </div>
@@ -469,9 +496,8 @@ https://www.tooplate.com/view/2125-artxibition
     </div>
 
     <!-- *** Footer *** -->
+
     <jsp:include page="../component/Footer.jsp" />
-
-
 
     <!-- jQuery -->
     <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/jquery-2.1.0.min.js"></script>

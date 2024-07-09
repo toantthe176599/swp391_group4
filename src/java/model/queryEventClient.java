@@ -23,6 +23,7 @@ public class queryEventClient {
         List<Event_client> list = new ArrayList<>();
         String query = "select event_id, name, title, start_time, start_date, location, image_event from event where status = 'active'" ;
 
+
         try {
             // Sử dụng connection từ DBContext đã được khởi tạo
             conn = new DBContext().connection;
@@ -164,6 +165,7 @@ public class queryEventClient {
         List<Event_client> list = new ArrayList<>();
         String query = "select * from event\n"
                 + "where category = ? and  status = 'active'";
+
 
         try {
             // Sử dụng connection từ DBContext đã được khởi tạo

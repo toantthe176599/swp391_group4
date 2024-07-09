@@ -34,6 +34,7 @@ public class queryReportEvent extends DBContext {
     }
 
     // get all event report
+    /*
     public List<ReportEvent> listReport() {
         String sql = "select event_id, name, image_event from event";
         List<ReportEvent> listReport = new ArrayList<>();
@@ -59,8 +60,8 @@ public class queryReportEvent extends DBContext {
         }
 
     }
+     */
     //end
-
     // get all event report
     public List<ReportEvent> listReportByUserId(String accountId) {
 
@@ -69,7 +70,7 @@ public class queryReportEvent extends DBContext {
         qEvent.updateStatusEventExpired();
         //end
 
-        String sql = "select event_id, name, image_event from event where event_id in (select event_id from logHistory where account_id = ? "
+        String sql = "select event_id, name, image_event, status from event where event_id in (select event_id from logHistory where account_id = ? "
                 + "and type = 'create') and status <> 'inactive' ";
         List<ReportEvent> listReport = new ArrayList<>();
         try {
@@ -84,7 +85,8 @@ public class queryReportEvent extends DBContext {
                 int dayleft = calDayLeft(idEvent); // get day left 
                 String name = rs.getString("name"); // get name event
                 String img = rs.getString("image_event"); // get img
-                ReportEvent report = new ReportEvent(idEvent, totalTicket - currentTicket, totalTicket, dayleft, img, name);
+                String status = rs.getString("status");
+                ReportEvent report = new ReportEvent(idEvent, totalTicket - currentTicket, totalTicket, dayleft, img, name, status);
                 listReport.add(report);
                 //end
             }
@@ -207,12 +209,14 @@ public class queryReportEvent extends DBContext {
                 int dayleft = calDayLeft(idEvent); // get day left 
                 String nameEvent = rs.getString("name"); // get name event
                 List<ReportArea> areaReport = getAllReportAreas(idEvent); // get area detail
+                String status = rs.getString("status");
                 ReportEvent report = new ReportEvent(idEvent,
                         totalTicket - currentTicket,
                         totalTicket,
                         areaReport,
                         dayleft,
-                        nameEvent);
+                        nameEvent,
+                        status);
                 return report;
                 //end
             }

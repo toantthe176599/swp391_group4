@@ -30,12 +30,20 @@ public class Blogpage extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
+=======
+@WebServlet(name="Blogpage", urlPatterns={"/blog"})
+public class Blogpage extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int BLOGS_PER_PAGE = 6;
@@ -86,6 +94,33 @@ public class Blogpage extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
+=======
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        queryBlogClient qb = new queryBlogClient();
+        List<Blog_client> blogs = qb.getAllBlog();
+         queryFooter query = new queryFooter();
+        
+        List<Footer_client> footers = query.getAllFooter();
+
+        request.setAttribute("footers", footers);
+        // In log chi tiết về danh sách blog đã lấy được
+        if (blogs != null && !blogs.isEmpty()) {
+            System.out.println("Số lượng blog: " + blogs.size());
+            for (Blog_client blog : blogs) {
+                System.out.println("Blog: " + blog.getTitle());
+            }
+        } else {
+            System.out.println("Không có blog nào được tìm thấy.");
+        }
+
+        request.setAttribute("blogs", blogs);
+        request.getRequestDispatcher("/views/client/homepage/Blog_event.jsp").forward(request, response);
+    } 
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /** 
+     * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -93,30 +128,21 @@ public class Blogpage extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+
             throws ServletException, IOException {
 
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";
