@@ -77,8 +77,11 @@ public class editEventForm extends HttpServlet {
         queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();
         List<AreaEvent> listArea = qAreaPosition.getAllAreaOfAnEventById(eventId);
         req.setAttribute("area", listArea);
-        //end
+        for (AreaEvent i : listArea) {
+            System.out.println(i.getQuantityTicketOrigin());
+        }
 
+        //end
         req.getRequestDispatcher("/views/admin/pages/event/editEvent.jsp").forward(req, res);
     }
 

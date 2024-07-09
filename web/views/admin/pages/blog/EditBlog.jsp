@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
 
-                                <main style="margin-left: 100px; width: 1800px">
+                                <main style="margin-left: 100px; width: 1600px">
                                     <div class="form-container">
                                         <h1 class="title"><span><h3>Điền thông tin bài viết mới</h3></span></h1>
                                         <form action="/admin/blog/edit" method="post" formCreate autocomplete="on" enctype="multipart/form-data">
