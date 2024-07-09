@@ -52,7 +52,39 @@ public class renderTransactionDashboard extends HttpServlet {
         queryBooking qBooking = queryBooking.createInstanceBooking();
         List<ReportTransaction> reportTran = qBooking.getBookingByEvent(eventId);
 
-        // Phân trang
+        
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               // Phân trang
         int pageSize = 3; // Số lượng bản ghi trên mỗi trang
         int page;
         String pageStr = req.getParameter("page");
