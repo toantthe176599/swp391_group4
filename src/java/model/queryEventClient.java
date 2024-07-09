@@ -21,7 +21,8 @@ public class queryEventClient {
 
     public List<Event_client> getAllEvent() {
         List<Event_client> list = new ArrayList<>();
-        String query = "select event_id, name, title, start_time, start_date, location, image_event from event where status='active'";
+        String query = "select event_id, name, title, start_time, start_date, location, image_event from event where status = 'active'" ;
+
 
         try {
             // Sử dụng connection từ DBContext đã được khởi tạo
@@ -69,7 +70,7 @@ public class queryEventClient {
     public List<Event_client> searchEvents(String searchTerm) {
         List<Event_client> list = new ArrayList<>();
         String query = "SELECT event_id, name, title, start_time, start_date, location, image_event "
-                + "FROM event WHERE LOWER(name) LIKE ? and status='active'";
+                + "FROM event WHERE LOWER(name) LIKE ? and  status = 'active'";
 
         try {
             conn = new DBContext().connection;
@@ -163,7 +164,8 @@ public class queryEventClient {
     public List<Event_client> getAllEventsByCateID(String category_id) {
         List<Event_client> list = new ArrayList<>();
         String query = "select * from event\n"
-                + "where category = ? and status='active'";
+                + "where category = ? and  status = 'active'";
+
 
         try {
             // Sử dụng connection từ DBContext đã được khởi tạo
@@ -212,7 +214,7 @@ public class queryEventClient {
         List<Event_client> list = new ArrayList<>();
         String query = "SELECT event_id, name, title, start_time, start_date, location, image_event "
                 + "FROM event "
-                + "WHERE MONTH(start_date) = ? AND category = ? and status='active'";
+                + "WHERE MONTH(start_date) = ? AND category = ? and  status = 'active'";
 
         try {
             conn = new DBContext().connection;
@@ -258,7 +260,7 @@ public class queryEventClient {
     public List<Event_client> getAllEventsByMonth(int month) {
         List<Event_client> list = new ArrayList<>();
         String query = "SELECT event_id, name, title, start_time, start_date, location, image_event "
-                + "FROM event WHERE MONTH(start_date) = ? and status='active'";
+                + "FROM event WHERE MONTH(start_date) = ? and  status = 'active'";
 
         try {
             conn = new DBContext().connection;

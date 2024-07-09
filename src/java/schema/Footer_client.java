@@ -9,7 +9,9 @@ package schema;
  * @author ADMIN
  */
 public class Footer_client {
-    private int id;
+
+    private String id;
+
     private String address;
     private String useful_links;
     private String working_hours;
@@ -20,7 +22,9 @@ public class Footer_client {
     public Footer_client() {
     }
 
-    public Footer_client(int id, String address, String useful_links, String working_hours, String phone_number, String email, String facebook, String zalo) {
+
+    public Footer_client(String id, String address, String useful_links, String working_hours, String phone_number, String email, String facebook, String zalo) {
+
         this.id = id;
         this.address = address;
         this.useful_links = useful_links;
@@ -31,11 +35,13 @@ public class Footer_client {
         this.zalo = zalo;
     }
 
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
+
         this.id = id;
     }
 

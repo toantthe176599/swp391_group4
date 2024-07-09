@@ -111,9 +111,6 @@ public class queryBlogClient {
         }
     }
      public static void main(String[] args) {
-//        queryEvent queryEvent = new queryEvent();
-//        queryEvent.printAllEvents();
-//        queryBlog queryBlog = new queryBlog();
-//        queryBlog.printAllBlog();
+
     }
 }

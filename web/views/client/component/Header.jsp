@@ -8,6 +8,9 @@
             </div>
             <div class="col-lg-6 col-sm-6">
                 <div class="text-button">
+
+                 
+
                     <%-- Check if user is logged in --%>
                     <c:if test="${empty sessionScope.username}">
                         <a href="/login">Đăng nhập <i class="fa fa-arrow-right"></i></a>
@@ -16,6 +19,7 @@
                         Logged in as: ${sessionScope.username} 
                         <a href="/logout">Đăng xuất <i class="fa fa-arrow-right"></i></a>
                     </c:if>
+
                 </div>
             </div>
         </div>
@@ -34,9 +38,11 @@
                         <ul class="nav">
                             <li><a href="/homepage" class="active">Trang chủ</a></li>
                             <li><a href="/blog">Bài viết</a></li>
-                            <li><a href="rent-venue.html"></a></li>
-                            <li><a href="shows-events.html">Shows & Events</a></li>
+
+                            <li><a href="rent-venue.html">Các vé đã mua</a></li>
+                            <li><a href="shows-events.html">Thông tin tài khoản</a></li>
                         </ul>
+                      
                         <%-- Display different menu options based on login status --%>
                         <c:choose>
                             <c:when test="${empty sessionScope.username}">
@@ -50,6 +56,7 @@
                                 </a>
                             </c:otherwise>
                         </c:choose>
+
                     </nav>
                 </div>
             </div>

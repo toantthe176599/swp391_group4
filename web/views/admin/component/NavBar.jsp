@@ -108,7 +108,7 @@
                     
                 <c:if test="${fn:contains(permission, 'view_inforwebsite')}">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/admin/footer">
                             <i class="bi bi-envelope"></i> Thông tin website
                         </a>
 

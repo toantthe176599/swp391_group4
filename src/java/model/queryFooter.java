@@ -41,7 +41,9 @@ public class queryFooter {
                 String email = rs.getString("email");
                 String facebook = rs.getString("facebook");
                 String zalo = rs.getString("zalo");
-                Footer_client footer = new Footer_client(0, address, useful_links, working_hours, phone_number, email, facebook, zalo);
+
+                Footer_client footer = new Footer_client(id, address, useful_links, working_hours, phone_number, email, facebook, zalo);
+
                 list.add(footer);
             }
         } catch (SQLException ex) {
@@ -65,6 +67,46 @@ public class queryFooter {
 
         return list;
     }
+
+    public void updateFooter(String id, String address, String useful_links, String working_hours, String phone_number, String email, String facebook, String zalo) {
+    String query = "UPDATE footer_info SET address=?, useful_links=?, working_hours=?, phone_number=?, email=?, facebook=?, zalo=? WHERE id=?";
+    
+    try {
+        conn = new DBContext().connection;
+        ps = conn.prepareStatement(query);
+        
+        ps.setString(1, address);
+        ps.setString(2, useful_links);
+        ps.setString(3, working_hours);
+        ps.setString(4, phone_number);
+        ps.setString(5, email);
+        ps.setString(6, facebook);
+        ps.setString(7, zalo);
+        ps.setString(8, id);
+        
+        int rowsUpdated = ps.executeUpdate();
+        if (rowsUpdated > 0) {
+            System.out.println("Footer info updated successfully.");
+        } else {
+            System.out.println("Failed to update footer info.");
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    } finally {
+        try {
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+
+
     public void printAllFooter() {
         List<Footer_client> footers = getAllFooter();
         for (Footer_client footer : footers) {

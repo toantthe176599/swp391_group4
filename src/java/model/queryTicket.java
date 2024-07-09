@@ -46,7 +46,7 @@ public class queryTicket extends DBContext {
             PreparedStatement pt = connection.prepareStatement(sql);
             pt.execute();
         } catch (Exception e) {
-            System.out.println(e + " lỗi tại queryticket hàm insert ticket");
+            System.out.println(e + " error at insertTicket in queryTicket");
         }
 
     }

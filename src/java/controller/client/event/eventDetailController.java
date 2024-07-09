@@ -13,6 +13,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.queryAreaPosition;
 import model.queryEvent;
+import model.queryFooter;
+import schema.AreaEvent;
+import schema.Event;
+import schema.Footer_client;
 import schema.AreaEvent;
 import schema.Event;
 
@@ -78,6 +82,9 @@ public class eventDetailController extends HttpServlet {
             response.getWriter().print(event.getImg_event());
             response.getWriter().print(event.getImg_position());
             
+             queryFooter query = new queryFooter();
+            List<Footer_client> footers = query.getAllFooter();
+            request.setAttribute("footers", footers);
 
             //get all area of event
             queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();

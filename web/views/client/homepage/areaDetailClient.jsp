@@ -14,6 +14,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/bootstrap.min.css">
+
+        <!-- Font Awesome CSS -->
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/font-awesome.css">
+
+        <!-- Owl Carousel CSS -->
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/owl-carousel.css">
+
+        <!-- Tooplate ArtXibition CSS -->
+         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/your-stylesheet.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/tooplate-artxibition.css">
+
         <style>
             /*            .body {
                             margin: 0px;
@@ -600,6 +614,11 @@
 
         <c:set var="event" value="${requestScope.event}" />
         <c:set var="area" value="${requestScope.area}" />
+
+        <div class="header-wrapper">
+            <jsp:include page="../component/Header.jsp" />
+        </div>
+
         <div class="slug_WrapperEventDetail-sc-1hbmhht-0 doqHEz">
             <div class="Container-FlexColumn-sc-17x1kk6-3 Layout_Wrapper-sc-1x9m3gv-0 ddiJGM ddCPns">
                 <div class="Header_Wrapper-sc-qhadgg-1-kFFfPJ">
@@ -781,6 +800,9 @@
                     </div>
                 </main>
             </div>
+
+                                                                            <jsp:include page="../component/Footer.jsp" />
+
         </div>
 
 

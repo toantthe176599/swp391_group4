@@ -13,6 +13,25 @@
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
         <title>Book Show Tickets</title>
+
+        <script>
+            window.addEventListener('load', function () {
+                var eventItems = document.querySelectorAll('.event-item');
+                var maxHeight = 0;
+
+                eventItems.forEach(function (item) {
+                    var itemHeight = item.offsetHeight;
+                    if (itemHeight > maxHeight) {
+                        maxHeight = itemHeight;
+                    }
+                });
+
+                eventItems.forEach(function (item) {
+                    item.style.height = maxHeight + 'px';
+                });
+            });
+        </script>
+
         <style>
 
             /* Định dạng cho phân trang */
@@ -100,6 +119,75 @@
             }
         </style>
         <style>
+
+            .event-list {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .event-item {
+                flex: 1 1 30%;
+                margin-bottom: 30px;
+                padding: 15px;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+                min-height: 400px; /* Chiều cao tối thiểu của mỗi sản phẩm */
+            }
+
+            .event-item:hover {
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+                transform: translateY(-5px);
+            }
+
+            .event-item .thumb {
+                overflow: hidden;
+                height: 200px; /* Chiều cao ảnh */
+                border-radius: 5px 5px 0 0;
+            }
+
+            .event-item .thumb img {
+                width: 100%;
+                height: auto;
+                border-radius: 5px 5px 0 0;
+            }
+
+            .event-item .down-content {
+                padding: 15px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: calc(100% - 215px); /* Đặt chiều cao cho nội dung còn lại */
+            }
+
+            .event-item .down-content h4 {
+                font-size: 18px;
+                margin-bottom: 10px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .event-item .down-content ul {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+            }
+
+            .event-item .down-content ul li {
+                margin-bottom: 8px;
+                font-size: 14px;
+            }
+
+            .event-item .main-dark-button {
+                text-align: center;
+            }
+
+            .event-item .main-dark-button .purchase-button {
+
             .event-item {
                 display: flex;
                 flex-direction: column;
@@ -155,39 +243,71 @@
                 padding: 10px 20px;
                 background-color: #333;
                 color: #fff;
-                text-align: center;
+
                 text-decoration: none;
-                border-radius: 5px;
+                border-radius: 4px;
                 transition: background-color 0.3s ease;
-                min-width: 120px;
-                min-height: 40px;
-                line-height: 1;
-                margin-top: 10px; /* Khoảng cách giữa nút mua vé và nội dung khác */
             }
 
-            .purchase-button:hover {
+            .event-item .main-dark-button .purchase-button:hover {
                 background-color: #555;
+            }
+        </style>
+
+        <style>
+            .thumb img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
             }
         </style>
         <style>
-            .purchase-button {
-                display: inline-block;
-                padding: 10px 20px;
-                background-color: #333;
-                color: #fff;
-                text-align: center;
-                text-decoration: none;
-                border-radius: 5px;
-                transition: background-color 0.3s ease;
-                min-width: 120px;
-                min-height: 40px;
-                line-height: 1;
-            }
-            .purchase-button:hover {
-                background-color: #555;
-            }
+    .filter-box {
+        background-color: #f8f9fa; /* Màu nền đen */
+        border: 1px solid #292b2c; /* Viền */
+        border-radius: 8px; /* Độ cong viền */
+        padding: 20px; /* Padding */
+    }
 
-        </style>
+    .filter-heading {
+        margin-bottom: 20px;
+        color: #6c757d; /* Màu chữ xám nhạt */
+        font-size: 24px; /* Cỡ chữ */
+        font-family: 'Poppins', sans-serif; /* Font-family */
+    }
+
+    .filter-select {
+        width: 100%; /* Độ rộng 100% cho select box */
+        padding: 10px; /* Padding */
+        font-size: 16px; /* Cỡ chữ */
+        border-radius: 5px; /* Độ cong viền */
+        border: none; /* Loại bỏ viền */
+        background-color: #f8f9fa; /* Màu nền trắng */
+        color: #000; /* Màu chữ */
+        font-family: 'Poppins', sans-serif; /* Font-family */
+    }
+
+    .filter-btn {
+        padding: 10px 20px; /* Padding cho button */
+        font-size: 16px; /* Cỡ chữ */
+        border-radius: 5px; /* Độ cong viền */
+        background-color: #28a745; /* Màu xanh lá cây */
+        border: none; /* Loại bỏ viền */
+        color: #fff; /* Màu chữ */
+        cursor: pointer; /* Con trỏ chuột */
+        font-family: 'Poppins', sans-serif; /* Font-family */
+    }
+
+    .filter-btn:hover {
+        background-color: #218838; /* Màu nền hover */
+    }
+
+    .filter-btn:focus {
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5); /* Hiệu ứng focus */
+    }
+</style>
+
+
 
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/bootstrap.min.css">
 
@@ -241,55 +361,38 @@
 
         <div class="tickets-page">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="search-box">
-                            <form id="subscribe" action="" method="get">
-                                <div class="row">
-                                    <div class="col-lg-5">
-                                        <div class="search-heading">
-                                            <h4>Lọc sự kiện theo giá, tháng, thể loại:</h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7">
-                                        <form action="homepage" method="GET">
-                                            <div class="row">
-                                                <div class="col-lg-3">
-                                                    <select name="month">
-                                                        <option value="">Tháng</option>
-                                                        <c:forEach var="m" begin="1" end="12">
-                                                            <option value="${m}">${m}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <select name="category_id">
-                                                        <option value=""> Thể loại</option>
-                                                        <c:forEach items="${categories}" var="category">
-                                                            <option value="${category.category_id}">${category.category_name}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <select value="month">
-                                                        <option value="month">Giá</option>
-                                                        <option name="min" id="min">$0 - $50</option>
-                                                        <option name="standard" id="standard">$50 - $100</option>
-                                                        <option name="hight" id="hight">$100 - $200</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <fieldset>
-                                                        <button type="submit" id="form-submit" class="main-dark-button">Lọc</button>
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                        </form>
 
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="filter-box text-center bg-dark p-4">
+                            <div class="filter-heading mb-4">
+                                <h4 class="text-white">Lọc sự kiện theo tháng, thể loại:</h4>
+                            </div>
+                            <form action="homepage" method="GET">
+                                <div class="row">
+                                    <div class="col-lg-4 mb-3">
+                                        <select class="filter-select form-select" name="month">
+                                            <option value="">Tháng</option>
+                                            <c:forEach var="m" begin="1" end="12">
+                                                <option value="${m}">${m}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <select class="filter-select form-select" name="category_id">
+                                            <option value="">Thể loại</option>
+                                            <c:forEach items="${categories}" var="category">
+                                                <option value="${category.category_id}">${category.category_name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <button type="submit" class="filter-btn btn btn-success w-100">Lọc</button>
                                     </div>
                                 </div>
+                            </form>
                         </div>
-                        </form>
+
                     </div>
                 </div>
 
