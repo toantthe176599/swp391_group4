@@ -3,7 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin.dashboard;
+
+
+
+
+
+
+
+
+
+
+
+
+
+   package controller.admin.dashboard;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -50,41 +63,8 @@ public class renderTransactionDashboard extends HttpServlet {
         // get detail transaction
         queryBooking qBooking = queryBooking.createInstanceBooking();
         List<ReportTransaction> reportTran = qBooking.getBookingByEvent(eventId);
-
-        // Phân trang
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-               // Phân trang
+               
+         // Phân trang
         int pageSize = 3; // Số lượng bản ghi trên mỗi trang
         int page;
         String pageStr = req.getParameter("page");
