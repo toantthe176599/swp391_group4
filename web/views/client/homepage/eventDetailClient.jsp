@@ -343,47 +343,10 @@ https://www.tooplate.com/view/2125-artxibition
 
         <jsp:include page="../component/Header.jsp" />
 
-        <div class="pre-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-sm-6">
-                        <span>Hey! The Show Is Starting In 5 Days.</span>
-                    </div>
-                    <div class="col-lg-6 col-sm-6">
-                        <div class="text-button">
-                            <a href="rent-venue.html">Contact Us Now! <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- ***** Header Area Start ***** -->
-        <header class="header-area header-sticky">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <nav class="main-nav">
-                            <!-- ***** Logo Start ***** -->
-                            <a href="index.html" class="logo">Art<em>Xibition</em></a>
-                            <!-- ***** Logo End ***** -->
-                            <!-- ***** Menu Start ***** -->
-                            <ul class="nav">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="rent-venue.html">Rent Venue</a></li>
-                                <li><a href="shows-events.html">Shows & Events</a></li> 
-                                <li><a href="tickets.html" class="active">Tickets</a></li> 
-                            </ul>        
-                            <a class='menu-trigger'>
-                                <span>Menu</span>
-                            </a>
-                            <!-- ***** Menu End ***** -->
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
+
 
         <!-- ***** Header Area End ***** -->
 

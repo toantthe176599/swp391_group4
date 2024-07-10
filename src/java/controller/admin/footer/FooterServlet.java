@@ -7,14 +7,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.queryFooter;
 import schema.Footer_client;
 
 @WebServlet(name = "FooterServlet", urlPatterns = {"/admin/footer"})
 public class FooterServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 1L;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -30,7 +32,7 @@ public class FooterServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,7 +41,7 @@ public class FooterServlet extends HttpServlet {
         request.setAttribute("footers", footers);
         request.getRequestDispatcher("/views/admin/pages/website/website.jsp").forward(request, response);
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -51,13 +53,14 @@ public class FooterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String facebook = request.getParameter("facebook");
         String zalo = request.getParameter("zalo");
-
+        
         queryFooter queryFooter = new queryFooter();
         queryFooter.updateFooter(id, address, useful_links, working_hours, phone_number, email, facebook, zalo);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("success", "Cập nhật thành công");
         response.sendRedirect(request.getContextPath() + "/admin/footer");
     }
-
+    
     @Override
     public String getServletInfo() {
         return "Short description";

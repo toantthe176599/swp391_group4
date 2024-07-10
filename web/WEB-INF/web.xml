@@ -301,12 +301,12 @@
         <servlet-class>controller.admin.Profile.updateProfile</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>renderTransactionDashboard</servlet-name>
-        <servlet-class>controller.admin.dashboard.renderTransactionDashboard</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CancelEvent</servlet-name>
         <servlet-class>controller.client.event.CancelEvent</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Transaction</servlet-name>
+        <servlet-class>controller.admin.dashboard.Transaction</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>renderAuthForm</servlet-name>
@@ -504,21 +504,14 @@
         <servlet-name>updateProfile</servlet-name>
         <url-pattern>/admin/profile/update</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>renderTransactionDashboard</servlet-name>
-        <url-pattern>/admin/dashboard/transaction/*</url-pattern>
-    </servlet-mapping>
-
     <servlet>
         <servlet-name>eventDetailController</servlet-name>
         <servlet-class>controller.client.event.eventDetailController</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>eventDetailController</servlet-name>
         <url-pattern>/eventDetailController</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>areaDetailController</servlet-name>
         <servlet-class>controller.client.event.areaDetailController</servlet-class>
@@ -531,9 +524,11 @@
         <servlet-name>CancelEvent</servlet-name>
         <url-pattern>/admin/event/cancel</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>Transaction</servlet-name>
+        <url-pattern>/admin/dashboard/transaction/*</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>views/client/pages/authForm.jsp</welcome-file>
     </welcome-file-list>
-
 </web-app>
