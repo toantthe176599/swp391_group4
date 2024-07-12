@@ -40,7 +40,7 @@ public class VNPAYController extends HttpServlet {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
-        long amount = Integer.parseInt(req.getParameter("amount")) * 100;
+        long amount = Integer.parseInt(req.getParameter("amount")) ;
         String bankCode = req.getParameter("VNBANK");
         String vnp_TxnRef = Config.getRandomNumber(8);
         String vnp_IpAddr = Config.getIpAddress(req);
@@ -49,7 +49,7 @@ public class VNPAYController extends HttpServlet {
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf(amount));
+        vnp_Params.put("vnp_Amount", String.valueOf(amount) * 100);
         vnp_Params.put("vnp_CurrCode", "VND");
         if (bankCode != null && !bankCode.isEmpty()) {
             vnp_Params.put("vnp_BankCode", bankCode);
