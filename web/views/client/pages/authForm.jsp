@@ -44,8 +44,7 @@
                 <div class="login">
                     <div class="title">
                         <span>Đăng nhập</span>
-                        <p>Welcome back, please login to your account. You can login with Google or by your regular
-                            user login.</p>
+
                     </div>
                     <div>
                         <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/GoogleLogin&response_type=code&client_id=486293954738-8c3f1t8nphc2nn3qvmkuqra1js1ja2n8.apps.googleusercontent.com&approval_prompt=force" class="btn-face"><i class="fa fa-facebook" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
@@ -57,9 +56,9 @@
                         <input type="text" placeholder="Tên tài khoản" name="Username" required>
                         <input type="password" placeholder="Mật khẩu" name="Password" required  pattern="^\S{6,}$">
                         <input type="checkbox" id="remember" name="remember" value="remember">
-                        <label for="remember">Keep me sign in</label>
+                        <label for="remember">Tự đăng nhập trong lần tới</label>
 
-                        <a id="clickHref" class="btn-signin">Sign In</a>
+                        <a id="clickHref" class="btn-signin">Đăng nhập</a>
                         <!--                        <input type="submit" value="Submit" class="btn-signin">-->
 
 
@@ -73,8 +72,7 @@
                 <div class="signup">
                     <div class="title">
                         <span>Đăng ký</span>
-                        <p>Create a new account. You can sign up with your Google accunt. Or your regular user
-                            login.</p>
+                        <p>Tạo 1 tài khoản mới</p>
                     </div>
                     <div>
                         <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/GoogleSignup&response_type=code&client_id=486293954738-8c3f1t8nphc2nn3qvmkuqra1js1ja2n8.apps.googleusercontent.com&approval_prompt=force" class="btn-face"><i class="fa fa-facebook" aria-hidden="true"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
@@ -83,16 +81,16 @@
 
                     </div>
 
-                    <div class="or"><span>OR</span></div>
+                    <div class="or"><span>hoặc</span></div>
 
                     <form action="/signUp" id="signUp" method="post">
-                        <input type="text" placeholder="Username" name="username" required>
-                        <input type="text" placeholder="Email Address" name="email" required>
-                        <input type="password" placeholder="Password" name="password"  pattern="^\S{6,}$" required>
-                        <input type="password" placeholder="Repeat Password" name="repeatPassword" maxlength="6" pattern="^\S{6,}$" required>
+                        <input type="text" placeholder="Tên tài khoản" name="username" required>
+                        <input type="text" placeholder="Email" name="email" required>
+                        <input type="password" placeholder="Mật khẩu" name="password"  pattern="^\S{6,}$" required>
+                        <input type="password" placeholder="Nhập lại mật khẩu" name="repeatPassword" maxlength="6" pattern="^\S{6,}$" required>
 
-                        <a href="#" class="btn-signin" id="signUpLink">Sign Up</a>
-                        <a href="javascript:void(0)" class="btn-login btn-fade">Already have an account, Sign In <i
+                        <a href="#" class="btn-signin" id="signUpLink">Đăng ký</a>
+                        <a href="javascript:void(0)" class="btn-login btn-fade">Đã có tài khoản, đăng nhập <i
                                 class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                     </form>
                 </div>
@@ -104,10 +102,10 @@
                     </div>
 
                     <form action="/fogotPassword">
-                        <input type="email" placeholder="Username/Email Address" id="resetPassword" name="email" required>
+                        <input type="email" placeholder="Email" id="resetPassword" name="email" required>
                         <span class="error"></span>
 
-                        <input type="submit" value="Send" style="background-color: #ec581e; color: white">
+                        <input type="submit" value="Gửi" style="background-color: #ec581e; color: white">
                         <a href="javascript:void(0)" class="btn-login btn-fade"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Quay lại đăng nhập </a>
                     </form>
 

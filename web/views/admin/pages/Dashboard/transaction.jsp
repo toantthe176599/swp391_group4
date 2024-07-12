@@ -61,7 +61,7 @@
                                         <div class="content2">
                                             <div class="online_orders shadow">
                                                 <div class="online_orders_1">Số giao dịch</div>
-                                                <div class="online_orders_2">${fn:length(report)}</div>
+                                                <div class="online_orders_2">${total}</div>
                                             </div>
                                             <div class="amount_recieved shadow">
                                                 <c:set var="sum" value="0" />
@@ -70,7 +70,7 @@
                                                     <c:set var="sum" value="${sum + num}" />
                                                 </c:forEach>
                                                 <div class="amount_recieved_1">Tổng tiền hiện tại</div>
-                                                <div class="amount_recieved_2"><fmt:formatNumber value="${sum}" type="currency" currencySymbol="₫" currencyCode="VND" /></div>
+                                                <div class="amount_recieved_2"> <fmt:formatNumber value="${sum}" type="currency" currencySymbol="₫" currencyCode="VND" /> </div>
 
                                             </div>
                                         </div>

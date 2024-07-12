@@ -4,11 +4,18 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-sm-6">
-                <span>Hey! The Show Is Starting In 5 Days.</span>
+                <span>                    </span>
             </div>
             <div class="col-lg-6 col-sm-6">
                 <div class="text-button">
-                    <a href="/logout">Đăng xuất <i class="fa fa-arrow-right"></i></a>
+
+                    <c:if test="${token == null}">
+                        <a href="/form">Đăng nhập <i class="fa fa-arrow-right"></i></a>
+                        </c:if>
+                        <c:if test="${token != null}">
+                        <a href="/logout">Đăng xuất <i class="fa fa-arrow-right"></i></a>
+                        </c:if>
+                    
                 </div>
             </div>
         </div>

@@ -51,7 +51,7 @@ public class Transaction extends HttpServlet {
         List<ReportTransaction> reportTran = qBooking.getBookingByEvent(eventId);
 
         // Phân trang
-        int pageSize = 3; // Số lượng bản ghi trên mỗi trang
+        int pageSize = 10; // Số lượng bản ghi trên mỗi trang
         int page;
         String pageStr = req.getParameter("page");
         if (pageStr == null) {
@@ -64,6 +64,7 @@ public class Transaction extends HttpServlet {
         int start = (page - 1) * pageSize;
         int end = Math.min(start + pageSize, totalRecords);
         List<ReportTransaction> paginatedList = reportTran.subList(start, end);
+        req.setAttribute("total", reportTran.size());
         req.setAttribute("report", paginatedList);
         req.setAttribute("currentPage", page);
         req.setAttribute("totalPages", totalPages);

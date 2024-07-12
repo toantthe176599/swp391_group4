@@ -54,8 +54,8 @@
                                                         <div>
                                                             <b>Sắp xếp theo</b>
                                                             <select id="sort-option" onchange="sortEvents(this.value)">
-                                                                <option value="ticket-asc">Tiến độ bán vé (giảm dần)</option>
-                                                                <option value="ticket-desc">Tiến độ bán vé (tăng dần)</option>
+                                                                <option value="ticket-asc">Tiến độ bán vé (tăng dần)</option>
+                                                                <option value="ticket-desc">Tiến độ bán vé (giảm dần)</option>
 
                                                             </select>
                                                         </div>
@@ -71,7 +71,7 @@
                                                     <c:forEach var="item" items="${report}">
                                                         <li class="project-item">
                                                             <div>
-                                                                <img src="${item.img}" alt="Image 001" style="width: auto; height: auto; border-radius: 5%" />
+                                                                <img src="${item.img}" loading="lazy" alt="Image 001" style="width: auto; height: auto; border-radius: 5%" />
                                                             </div>
                                                             <div class="title-row">
                                                                 <h5><b>${item.nameEvent}</b></h5>
@@ -190,16 +190,9 @@
 
                                                                 function getDateValue(element) {
                                                                     // Lấy giá trị ngày tháng từ các phần tử trong phần tử project-item
-                                                                    const dateString = element.querySelector('.progress-row h6:nth-of-type(4)').textContent.trim();
-
-                                                                    // Xử lý chuyển đổi chuỗi ngày tháng về đối tượng Date để có thể so sánh
-                                                                    const dateParts = dateString.split('/');
-                                                                    const day = parseInt(dateParts[0]);
-                                                                    const month = parseInt(dateParts[1]) - 1; // Tháng trong đối tượng Date bắt đầu từ 0 (0 -> Tháng 1)
-                                                                    const year = parseInt(dateParts[2]);
-
-                                                                    const eventDate = new Date(year, month, day);
-                                                                    return eventDate.getTime(); // Trả về giá trị số mili giây của ngày tháng
+                                                                    const dateString = element.querySelector('.footer-row .alert-dark, .footer-row .alert-success').textContent;
+                                                                    const days = dateString.match(/-?\d+/)[0];
+                                                                    return parseInt(days);
                                                                 }
         </script>
     </body>
