@@ -204,9 +204,6 @@
                         <div id="piechart_3d" style="width: auto; height: 200px;"></div>
                         <div id="piechart_3d_sold" style="width: auto; height: 200px;"></div>
                         <!----->
-
-
-
                     </div>
 
 
@@ -289,9 +286,9 @@
         const detailBtn = document.querySelector("[detailBtn]");
         if (detailBtn) {
             detailBtn.addEventListener("click", () => {
-                const idEvent = "${report.idEvent}"
+                const idEvent = "${report.idEvent}";
                 window.location.href = "/admin/dashboard/transaction/" + idEvent;
-            })
+            });
         }
 
 

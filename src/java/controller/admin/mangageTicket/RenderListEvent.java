@@ -61,7 +61,24 @@ public class RenderListEvent extends HttpServlet {
         List<Event> listEvent = qEvent.getEventByCreator(qUser.getIdByToken(token));
         req.setAttribute("event", listEvent);
         //end
-//         / views / admin / pages / event / dashboard.js
+
+        // Phân trang
+        int pageSize = 5; // Số sự kiện trên mỗi trang
+        int totalEvents = listEvent.size();
+        int totalPages = (int) Math.ceil((double) totalEvents / pageSize);
+        int currentPage = (req.getParameter("page") != null) ? Integer.parseInt(req.getParameter("page")) : 1;
+        int startIndex = (currentPage - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, totalEvents);
+
+        // Lấy danh sách sự kiện trang hiện tại
+        List<Event> currentPageEvents = listEvent.subList(startIndex, endIndex);
+
+        // Đặt các thuộc tính vào request để truyền tới JSP
+        req.setAttribute("event", currentPageEvents);
+        req.setAttribute("currentPage", currentPage);
+        req.setAttribute("totalPages", totalPages);
+
+        // Chuyển tiếp request tới JSP để hiển thị
         req.getRequestDispatcher("/views/admin/pages/event/dashboard.jsp").forward(req, res);
     }
 

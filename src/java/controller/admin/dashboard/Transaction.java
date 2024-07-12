@@ -1,29 +1,15 @@
-@@ -1,58 +1,90 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package controller.admin.dashboard;
 
-
-
-
-
-
-
-
-
-
-
-
-
-   package controller.admin.dashboard;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 import model.queryBooking;
 import schema.ReportTransaction;
@@ -32,9 +18,8 @@ import schema.ReportTransaction;
  *
  * @author LENOVO
  */
-public class renderTransactionDashboard extends HttpServlet {
-   
-    
+public class Transaction extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -56,18 +41,17 @@ public class renderTransactionDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-
         // get id event from url
-      String pathInfo = req.getPathInfo();
+        String pathInfo = req.getPathInfo();
         String[] pathSegments = pathInfo.split("/");
         String eventId = pathSegments[pathSegments.length - 1];
-        
+
         // get detail transaction
         queryBooking qBooking = queryBooking.createInstanceBooking();
         List<ReportTransaction> reportTran = qBooking.getBookingByEvent(eventId);
-               
-         // Phân trang
-        int pageSize = 3; // Số lượng bản ghi trên mỗi trang
+
+        // Phân trang
+        int pageSize = 10; // Số lượng bản ghi trên mỗi trang
         int page;
         String pageStr = req.getParameter("page");
         if (pageStr == null) {
@@ -80,11 +64,14 @@ public class renderTransactionDashboard extends HttpServlet {
         int start = (page - 1) * pageSize;
         int end = Math.min(start + pageSize, totalRecords);
         List<ReportTransaction> paginatedList = reportTran.subList(start, end);
+        req.setAttribute("total", reportTran.size());
         req.setAttribute("report", paginatedList);
         req.setAttribute("currentPage", page);
         req.setAttribute("totalPages", totalPages);
         req.getRequestDispatcher("/views/admin/pages/Dashboard/transaction.jsp").forward(req, res);
+
     }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -102,4 +89,5 @@ public class renderTransactionDashboard extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

@@ -21,8 +21,7 @@ public class queryEventClient {
 
     public List<Event_client> getAllEvent() {
         List<Event_client> list = new ArrayList<>();
-        String query = "select event_id, name, title, start_time, start_date, location, image_event from event where status = 'active'" ;
-
+        String query = "select event_id, name, title, start_time, start_date, location, image_event from event where status = 'active'";
 
         try {
             // Sử dụng connection từ DBContext đã được khởi tạo
@@ -134,7 +133,7 @@ public class queryEventClient {
 
             while (rs.next()) {
                 // Đọc dữ liệu từ ResultSet và thêm vào list
-                int category_id = rs.getInt("category_id");
+                String category_id = rs.getString("category_id");
                 String category_name = rs.getString("category_name");
                 Category_client category = new Category_client(category_id, category_name);
                 list.add(category);
@@ -165,7 +164,6 @@ public class queryEventClient {
         List<Event_client> list = new ArrayList<>();
         String query = "select * from event\n"
                 + "where category = ? and  status = 'active'";
-
 
         try {
             // Sử dụng connection từ DBContext đã được khởi tạo

@@ -688,13 +688,13 @@
                                                                         </div>
                                                                     </c:forEach>
                                                                     <div class="tbox-row row-default">
-                                                                        <div class="tbox-col-sm-7 tbox-col-md-9 ">
-                                                                            <article class="ant-typography styles__Text-sc-17nwz24-3 jlYsqu css-euj9ji" color="mainGreen" weight="700">Gọi Mưa</article>
-                                                                            <article class="ant-typography styles__Text-sc-17nwz24-3 dMsBvl css-euj9ji" color="white">1.000.000 đ</article>
-                                                                        </div>
-                                                                        <div class="tbox-col-sm-5 tbox-col-md-3 text-right flex-end">
-                                                                            <div class="tag" style="color: rgb(255, 66, 79); background-color: rgb(255, 184, 188); border-radius: 12px; padding: 4px 8px;">Hết vé</div>
-                                                                        </div>  
+                                                                        <!--                                                                        <div class="tbox-col-sm-7 tbox-col-md-9 ">
+                                                                                                                                                    <article class="ant-typography styles__Text-sc-17nwz24-3 jlYsqu css-euj9ji" color="mainGreen" weight="700">Gọi Mưa</article>
+                                                                                                                                                    <article class="ant-typography styles__Text-sc-17nwz24-3 dMsBvl css-euj9ji" color="white">1.000.000 đ</article>
+                                                                                                                                                </div>-->
+                                                                        <!--                                                                        <div class="tbox-col-sm-5 tbox-col-md-3 text-right flex-end">
+                                                                                                                                                    <div class="tag" style="color: rgb(255, 66, 79); background-color: rgb(255, 184, 188); border-radius: 12px; padding: 4px 8px;">Hết vé</div>
+                                                                                                                                                </div>  -->
                                                                     </div>
                                                                 </div>
                                                             </div>

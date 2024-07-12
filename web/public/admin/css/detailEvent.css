@@ -2,3 +2,40 @@ img:hover{
     transform: scale(1.4);
     border-radius: 5%;
 }
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white; /* Màu chữ cho các nút */
+    border: 1px solid #007bff; /* Viền của các nút */
+    border-radius: 3px; /* Đường cong của các nút */
+}
+
+.pagination a.current {
+    background-color: #007bff; /* Màu nền của nút hiện tại */
+    color: #fff; /* Màu chữ của nút hiện tại */
+}
+
+.pagination a:hover {
+    background-color: #0056b3; /* Màu nền khi di chuột qua các nút */
+    border-color: #0056b3; /* Màu viền khi di chuột qua các nút */
+}
+
+.pagination .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* Để căn giữa các nút phân trang */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

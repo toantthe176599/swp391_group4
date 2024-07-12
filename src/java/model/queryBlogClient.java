@@ -21,13 +21,14 @@ import schema.Event_client;
  * @author ADMIN
  */
 public class queryBlogClient {
-     private Connection conn = null;
+
+    private Connection conn = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
-    
-     public List<Blog_client> getAllBlog() {
+
+    public List<Blog_client> getAllBlog() {
         List<Blog_client> list = new ArrayList<>();
-        String query = "SELECT blog_id, title, content, publishDate, image, author FROM blog";
+        String query = "SELECT blog_id, title, content, publishDate, image, author FROM blog where status = 'active'";
 
         try {
             // Sử dụng connection từ DBContext đã được khởi tạo
@@ -38,7 +39,7 @@ public class queryBlogClient {
 
             while (rs.next()) {
                 // Đọc dữ liệu từ ResultSet và thêm vào list
-               String blogId = rs.getString("blog_id");
+                String blogId = rs.getString("blog_id");
                 String title = rs.getString("title");
                 String content = rs.getString("content");
                 Date publishDate = rs.getDate("publishDate");
@@ -70,47 +71,55 @@ public class queryBlogClient {
 
         return list;
     }
-     public Blog_client getBlogById(String blogId) {
-    Blog_client blog = null;
-    String query = "SELECT blog_id, title, content, publishDate, image, author FROM blog WHERE blog_id = ?";
 
-    try {
-        conn = new DBContext().connection;
-        ps = conn.prepareStatement(query);
-        ps.setString(1, blogId);
-        rs = ps.executeQuery();
+    public Blog_client getBlogById(String blogId) {
+        Blog_client blog = null;
+        String query = "SELECT blog_id, title, content, publishDate, image, author FROM blog WHERE blog_id = ?";
 
-        if (rs.next()) {
-            String title = rs.getString("title");
-            String content = rs.getString("content");
-            Date publishDate = rs.getDate("publishDate");
-            String image = rs.getString("image");
-            String author = rs.getString("author");
-
-            blog = new Blog_client(blogId, title, content, publishDate, image, author);
-        }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-    } finally {
         try {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (conn != null) conn.close();
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, blogId);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                Date publishDate = rs.getDate("publishDate");
+                String image = rs.getString("image");
+                String author = rs.getString("author");
+
+                blog = new Blog_client(blogId, title, content, publishDate, image, author);
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
+
+        return blog;
     }
 
-    return blog;
-}
-
-      public void printAllBlog() {
+    public void printAllBlog() {
         List<Blog_client> blogs = getAllBlog();
         for (Blog_client blog : blogs) {
             System.out.println(blog.toString());
         }
     }
-     public static void main(String[] args) {
+
+    public static void main(String[] args) {
 
     }
 }
