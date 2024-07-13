@@ -304,6 +304,18 @@
         <servlet-name>renderTransactionDashboard</servlet-name>
         <servlet-class>controller.admin.dashboard.renderTransactionDashboard</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RenderProflieClient</servlet-name>
+        <servlet-class>controller.client.profile.RenderProflieClient</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>renderUpdateProfileFormClient</servlet-name>
+        <servlet-class>controller.client.profile.renderUpdateProfileFormClient</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateProfileClient</servlet-name>
+        <servlet-class>controller.client.profile.updateProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>renderAuthForm</servlet-name>
         <url-pattern>/form</url-pattern>
@@ -503,6 +515,34 @@
     <servlet-mapping>
         <servlet-name>renderTransactionDashboard</servlet-name>
         <url-pattern>/admin/dashboard/transaction/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>eventDetailController</servlet-name>
+        <servlet-class>controller.client.event.eventDetailController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>eventDetailController</servlet-name>
+        <url-pattern>/eventDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>areaDetailController</servlet-name>
+        <servlet-class>controller.client.event.areaDetailController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>areaDetailController</servlet-name>
+        <url-pattern>/areaDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RenderProflieClient</servlet-name>
+        <url-pattern>/RenderProflieClient</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>renderUpdateProfileFormClient</servlet-name>
+        <url-pattern>/client/homepage/updateProfileClient/form</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateProfileClient</servlet-name>
+        <url-pattern>/client/homepage/updateProfileClient</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>views/client/pages/authForm.jsp</welcome-file>

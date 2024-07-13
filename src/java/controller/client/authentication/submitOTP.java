@@ -73,7 +73,7 @@ public class submitOTP extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        String OTP = req.getParameter("OTP");
+        String OTP = req.getParameter("OTP").trim();
         HttpSession session = req.getSession();
         queryOTP querOTP = queryOTP.createInstance();
         payload checkOtpStatus = querOTP.compareOtpForgotPass(OTP);

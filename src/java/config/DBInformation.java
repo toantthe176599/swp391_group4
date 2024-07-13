@@ -11,7 +11,7 @@ package config;
 public class DBInformation {
 
     public static String USER_NAME = "sa";
-    public static String PASS_WORD = "123";
+    public static String PASS_WORD = "12345";
     public static String LOCAL_HOST = "localhost:1433";
-    public static String DB_NAME = "swp";
+    public static String DB_NAME = "swp3";
 }

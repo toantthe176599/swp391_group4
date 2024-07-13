@@ -50,4 +50,26 @@ public class AreaEvent {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setNameArea(String nameArea) {
+        this.nameArea = nameArea;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setQuantityTicketCurrent(String quantityTicketCurrent) {
+        this.quantityTicketCurrent = quantityTicketCurrent;
+    }
+
+    public void setQuantityTicketOrigin(String quantityTicketOrigin) {
+        this.quantityTicketOrigin = quantityTicketOrigin;
+    }
+    
+    
+
 }
