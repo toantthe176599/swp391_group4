@@ -2,6 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html lang="en">
 
     <head>
@@ -331,6 +332,7 @@
 
         <body>
 
+
             <!-- ***** Preloader Start ***** -->
             <div id="js-preloader" class="js-preloader">
                 <div class="preloader-inner">
@@ -411,12 +413,10 @@
                                     <div class="ticket-item">
                                         <div class="thumb">
                                             <img src="${pageContext.request.contextPath}${item.image_event}" alt="${item.title}">
-                                            <div class="price">
-                                                <span>1 vé từ <em>$25</em></span>
-                                            </div>
+
                                         </div>
                                         <div class="down-content">
-                                            <span>Còn 150 vé cho buổi biểu diễn này</span>
+
                                             <h4>${item.name}</h4>
                                             <ul>
                                                 <!-- Chuyển đổi chuỗi thành đối tượng Date -->
@@ -442,6 +442,11 @@
                                 </div>
                             </div>
                         </c:forEach>
+
+                        <c:if test="${fn:length(events) == 0}">
+                            <h3>Không có sự kiện nào</h3>
+                        </c:if>
+
                     </div>
 
                     <!-- Hiển thị phân trang -->
@@ -467,39 +472,40 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- *** Footer *** --> <jsp:include page="../component/Footer.jsp" />
+
+            <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/jquery-2.1.0.min.js"></script>
+
+            <!-- Bootstrap JS -->
+            <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/bootstrap.min.js"></script>
+
+            <!-- ScrollReveal JS -->
+            <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/scrollreveal.min.js"></script>
+
+            <!-- Waypoints JS -->
+            <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/waypoints.min.js"></script>
+
+            <!-- CounterUp JS -->
+            <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/jquery.counterup.min.js"></script>
+
+            <!-- ImgFix JS -->
+            <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/imgfix.min.js"></script>
+
+            <!-- MixItUp JS -->
+            <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/mixitup.js"></script>
+
+            <!-- Accordions JS -->
+            <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/accordions.js"></script>
+
+            <!-- Owl Carousel JS -->
+            <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/owl-carousel.js"></script>
+
+            <!-- Custom JS -->
+            <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/custom.js"></script>
 
 
-                    <!-- *** Footer *** --> <jsp:include page="../component/Footer.jsp" />
-
-                    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/jquery-2.1.0.min.js"></script>
-
-                    <!-- Bootstrap JS -->
-                    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/bootstrap.min.js"></script>
-
-                    <!-- ScrollReveal JS -->
-                    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/scrollreveal.min.js"></script>
-
-                    <!-- Waypoints JS -->
-                    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/waypoints.min.js"></script>
-
-                    <!-- CounterUp JS -->
-                    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/jquery.counterup.min.js"></script>
-
-                    <!-- ImgFix JS -->
-                    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/imgfix.min.js"></script>
-
-                    <!-- MixItUp JS -->
-                    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/mixitup.js"></script>
-
-                    <!-- Accordions JS -->
-                    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/accordions.js"></script>
-
-                    <!-- Owl Carousel JS -->
-                    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/owl-carousel.js"></script>
-
-                    <!-- Custom JS -->
-                    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/custom.js"></script>
-
-
-                    </body>
-                    </html>
+        </body>
+    </html>

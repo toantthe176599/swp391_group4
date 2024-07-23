@@ -2,13 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.client.authentication;
+package controller.client.profile;
 
-import config.GoogleInfomation;
-import helper.GoogleAuthentication;
-import helper.payload;
-import helper.randomToken;
-import helper.sendMail;
+import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,16 +13,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.queryOTP;
+import java.util.List;
+import model.queryFooter;
 import model.queryUser;
-import schema.GoogleUser;
-import schema.account;
+import schema.Footer_client;
+import schema.InformationUser;
 
 /**
  *
- * @author LENOVO
+ * @author linhl
  */
-public class SignUpwithGoogle extends HttpServlet {
+public class updateProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +42,10 @@ public class SignUpwithGoogle extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignUpwithGoogle</title>");
+            out.println("<title>Servlet updateProfile</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignUpwithGoogle at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet updateProfile at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,32 +61,9 @@ public class SignUpwithGoogle extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            // Send google authentication
-            String code = req.getParameter("code");
-            String accessToken = GoogleAuthentication.getToken(code, GoogleInfomation.GOOGLE_REDIRECT_URL_SIGNUP);
-            GoogleUser user = GoogleAuthentication.getUserInfo(accessToken);
-
-            // check email exist
-            queryUser queryUs = queryUser.createQueryUSer();
-            payload checkEmail = queryUs.checkEmail(user.getEmail());
-            if (checkEmail.isIsSuccess() == true) {
-                HttpSession session = req.getSession();
-                session.setAttribute("error", "Email đã được đăng ký! vui lòng chon email khác");
-                res.sendRedirect("/views/client/pages/authForm.jsp");
-                return;
-            }
-
-            queryOTP otp = queryOTP.createInstance();
-            final String OTP = randomToken.generateRandomDigitString(8);
-            otp.addOtp("", user.getEmail(), user.getId(), OTP);
-            sendMail.sendEmailTo(user.getEmail(), "Your OTP", "your OTP is " + OTP + " it will be expired in 3 minutes");
-            req.getRequestDispatcher("/views/client/pages/OTPFormSignUp.jsp").forward(req, res);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -103,7 +77,61 @@ public class SignUpwithGoogle extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // get data from client
+        String name = request.getParameter("name");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String birthday = request.getParameter("dob");
+        String imgUrl = request.getParameter("imgUrl");
+        //end
+
+        String redirect = "/client/homepage/updateProfileClient/form";
+        //validate 
+        HttpSession session = request.getSession();
+        if (name == null || address == null || phone == null || birthday == null) {
+            session.setAttribute("error", "Dữ liệu không được để trống");
+            response.sendRedirect(redirect);
+            return;
+        }
+
+        if (name.isBlank() || address.isBlank() || phone.isBlank() || birthday.isBlank()) {
+            session.setAttribute("error", "Dữ liệu không được để trống");
+            response.sendRedirect(redirect);
+            return;
+        }
+        //end
+
+        // get id user
+        String token = "";
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            // Kiểm tra tên cookie để tìm token
+            if ("token".equals(cookie.getName())) {
+                // Lấy giá trị token từ cookie
+                token = cookie.getValue();
+
+            }
+        }
+
+        queryUser qUser = queryUser.createQueryUSer();
+
+        String idUser = qUser.getIdByToken(token);
+
+        if (idUser.isBlank()) {
+            session.setAttribute("error", "Vui lòng đăng nhập");
+            response.sendRedirect("/");
+            return;
+        }
+
+        InformationUser inforUser = new InformationUser(idUser, name, phone, address, birthday, imgUrl);
+        qUser.updateUserInformation(inforUser);
+        queryFooter query = new queryFooter();
+        List<Footer_client> footers = query.getAllFooter();
+        request.setAttribute("footers", footers);
+
+        //end 
+        session.setAttribute("success", " Cập nhật thành công! ");
+        response.sendRedirect(redirect);
     }
 
     /**

@@ -2,31 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.client.authentication;
+package controller.client.event;
 
-import config.GoogleInfomation;
-import helper.GoogleAuthentication;
-import helper.payload;
-import helper.randomToken;
-import helper.sendMail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.queryOTP;
+import java.util.List;
+import model.queryBooking;
+import model.queryEventClient;
+import model.queryFooter;
 import model.queryUser;
-import schema.GoogleUser;
+import schema.Booking;
+import schema.Footer_client;
 import schema.account;
 
 /**
  *
- * @author LENOVO
+ * @author HP
  */
-public class SignUpwithGoogle extends HttpServlet {
+@WebServlet(name = "HistoryTicketController", urlPatterns = {"/history-ticket"})
+public class HistoryTicketController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +46,10 @@ public class SignUpwithGoogle extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignUpwithGoogle</title>");
+            out.println("<title>Servlet HistoryTicketController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignUpwithGoogle at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet HistoryTicketController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,30 +65,38 @@ public class SignUpwithGoogle extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        queryFooter query = new queryFooter();
+        List<Footer_client> footers = query.getAllFooter();
+        request.setAttribute("footers", footers);
+
         try {
-            // Send google authentication
-            String code = req.getParameter("code");
-            String accessToken = GoogleAuthentication.getToken(code, GoogleInfomation.GOOGLE_REDIRECT_URL_SIGNUP);
-            GoogleUser user = GoogleAuthentication.getUserInfo(accessToken);
-
-            // check email exist
-            queryUser queryUs = queryUser.createQueryUSer();
-            payload checkEmail = queryUs.checkEmail(user.getEmail());
-            if (checkEmail.isIsSuccess() == true) {
-                HttpSession session = req.getSession();
-                session.setAttribute("error", "Email đã được đăng ký! vui lòng chon email khác");
-                res.sendRedirect("/views/client/pages/authForm.jsp");
-                return;
+            Cookie cookie[] = request.getCookies();
+            String token = "";
+            for (Cookie i : cookie) {
+                if (i.getName().equals("token")) {
+                    token = i.getValue();
+                }
             }
+            queryUser queryUserDao = queryUser.createQueryUSer();
+            String accountId = queryUserDao.getIdByToken(token);
 
-            queryOTP otp = queryOTP.createInstance();
-            final String OTP = randomToken.generateRandomDigitString(8);
-            otp.addOtp("", user.getEmail(), user.getId(), OTP);
-            sendMail.sendEmailTo(user.getEmail(), "Your OTP", "your OTP is " + OTP + " it will be expired in 3 minutes");
-            req.getRequestDispatcher("/views/client/pages/OTPFormSignUp.jsp").forward(req, res);
+            if (!accountId.isBlank()) {
+                queryBooking bookingDao = queryBooking.createInstanceBooking();
+                List<Booking> bookings = bookingDao.getAllBookingsByCustomer(accountId);
+
+                request.setAttribute("booking", bookings);
+                request.getRequestDispatcher("./views/client/homepage/history-ticket.jsp").forward(request, response);
+
+            } else {
+                session.setAttribute("error", "Vui lòng đăng nhập");
+                response.sendRedirect("/");
+            }
         } catch (Exception e) {
+            session.setAttribute("error", "Vui lòng đăng nhập");
+            response.sendRedirect("/");
             System.out.println(e);
         }
     }

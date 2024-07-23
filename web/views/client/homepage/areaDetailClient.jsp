@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/bootstrap.min.css">
 
         <!-- Font Awesome CSS -->
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/font-awesome.css">
@@ -25,7 +25,7 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/owl-carousel.css">
 
         <!-- Tooplate ArtXibition CSS -->
-         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/your-stylesheet.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/your-stylesheet.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/tooplate-artxibition.css">
 
         <style>
@@ -554,60 +554,7 @@
             }
 
         </style>
-        <script>
-            // Khởi tạo biến đếm số lượng vé và tổng giá tiền
-            let totalPrice = 0;
-            function increaseQuantity(price, quantityMax, ele) {
-                let quantity = document.querySelector("#" + ele).value;
-                quantity++;
-                if (quantity > quantityMax) {
-                    quantity = quantityMax;
-                    alert("Số vé vượt quá giới hạn");
-                    return;
-                }
-                document.querySelector("#" + ele).value = quantity;
-                totalPrice += price;
-                let chooseTicketButton = document.getElementById('chooseTicketButton');
-                chooseTicketButton.textContent = 'Tiếp tục - ' + totalPrice + ' VNĐ';
-                chooseTicketButton.disabled = false;
-                chooseTicketButton.classList.add('btn-success');
-                chooseTicketButton.classList.remove('iNUmHz .buttomBooking'); // Xóa lớp màu xám
 
-            }
-
-            // Hàm giảm số lượng vé và cập nhật tổng giá tiền
-            function decreaseQuantity(price, ele) {
-                let quantity = document.querySelector("#" + ele).value;
-                if (quantity > 0) {
-                    quantity--;
-                    totalPrice -= price; // Trừ đi giá tiền
-                    document.querySelector("#" + ele).value = quantity;
-                    // Cập nhật nội dung của button
-                    let chooseTicketButton = document.getElementById('chooseTicketButton');
-                    if (quantity === 0) {
-                        chooseTicketButton.innerHTML = `
-                            Vui lòng chọn vé  
-                            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="disable">
-                            <path d="M8.207 5.293a1 1 0 00-1.414 1.414L12.086 12l-5.293 5.293a1 1 0 101.414 1.414l6-6a1 1 0 000-1.414l-6-6z" fill="#fff"></path>
-                            <path d="M13.207 5.293a1 1 0 10-1.414 1.414L17.086 12l-5.293 5.293a1 1 0 001.414 1.414l6-6a1 1 0 000-1.414l-6-6z" fill="#fff"></path>
-                            </svg>
-                                                                `;
-                        chooseTicketButton.disabled = true;
-                        chooseTicketButton.classList.remove('btn-success'); // Xóa lớp màu xanh lá cây
-                        chooseTicketButton.classList.add('iNUmHz .buttomBooking'); // Thêm lại lớp màu xám
-                        // Ẩn div flex-end khi số lượng vé bằng 0
-                        document.getElementById('flexEndDiv').style.display = 'none';
-                    } else {
-                        chooseTicketButton.textContent = 'Tiếp tục - ' + totalPrice + ' VNĐ';
-                        chooseTicketButton.classList.add('btn-success'); // Thêm lớp màu xanh lá cây
-                        chooseTicketButton.classList.remove('iNUmHz .buttomBooking'); // Xóa lớp màu xám
-
-                        // Hiển thị lại div flex-end khi số lượng vé lớn hơn 0
-                        document.getElementById('flexEndDiv').style.display = 'block';
-                    }
-                }
-            }
-        </script>
 
     </head>
     <body>
@@ -645,7 +592,7 @@
                                                             <div class="icon">
                                                                 <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" class="back">
                                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M8.707 3.793a1 1 0 010 1.414L4.414 9.5H18a1 1 0 110 2H4.414l4.293 4.293a1 1 0 11-1.414 1.414l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 0z" fill="#fff"></path>
-                                                                </svg>Trở về</div>
+                                                                </svg><a href="/eventDetailController?eventId=${event.id}" style="color: rgb(45, 194, 117)">Trở về</a></div>
                                                             <div class="content">Chọn vé</div>  
                                                         </div>
                                                     </div>
@@ -664,38 +611,80 @@
                                                                     </div>
                                                                     <input type="hidden" name="eventId" value="${event.id}">
                                                                     <c:forEach var="item" items="${area}" varStatus="loop" >
-                                                                        <div class="tbox-row row-default">
-                                                                            <div class="tbox-col-sm-7 tbox-col-md-9 ">
-                                                                                <article class="ant-typography styles__Text-sc-17nwz24-3 jlYsqu css-euj9ji" color="mainGreen" weight="700">${item.nameArea}:</article>
-                                                                                <article class="ant-typography styles__Text-sc-17nwz24-3 dMsBvl css-euj9ji" color="white">${item.price}</article>
-                                                                            </div>
-                                                                            <div class="tbox-col-sm-5 tbox-col-md-3 text-right flex-end" id="flexEndDiv">
-                                                                                <div class="Container__AlignItemsCenter-sc-17x1kk6-4 styles__QuantityInputWrapper-sc-soyhxv-0 fYSkyu jpnUwK" id="quantityInputWrapper-${loop.index}">
-                                                                                    <button type="button" class="ant-btn css-euj9ji ant-btn-default" id="minusButton-${loop.index}" onclick="decreaseQuantity(${item.price}, 'quantityInput-${loop.index}')">
-                                                                                        <span>-</span>
-                                                                                    </button>
-                                                                                    <input min="0" max="${item.quantityTicketCurrent}" name="quantityInput-${loop.index}" readonly class="ant-input css-euj9ji" type="text" value="0" class="quantityInput" id="quantityInput-${loop.index}" style="min-width: 40px; max-width: 50px; text-align: center;">
-                                                                                    <button type="button" class="ant-btn css-euj9ji ant-btn-default" id="plusButton-${loop.index}" onclick="increaseQuantity(${item.price}, ${item.quantityTicketCurrent}, 'quantityInput-${loop.index}')">
-                                                                                        <span>+</span>
-                                                                                    </button> 
-                                                                                </div>
 
-                                                                            </div>  
-                                                                            <input type="hidden" name="ticketId-${loop.index}" value="${item.id}">
-                                                                            <div class="number-ticket-container" id="chooseTicketText_${loop.index}">
-                                                                                <a class="number-ticket">Số vé còn lại: ${item.quantityTicketCurrent}</a>
+                                                                        <c:if test="${item.quantityTicketCurrent == 0}">
+                                                                            <div class="tbox-row row-default">
+                                                                                <div class="tbox-col-sm-7 tbox-col-md-9 ">
+                                                                                    <article class="ant-typography styles__Text-sc-17nwz24-3 jlYsqu css-euj9ji" color="mainGreen" weight="700">${item.nameArea}</article>
+                                                                                    <article class="ant-typography styles__Text-sc-17nwz24-3 dMsBvl css-euj9ji" color="white"> 
+
+                                                                                        Giá: <fmt:formatNumber value="${item.price}" type="currency" currencySymbol="₫" />
+                                                                                    </article>
+                                                                                </div>
+                                                                                <div class="tbox-col-sm-5 tbox-col-md-3 text-right flex-end">
+                                                                                    <div class="tag" style="color: rgb(255, 66, 79); background-color: rgb(255, 184, 188); border-radius: 12px; padding: 4px 8px;">Hết vé</div>
+                                                                                </div>  
                                                                             </div>
-                                                                        </div>
+
+                                                                            <div class="tbox-row row-default" style="display: none">
+
+
+                                                                                <div class="tbox-col-sm-7 tbox-col-md-9 ">
+                                                                                    <article class="ant-typography styles__Text-sc-17nwz24-3 jlYsqu css-euj9ji" color="mainGreen" weight="700">${item.nameArea}</article>
+                                                                                    <article class="ant-typography styles__Text-sc-17nwz24-3 dMsBvl css-euj9ji" color="white">Giá: ${item.price}</article>
+                                                                                </div>
+                                                                                <div class="tbox-col-sm-5 tbox-col-md-3 text-right flex-end" id="flexEndDiv">
+                                                                                    <div class="Container__AlignItemsCenter-sc-17x1kk6-4 styles__QuantityInputWrapper-sc-soyhxv-0 fYSkyu jpnUwK" id="quantityInputWrapper-${loop.index}">
+                                                                                        <button type="button" class="ant-btn css-euj9ji ant-btn-default" id="minusButton-${loop.index}" onclick="decreaseQuantity(${item.price}, 'quantityInput-${loop.index}')">
+                                                                                            <span>-</span>
+                                                                                        </button>
+                                                                                        <input min="0" max="${item.quantityTicketCurrent}" name="quantityInput-${loop.index}" readonly class="ant-input css-euj9ji" type="text" value="0" class="quantityInput" id="quantityInput-${loop.index}" style="min-width: 40px; max-width: 50px; text-align: center;">
+                                                                                        <button type="button" class="ant-btn css-euj9ji ant-btn-default" id="plusButton-${loop.index}" onclick="increaseQuantity(${item.price}, ${item.quantityTicketCurrent}, 'quantityInput-${loop.index}')">
+                                                                                            <span>+</span>
+                                                                                        </button> 
+                                                                                    </div>
+
+                                                                                </div>  
+                                                                                <input type="hidden" name="ticketId-${loop.index}" value="${item.id}">
+                                                                                <div class="number-ticket-container" id="chooseTicketText_${loop.index}">
+                                                                                    <a class="number-ticket">Số vé còn lại: ${item.quantityTicketCurrent}</a>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </c:if> 
+
+                                                                        <c:if test="${item.quantityTicketCurrent > 0}">
+                                                                            <div class="tbox-row row-default">
+
+
+                                                                                <div class="tbox-col-sm-7 tbox-col-md-9 ">
+                                                                                    <article class="ant-typography styles__Text-sc-17nwz24-3 jlYsqu css-euj9ji" color="mainGreen" weight="700">${item.nameArea}</article>
+                                                                                    <article class="ant-typography styles__Text-sc-17nwz24-3 dMsBvl css-euj9ji" color="white">Giá: <fmt:formatNumber value="${item.price}" type="currency" currencySymbol="₫" /></article>
+                                                                                </div>
+                                                                                <div class="tbox-col-sm-5 tbox-col-md-3 text-right flex-end" id="flexEndDiv">
+                                                                                    <div class="Container__AlignItemsCenter-sc-17x1kk6-4 styles__QuantityInputWrapper-sc-soyhxv-0 fYSkyu jpnUwK" id="quantityInputWrapper-${loop.index}">
+                                                                                        <button type="button" class="ant-btn css-euj9ji ant-btn-default" id="minusButton-${loop.index}" onclick="decreaseQuantity(${item.price}, 'quantityInput-${loop.index}')">
+                                                                                            <span>-</span>
+                                                                                        </button>
+                                                                                        <input min="0" max="${item.quantityTicketCurrent}" name="quantityInput-${loop.index}" readonly class="ant-input css-euj9ji" type="text" value="0" class="quantityInput" id="quantityInput-${loop.index}" style="min-width: 40px; max-width: 50px; text-align: center;">
+                                                                                        <button type="button" class="ant-btn css-euj9ji ant-btn-default" id="plusButton-${loop.index}" onclick="increaseQuantity(${item.price}, ${item.quantityTicketCurrent}, 'quantityInput-${loop.index}')">
+                                                                                            <span>+</span>
+                                                                                        </button> 
+                                                                                    </div>
+
+                                                                                </div>  
+                                                                                <input type="hidden" name="ticketId-${loop.index}" value="${item.id}">
+                                                                                <div class="number-ticket-container" id="chooseTicketText_${loop.index}">
+                                                                                    <a class="number-ticket">Số vé còn lại: ${item.quantityTicketCurrent}</a>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </c:if>
+
+
+
                                                                     </c:forEach>
-                                                                    <div class="tbox-row row-default">
-                                                                        <!--                                                                        <div class="tbox-col-sm-7 tbox-col-md-9 ">
-                                                                                                                                                    <article class="ant-typography styles__Text-sc-17nwz24-3 jlYsqu css-euj9ji" color="mainGreen" weight="700">Gọi Mưa</article>
-                                                                                                                                                    <article class="ant-typography styles__Text-sc-17nwz24-3 dMsBvl css-euj9ji" color="white">1.000.000 đ</article>
-                                                                                                                                                </div>-->
-                                                                        <!--                                                                        <div class="tbox-col-sm-5 tbox-col-md-3 text-right flex-end">
-                                                                                                                                                    <div class="tag" style="color: rgb(255, 66, 79); background-color: rgb(255, 184, 188); border-radius: 12px; padding: 4px 8px;">Hết vé</div>
-                                                                                                                                                </div>  -->
-                                                                    </div>
+
                                                                 </div>
                                                             </div>
                                                             <div class="tbox-col-lg-2 "></div>
@@ -765,7 +754,7 @@
                                                                                     </div>
 
                                                                                 </div>
-                                                                                <div class="ticket-price">${item.price} VNĐ</div>
+                                                                                <div class="ticket-price"><fmt:formatNumber value="${item.price}" type="currency" currencySymbol="₫" /></div>
                                                                             </li>                                                      
                                                                         </ul>
                                                                     </c:forEach>
@@ -801,9 +790,78 @@
                 </main>
             </div>
 
-                                                                            <jsp:include page="../component/Footer.jsp" />
+            <jsp:include page="../component/Footer.jsp" />
 
         </div>
+
+        <script>
+            // Khởi tạo biến đếm số lượng vé và tổng giá tiền
+            let totalPrice = 0;
+            let totalQuantity = 0;
+            function increaseQuantity(price, quantityMax, ele) {
+
+                let quantity = document.querySelector("#" + ele).value;
+                quantity++;
+                totalQuantity++;
+                if (quantity > quantityMax) {
+                    quantity = quantityMax;
+                    alert("Số vé vượt quá giới hạn");
+                    return;
+                }
+
+                document.querySelector("#" + ele).value = quantity;
+                totalPrice += price;
+
+                let chooseTicketButton = document.getElementById('chooseTicketButton');
+                let formattedAmount = totalPrice.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+                chooseTicketButton.textContent = 'Thanh toán: ' + formattedAmount;
+                chooseTicketButton.disabled = false;
+                chooseTicketButton.classList.add('btn-success');
+                chooseTicketButton.classList.add('iNUmHz .buttomBooking'); // Thêm lại lớp màu xám
+
+            }
+
+            // Hàm giảm số lượng vé và cập nhật tổng giá tiền
+            function decreaseQuantity(price, ele) {
+
+                let quantity = document.querySelector("#" + ele).value;
+
+                if (quantity > 0) {
+                    quantity--;
+                    totalQuantity--;
+
+                    totalPrice -= price; // Trừ đi giá tiền
+
+                    document.querySelector("#" + ele).value = quantity;
+                    // Cập nhật nội dung của button
+                    let chooseTicketButton = document.getElementById('chooseTicketButton');
+
+                    if (totalQuantity === 0) {
+                        chooseTicketButton.innerHTML = `
+                        Vui lòng chọn vé  
+                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="disable">
+                        <path d="M8.207 5.293a1 1 0 00-1.414 1.414L12.086 12l-5.293 5.293a1 1 0 101.414 1.414l6-6a1 1 0 000-1.414l-6-6z" fill="#fff"></path>
+                        <path d="M13.207 5.293a1 1 0 10-1.414 1.414L17.086 12l-5.293 5.293a1 1 0 001.414 1.414l6-6a1 1 0 000-1.414l-6-6z" fill="#fff"></path>
+                        </svg>
+                                                            `;
+                        chooseTicketButton.disabled = true;
+                        chooseTicketButton.classList.remove('btn-success'); // Xóa lớp màu xanh lá cây
+                        chooseTicketButton.classList.add('iNUmHz .buttomBooking'); // Thêm lại lớp màu xám
+                        // Ẩn div flex-end khi số lượng vé bằng 0
+                        document.getElementById('flexEndDiv').style.display = 'none';
+                    } else {
+                        let formattedAmount = totalPrice.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+                        chooseTicketButton.textContent = 'Thanh toán: ' + formattedAmount;
+
+                        chooseTicketButton.classList.add('btn-success'); // Thêm lớp màu xanh lá cây
+                        chooseTicketButton.classList.remove('iNUmHz .buttomBooking'); // Xóa lớp màu xám
+
+                        // Hiển thị lại div flex-end khi số lượng vé lớn hơn 0
+                        document.getElementById('flexEndDiv').style.display = 'block';
+                    }
+                }
+            }
+        </script>
 
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

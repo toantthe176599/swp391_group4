@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+
 import java.sql.SQLException;
 import helper.DBContext;
 import java.sql.Connection;
@@ -17,9 +18,11 @@ import schema.Footer_client;
  * @author ADMIN
  */
 public class queryFooter {
+
     private Connection conn = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
+
     public List<Footer_client> getAllFooter() {
         List<Footer_client> list = new ArrayList<>();
         String query = "SELECT * from footer_info";
@@ -41,8 +44,8 @@ public class queryFooter {
                 String email = rs.getString("email");
                 String facebook = rs.getString("facebook");
                 String zalo = rs.getString("zalo");
-
-                Footer_client footer = new Footer_client(id, address, useful_links, working_hours, phone_number, email, facebook, zalo);
+                String iframe = rs.getString("iframe_url");
+                Footer_client footer = new Footer_client(id, address, useful_links, working_hours, phone_number, email, facebook, zalo, iframe);
 
                 list.add(footer);
             }
@@ -68,44 +71,44 @@ public class queryFooter {
         return list;
     }
 
-    public void updateFooter(String id, String address, String useful_links, String working_hours, String phone_number, String email, String facebook, String zalo) {
-    String query = "UPDATE footer_info SET address=?, useful_links=?, working_hours=?, phone_number=?, email=?, facebook=?, zalo=? WHERE id=?";
-    
-    try {
-        conn = new DBContext().connection;
-        ps = conn.prepareStatement(query);
-        
-        ps.setString(1, address);
-        ps.setString(2, useful_links);
-        ps.setString(3, working_hours);
-        ps.setString(4, phone_number);
-        ps.setString(5, email);
-        ps.setString(6, facebook);
-        ps.setString(7, zalo);
-        ps.setString(8, id);
-        
-        int rowsUpdated = ps.executeUpdate();
-        if (rowsUpdated > 0) {
-            System.out.println("Footer info updated successfully.");
-        } else {
-            System.out.println("Failed to update footer info.");
-        }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-    } finally {
+    public void updateFooter(String id, String address, String useful_links, String working_hours, String phone_number, String email, String facebook, String zalo, String iframe) {
+        String query = "UPDATE footer_info SET address=?, useful_links=?, working_hours=?, phone_number=?, email=?, facebook=?, zalo=?, iframe_url=?  WHERE id=? ";
+
         try {
-            if (ps != null) {
-                ps.close();
-            }
-            if (conn != null) {
-                conn.close();
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(query);
+
+            ps.setString(1, address);
+            ps.setString(2, useful_links);
+            ps.setString(3, working_hours);
+            ps.setString(4, phone_number);
+            ps.setString(5, email);
+            ps.setString(6, facebook);
+            ps.setString(7, zalo);
+            ps.setString(8, iframe);
+            ps.setString(9, id);
+
+            int rowsUpdated = ps.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Footer info updated successfully.");
+            } else {
+                System.out.println("Failed to update footer info.");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
-}
-
 
     public void printAllFooter() {
         List<Footer_client> footers = getAllFooter();
@@ -113,7 +116,8 @@ public class queryFooter {
             System.out.println(footer.toString());
         }
     }
-     public static void main(String[] args) {
+
+    public static void main(String[] args) {
 //        queryEvent queryEvent = new queryEvent();
 //        queryEvent.printAllEvents();
         queryFooter queryfooter = new queryFooter();

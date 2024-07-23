@@ -21,11 +21,13 @@ import java.util.List;
 import model.queryAreaPosition;
 import model.queryBooking;
 import model.queryEvent;
+import model.queryFooter;
 import model.queryTicket;
 import model.queryUser;
 import schema.AreaEvent;
 import schema.Booking;
 import schema.Event;
+import schema.Footer_client;
 import schema.account;
 
 /**
@@ -71,9 +73,38 @@ public class PaymentCallback extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected synchronized void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        // check login 
+        String token2 = "";
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            // Kiểm tra tên cookie để tìm token
+            if ("token".equals(cookie.getName())) {
+                // Lấy giá trị token từ cookie
+                token2 = cookie.getValue();
+
+            }
+        }
+
+        // footer
+        queryFooter query = new queryFooter();
+        List<Footer_client> footers = query.getAllFooter();
+        request.setAttribute("footers", footers);
+        //end
+
+        queryUser qUser = queryUser.createQueryUSer();
+        String idUser = qUser.getIdByToken(token2);
+        //end 
         HttpSession session = request.getSession();
+        if (idUser.isBlank()) {
+            session.setAttribute("error", "Vui lòng đăng nhập");
+            response.sendRedirect("/");
+            return;
+        }
+
+        //end check login
         List<Booking> bookings = new ArrayList<>();
         queryEvent queryEventDao = queryEvent.createInstance();
         queryBooking bookingDao = queryBooking.createInstanceBooking();
@@ -110,13 +141,14 @@ public class PaymentCallback extends HttpServlet {
             sendMail sendMail = new sendMail();
             EmailSender emailSend = new EmailSender();
             String template = emailSend.emailConfirmBooking(bookings, "Xác nhận vé", event, accountLogin);
-            sendMail.sendEmailToTicket(accountLogin.getEmail(), "Xác nhận vé", template);
+            sendMail.sendEmailToTicket(accountLogin.getEmail(), "Confirm Ticket", template);
             request.getRequestDispatcher("/views/client/homepage/booking-success.jsp").forward(req, res);
             session.removeAttribute("bookings");
             session.removeAttribute("listArea");
             session.removeAttribute("eventId");
             return;
         }
+
         request.getRequestDispatcher("/views/client/homepage/booking-success.jsp").forward(req, res);
         session.removeAttribute("bookings");
         session.removeAttribute("listArea");

@@ -110,33 +110,54 @@ public class validateSignUp implements Filter {
         // validate signin here
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        String userName = req.getParameter("username");
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        String rePassword = req.getParameter("repeatPassword");
+        String userName = req.getParameter("username").trim();
+        String email = req.getParameter("email").trim();
+        String password = req.getParameter("password").trim();
+        String rePassword = req.getParameter("repeatPassword").trim();
         String referer = req.getHeader("Referer");
-        
+        HttpSession session = req.getSession();
 
         if (userName == null || email == null || password == null || rePassword == null) {
-            HttpSession session = req.getSession();
-            session.setAttribute("error", "Please enter all field");
-            
+
+            session.setAttribute("error", "Vui lòng nhập tất cả các trường");
+
             res.sendRedirect(referer);
             return;
         }
 
         if (userName.trim().equals("") || email.trim().equals("") || password.trim().equals("") || rePassword.trim().equals("")) {
-           HttpSession session = req.getSession();
-            session.setAttribute("error", "Please enter all field");
-            
+
+            session.setAttribute("error", "Các trường phải có ít nhất 1 kí tự");
+
+            res.sendRedirect(referer);
+            return;
+        }
+
+        if (password.contains(" ") || rePassword.contains(" ") || userName.contains(" ") || email.contains(" ")) {
+            session.setAttribute("error", "Các trường không được chứa khoảng trắng");
+
+            res.sendRedirect(referer);
+            return;
+        }
+
+        if (password.length() < 6 || rePassword.length() < 6 || userName.length() < 6) {
+            session.setAttribute("error", "Tên tài khoản và mật khẩu phải có ít nhất 6 kí tự");
+
+            res.sendRedirect(referer);
+            return;
+        }
+
+        if (password.length() > 200 || rePassword.length() > 200 || userName.length() > 200) {
+            session.setAttribute("error", "Tên tài khoản và mật khẩu Không quá 200 kí tự");
+
             res.sendRedirect(referer);
             return;
         }
 
         if (password.equals(rePassword) == false) {
-            HttpSession session = req.getSession();
-            session.setAttribute("error", "Password is not correct");
-            
+
+            session.setAttribute("error", "Mật khẩu không khớp");
+
             res.sendRedirect(referer);
             return;
         }

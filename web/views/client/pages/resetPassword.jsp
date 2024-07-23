@@ -45,17 +45,17 @@
 
                 <div class="recover-password">
                     <div class="title">
-                        <span>Reset your Password</span>
-                        <p>Enter new password </p>
+                        <span>Đổi mật khẩu</span>
+                        <p>Nhập mật khẩu mới </p>
                     </div>
 
 
 
                     <div class="notification">
                         <form action="/resetPassword" method="POST">
-                            <input type="password" placeholder="Enter new password" id="resetPassword" name="password" required> 
-                            <input type="password" placeholder="Confirm password" id="resetPassword" name="confirmPassword" required> 
-                            <input type="submit" value="Submit" style="background-color:#ec581e; color: white " > 
+                            <input type="password" placeholder="Nhập mật khẩu mới" id="resetPassword" name="password" required> 
+                            <input type="password" placeholder="Nhập lại mật khẩu" id="resetPassword" name="confirmPassword" required> 
+                            <input type="submit" value="Submit" style="background-color: rgb(45, 194, 117); color: white " > 
                         </form>
                     </div>
 

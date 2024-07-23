@@ -9,13 +9,13 @@
             <div class="col-lg-6 col-sm-6">
                 <div class="text-button">
 
-                    <c:if test="${token == null}">
+                    <c:if test="${cookie.token.value == null}">
                         <a href="/form">Đăng nhập <i class="fa fa-arrow-right"></i></a>
                         </c:if>
-                        <c:if test="${token != null}">
+                        <c:if test="${cookie.token.value != null}">
                         <a href="/logout">Đăng xuất <i class="fa fa-arrow-right"></i></a>
                         </c:if>
-                    
+
                 </div>
             </div>
         </div>
@@ -43,8 +43,8 @@
                         <ul class="nav">
                             <li><a href="/homepage" class="active">Trang chủ</a></li>
                             <li><a href="/blog">Bài viết</a></li>
-                            <li><a href="rent-venue.html">Các vé đã mua</a></li>
-                            <li><a href="shows-events.html">Thông tin tài khoản</a></li>
+                            <li><a href="/history-ticket">Các vé đã mua</a></li>
+                            <li><a href="/RenderProfileClient">Thông tin tài khoản</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>

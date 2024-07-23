@@ -6,6 +6,7 @@ package model;
 
 import helper.DBContext;
 import helper.payload;
+import helper.randomToken;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import schema.OTP;
@@ -42,7 +43,7 @@ public class queryOTP extends DBContext {
 
     // remove otp after used
     private void removeOTPUsed(String nameTable, String otp) {
-        String sql = "delete  from " + nameTable + " where OTP = " + otp;
+        String sql = "delete  from " + nameTable + " where OTP = '" + otp + "'";
         try {
             PreparedStatement st = connection.prepareCall(sql);
             st.execute();
@@ -53,8 +54,9 @@ public class queryOTP extends DBContext {
 
     // add otp for signup
     public void addOtp(String username, String email, String password, String OTP) {
-        String format = "INSERT INTO accountSignUp (username, email, password, OTP) VALUES ('%s', '%s', %s, %s)";
-        String sql = String.format(format, username, email, password, OTP);
+        String format = "INSERT INTO accountSignUp (username, email, password, OTP) VALUES ('%s', '%s', '%s', '%s')";
+        String sql = String.format(format, username, email, randomToken.md5(password), OTP);
+        System.out.println(sql);
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.execute();
@@ -66,7 +68,7 @@ public class queryOTP extends DBContext {
     // compare otp sign up
     public payload compareOTP(String OTP) {
         removerOTPOT("accountSignUp");
-        String format = "select * from accountSignUp where OTP = %s";
+        String format = "select * from accountSignUp where OTP = '%s'";
         String sql = String.format(format, OTP);
         OTP result = null;
         try {
@@ -150,11 +152,7 @@ public class queryOTP extends DBContext {
     public static void main(String[] args) {
         queryOTP test = queryOTP.createInstance();
 
-        payload temp = test.compareOtpForgotPass("1111111");
-        System.out.println(temp.getDescription());
-        System.out.println((String) temp.getObject());
-//        payload temp = test.inserOTPForgotPasword("vipboyxu2k3@gmail.com");
-//        System.out.println(temp.isIsSuccess());
+        test.addOtp("aaa", "aaaa", "aaa", "aaa");
     }
 
     // add otp for forgot password

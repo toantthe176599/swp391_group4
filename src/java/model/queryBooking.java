@@ -15,25 +15,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import schema.ReportTransaction;
+import schema.Ticket;
 
 /**
  *
  * @author HP
  */
 public class queryBooking extends DBContext {
-
+    
     private static queryBooking qBooking;
-
+    
     private queryBooking() {
     }
-
+    
     public static synchronized queryBooking createInstanceBooking() {
         if (qBooking == null) {
             qBooking = new queryBooking();
         }
         return qBooking;
     }
-
+    
     public boolean insertBooking(Booking booking) {
         String sql = "INSERT INTO Booking (account_id, ticket_id, total_amount, payment_method, booking_date, booking_id, quantity) VALUES (?, ?, ?, ?, GETDATE(), ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -50,7 +51,7 @@ public class queryBooking extends DBContext {
         }
         return false;
     }
-
+    
     public List<Booking> getAllBookings() {
         String sql = "SELECT * FROM Booking";
         List<Booking> bookings = new ArrayList<>();
@@ -71,17 +72,17 @@ public class queryBooking extends DBContext {
         }
         return bookings;
     }
-
+    
     public Map<Date, Double> getRevenuePerDay() {
         List<Booking> bookings = getAllBookings();
         Map<Date, Double> revenuePerDay = new HashMap<>();
-
+        
         for (Booking booking : bookings) {
             Date bookingDate = booking.getBookingDate();
             double totalAmount = booking.getTotalAmount();
             revenuePerDay.put(bookingDate, revenuePerDay.getOrDefault(bookingDate, 0.0) + totalAmount);
         }
-
+        
         return revenuePerDay;
     }
 
@@ -124,11 +125,70 @@ public class queryBooking extends DBContext {
             return listReportBooking;
         }
     }
-    //end
+    
+    public List<Booking> getAllBookingsByCustomer(String account_id) {
+        
+        String sql = "SELECT b.*, e.status from event e join \n"
+                + "Ticket t on e.event_id = t.event_id\n"
+                + "join Booking b\n"
+                + "on b.ticket_id = t.ticket_id\n"
+                + "where account_id = ? \n"
+                + "order by b.booking_date desc";
+        
+        List<Booking> bookings = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, account_id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Booking booking = new Booking(
+                        resultSet.getString("booking_id"),
+                        resultSet.getString("account_id"),
+                        resultSet.getString("ticket_id"),
+                        resultSet.getDouble("total_amount"),
+                        resultSet.getString("payment_method"),
+                        resultSet.getDate("booking_date"),
+                        resultSet.getString("status")
+                );
+                booking.setQuantity(resultSet.getInt("quantity"));
+                booking.setTicket(this.getTicketById(resultSet.getString("ticket_id")));
+                bookings.add(booking);
+            }
+        } catch (Exception e) {
+            System.out.println("Get all booking: " + e);
+        }
+        return bookings;
+    }
+    
+    public Ticket getTicketById(String ticketId) {
+        String sql = "SELECT ticket_id, event_id, area_id FROM Ticket WHERE ticket_id = ?";
+        
+        try (PreparedStatement pt = connection.prepareStatement(sql)) {
+            pt.setString(1, ticketId);
+            try (ResultSet rs = pt.executeQuery()) {
+                if (rs.next()) {
+                    String id = rs.getString("ticket_id");
+                    String eventId = rs.getString("event_id");
+                    String areaId = rs.getString("area_id");
+                    Ticket ticket = new Ticket(id, eventId, areaId);
+                    queryEvent queryEnvent = queryEvent.createInstance();
+                    queryAreaPosition queryEAreaPosition = queryAreaPosition.createInstanceAreaPosition();
+                    ticket.setEvent(queryEnvent.getAnEventById(eventId));
+                    ticket.setArea(queryEAreaPosition.getAreaById(areaId));
+                    return ticket;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e + " lỗi tại queryticket hàm getTicketById");
+        }
+        
+        return null;
+    }
 
+    //end
     public static void main(String[] args) {
         queryBooking qBooking = queryBooking.createInstanceBooking();
         List<ReportTransaction> list = qBooking.getBookingByEvent("bFJZcmRWMVdpM3VvMFNtbVE3Smh0NHdrVQ==");
-
+        
     }
 }

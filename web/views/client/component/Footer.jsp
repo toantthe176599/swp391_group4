@@ -44,7 +44,7 @@
                     <div class="address">
                         <h4>Địa điểm</h4>
                         <div>
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d232.7588336279727!2d105.79969833536057!3d21.02702999035624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abe99f12ce91%3A0x20de9b2b8858d094!2sGameHome!5e0!3m2!1svi!2sus!4v1720669990857!5m2!1svi!2sus" width="200" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            ${footer.iframe}
                         </div>
                         <span>${footer.address}</span>
                     </div>
@@ -92,16 +92,21 @@
                                     <ul>
                                         <li><a href="/homepage" class="active">Trang chủ</a></li>
                                         <li><a href="/blog">Bài viết</a></li>
-                                        <li><a href="rent-venue.html">Rent Venue</a></li>
-                                        <li><a href="shows-events.html">Shows & Events</a></li> 
-                                        <li><a href="tickets.html">Tickets</a></li> 
+
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-lg-3">
+
                                 <div class="social-links">
                                     <ul>
-                                        <li><a href="${footer.zalo}"><i class="fa fa-instagram"></i></a></li>
+                                        <li>
+                                            <div style="width: 50px; height: 50px">
+                                                <a href="${footer.zalo}" target="_blank">
+                                                    <img style="width: 25px; height: 25px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/2048px-Icon_of_Zalo.svg.png" alt="">
+                                                </a>
+                                            </div>
+                                        </li>
                                         <li><a href="${footer.facebook}"><i class="fa fa-facebook"></i></a></li>
 
                                     </ul>

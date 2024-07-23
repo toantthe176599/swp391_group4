@@ -16,7 +16,7 @@ import schema.Footer_client;
 public class FooterServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -32,7 +32,7 @@ public class FooterServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,7 +41,7 @@ public class FooterServlet extends HttpServlet {
         request.setAttribute("footers", footers);
         request.getRequestDispatcher("/views/admin/pages/website/website.jsp").forward(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -53,14 +53,15 @@ public class FooterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String facebook = request.getParameter("facebook");
         String zalo = request.getParameter("zalo");
-        
+        String iframe = request.getParameter("map");
+
         queryFooter queryFooter = new queryFooter();
-        queryFooter.updateFooter(id, address, useful_links, working_hours, phone_number, email, facebook, zalo);
+        queryFooter.updateFooter(id, address, useful_links, working_hours, phone_number, email, facebook, zalo, iframe);
         HttpSession session = request.getSession();
         session.setAttribute("success", "Cập nhật thành công");
         response.sendRedirect(request.getContextPath() + "/admin/footer");
     }
-    
+
     @Override
     public String getServletInfo() {
         return "Short description";

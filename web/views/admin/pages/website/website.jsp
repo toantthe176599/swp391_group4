@@ -12,7 +12,7 @@
             body {
                 font-family: Arial, sans-serif;
                 margin: 0; /* Remove default body margin */
-                padding: 20px;
+
                 background-color: #f5f5f5;
             }
             .main-container {
@@ -20,14 +20,16 @@
                 align-items: flex-start;
             }
             .navbar-container {
+
                 flex: 1;
                 margin-right: 10px; /* Reduced margin to make form closer to navbar */
                 margin-left: 0; /* Ensure navbar is flush against the left */
             }
             .form-container-wrapper {
+                margin-left: -200px;
                 flex: 3;
                 background-color: #fff;
-                padding: 30px;
+
                 border-radius: 8px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
@@ -39,9 +41,9 @@
             .form-container {
                 border: 1px solid #ddd;
                 border-radius: 5px;
-                padding: 20px;
+
                 background-color: #fafafa;
-                margin-bottom: 20px;
+
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
             label {
@@ -112,8 +114,7 @@
                         <form action="${pageContext.request.contextPath}/admin/footer" method="post">
                             <input type="hidden" name="id" value="${footer.id}" />
 
-                            <label>Địa chỉ</label>
-                            <input type="text" name="address" value="${footer.address}" /><br/>
+
 
                             <label>Giới thiệu:</label>
                             <input type="text" name="useful_links" value="${footer.useful_links}" /><br/>
@@ -132,6 +133,15 @@
 
                             <label>Zalo:</label>
                             <input type="text" name="zalo" value="${footer.zalo}" /><br/>
+                            <label>Địa chỉ</label>
+                            <input type="text" name="address" value="${footer.address}" /><br/>
+
+
+                            <label>Bản đồ(iframe):</label> <input type="text" name="map" value="<c:out value='${footer.iframe}' escapeXml='true' />" />
+                            <div style="display: flex; justify-content: center; ">
+                                ${footer.iframe}
+                            </div>
+
 
                             <input type="submit" value="Chỉnh sửa" onclick="return confirm('Bạn có muốn thay đổi không?')" />
                             <a href="${pageContext.request.contextPath}/admin/dashboard" class="btn-back">Quay lại</a>

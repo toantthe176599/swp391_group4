@@ -28,15 +28,15 @@
                             <li><a href="/homepage" class="active">Trang chủ</a></li>
                             <li><a href="/blog">Bài viết</a></li>
 
-                            <li><a href="rent-venue.html">Các vé đã mua</a></li>
-                            <li><a href="shows-events.html">Thông tin tài khoản</a></li>
+                            <li><a href="/history-ticket">Các vé đã mua</a></li>
+                            <li><a href="/RenderProfileClient">Thông tin tài khoản</a></li>
                         </ul>
 
                         <%-- Display different menu options based on login status --%>
                         <c:choose>
-                            <c:when test="${empty sessionScope.username}">
+                            <c:when test="${cookie.token.value == ''}">
                                 <a href="/login" class='menu-trigger'>
-                                    <span>Login</span>
+                                    <span>Đăng nhập</span>
                                 </a>
                             </c:when>
                             <c:otherwise>

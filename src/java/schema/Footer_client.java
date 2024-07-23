@@ -19,11 +19,12 @@ public class Footer_client {
     private String email;
     private String facebook;
     private String zalo;
+    private String iframe;
+
     public Footer_client() {
     }
 
-
-    public Footer_client(String id, String address, String useful_links, String working_hours, String phone_number, String email, String facebook, String zalo) {
+    public Footer_client(String id, String address, String useful_links, String working_hours, String phone_number, String email, String facebook, String zalo, String iframe) {
 
         this.id = id;
         this.address = address;
@@ -33,8 +34,8 @@ public class Footer_client {
         this.email = email;
         this.facebook = facebook;
         this.zalo = zalo;
+        this.iframe = iframe;
     }
-
 
     public String getId() {
         return id;
@@ -101,10 +102,13 @@ public class Footer_client {
         this.zalo = zalo;
     }
 
+    public String getIframe() {
+        return iframe;
+    }
+
     @Override
     public String toString() {
         return "Footer_client{" + "id=" + id + ", address=" + address + ", useful_links=" + useful_links + ", working_hours=" + working_hours + ", phone_number=" + phone_number + ", email=" + email + ", facebook=" + facebook + ", zalo=" + zalo + '}';
     }
 
-    
 }

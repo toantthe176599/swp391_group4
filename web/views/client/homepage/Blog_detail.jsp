@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html lang="en">
 
     <head>
@@ -24,7 +26,7 @@
                 border: 1px solid #ddd;
                 border-radius: 5px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                max-width: 800px;
+
                 margin: 50px auto;
                 font-family: 'Poppins', sans-serif;
             }
@@ -78,7 +80,7 @@
     <body>
 
         <!-- ***** Preloader Start ***** -->
-        
+
         <!-- ***** Preloader End ***** -->
 
         <!-- ***** Pre HEader ***** -->
@@ -108,7 +110,9 @@
                 </div>
                 <div class="content">
                     <p>${blog.content}</p>
-                    <p>Published Date: ${blog.publishDate}</p>
+                    Ngày đăng: 
+                    <fmt:formatDate value="${blog.publishDate}" pattern="dd/MM/yyyy" />
+                    </p>
                     <p>Author: ${blog.author}</p>
                 </div>
             </c:if>

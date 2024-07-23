@@ -106,20 +106,33 @@ public class validateResetPassword implements Filter {
 
         doBeforeProcessing(request, response);
 
+        String redirect = "/views/client/pages/resetPassword.jsp";
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         String password = req.getParameter("password");
         String confirmPassword = req.getParameter("confirmPassword");
         if (password.isBlank() || confirmPassword.isBlank()) {
-            session.setAttribute("error", "Enter all field password");
-            res.sendRedirect("/views/client/pages/resetPassword.jsp");
+            session.setAttribute("error", "Vui lòng nhập tất cả các trường");
+            res.sendRedirect(redirect);
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            session.setAttribute("error", "Confirm password is not correct");
-            res.sendRedirect("/views/client/pages/resetPassword.jsp");
+            session.setAttribute("error", "Mật khẩu không khớp");
+            res.sendRedirect(redirect);
+            return;
+        }
+
+        if (password.contains(" ") || confirmPassword.contains(" ")) {
+            session.setAttribute("error", "Mật khẩu không được phép có khoảng trắng");
+            res.sendRedirect(redirect);
+            return;
+        }
+
+        if (password.length() < 6 || confirmPassword.length() < 6) {
+            session.setAttribute("error", "Độ dài mật khẩu phải ít nhất 6 kí tự");
+            res.sendRedirect(redirect);
             return;
         }
 

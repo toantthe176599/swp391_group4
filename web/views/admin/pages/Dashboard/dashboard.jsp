@@ -54,6 +54,7 @@
                                                         <div>
                                                             <b>Sắp xếp theo</b>
                                                             <select id="sort-option" onchange="sortEvents(this.value)">
+                                                                <option disabled default selected >--chọn--</option>
                                                                 <option value="ticket-asc">Tiến độ bán vé (tăng dần)</option>
                                                                 <option value="ticket-desc">Tiến độ bán vé (giảm dần)</option>
 
@@ -69,7 +70,7 @@
 
                                                 <ul class="projects" id="event-list">
                                                     <c:forEach var="item" items="${report}">
-                                                        <li class="project-item">
+                                                        <li class="project-item" item>
                                                             <div>
                                                                 <img src="${item.img}" loading="lazy" alt="Image 001" style="width: auto; height: auto; border-radius: 5%" />
                                                             </div>
@@ -81,7 +82,7 @@
                                                                     <h6>Tổng số lượng vé: <b>${item.totalTicket}</b></h6>
                                                                     <h6>Tiến độ bán vé</h6>
                                                                     <p class="value-label" style="width:${item.percentSold}%" data-value="${item.percentSold}"></p>
-                                                                    <progress max="${item.totalTicket}" value="${item.ticketSold}" data-value="${item.ticketSold}">${item.percentSold}%</progress>
+                                                                    <progress max="${item.totalTicket}" value="${item.ticketSold}" percentSold data-value="${item.ticketSold}">${item.percentSold}%</progress>
                                                                 </div>
                                                                 <div class="footer-row">
                                                                     <c:if test="${item.status != 'cancel'}">
@@ -145,20 +146,20 @@
                                                                 }
 
                                                                 function sortEvents(option) {
-                                                                    let events = Array.from(document.querySelectorAll('.project-item'));
+                                                                    let events = Array.from(document.querySelectorAll('[item]'));
 
                                                                     switch (option) {
                                                                         case 'ticket-asc':
                                                                             events.sort((a, b) => {
-                                                                                let soldA = parseInt(a.querySelector('.progress-row h6:nth-of-type(1) b').textContent);
-                                                                                let soldB = parseInt(b.querySelector('.progress-row h6:nth-of-type(1) b').textContent);
+                                                                                let soldA = parseFloat(a.querySelector('[percentSold]').textContent);
+                                                                                let soldB = parseFloat(b.querySelector('[percentSold]').textContent);
                                                                                 return soldA - soldB;
                                                                             });
                                                                             break;
                                                                         case 'ticket-desc':
                                                                             events.sort((a, b) => {
-                                                                                let soldA = parseInt(a.querySelector('.progress-row h6:nth-of-type(1) b').textContent);
-                                                                                let soldB = parseInt(b.querySelector('.progress-row h6:nth-of-type(1) b').textContent);
+                                                                                let soldA = parseFloat(a.querySelector('[percentSold]').textContent);
+                                                                                let soldB = parseFloat(b.querySelector('[percentSold]').textContent);
                                                                                 return soldB - soldA;
                                                                             });
                                                                             break;

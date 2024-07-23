@@ -299,6 +299,23 @@ public class queryEventClient {
         return list;
     }
 
+    public String getStatusEvent(String eventId) {
+        String sql = "select status from event where event_id = ?";
+        try {
+            conn = new DBContext().connection;
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, eventId);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("status");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return "";
+    }
+
     public void printAllEvents() {
         List<Event_client> events = getAllEvent();
         for (Event_client event : events) {
@@ -314,10 +331,7 @@ public class queryEventClient {
     }
 
     public static void main(String[] args) {
-        queryEventClient temp = new queryEventClient();
-        List<Event_client> list = temp.getAllEvent();
-        for (Event_client i : list) {
-            System.out.println(i.getName());
-        }
+        queryEventClient qClient = new queryEventClient();
+        System.out.println(qClient.getStatusEvent("aFREMzR0ZHRwa0gwcmZ1UGZ1MHJaU2ZhdQ=="));
     }
 }

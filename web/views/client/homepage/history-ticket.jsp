@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%@ page import="java.util.List" %>
-    <%@ page import="schema.Blog_client" %>
     <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+    <jsp:useBean class="helper.TicketUltils" id="getTime" />
     <head>
 
         <meta charset="utf-8">
@@ -96,34 +97,6 @@
 
             }
         </style>
-
-        <style>
-            .pagination {
-                display: flex;
-                justify-content: center;
-                margin-top: 20px;
-            }
-
-            .pagination a {
-                color: #28a745;
-                padding: 8px 16px;
-                text-decoration: none;
-                transition: background-color 0.3s;
-                border: 1px solid #ddd;
-                margin: 0 4px;
-                border-radius: 4px;
-            }
-
-            .pagination a.active {
-                background-color: #28a745;
-                color: white;
-            }
-
-            .pagination a:hover:not(.active) {
-                background-color: #ddd;
-            }
-        </style>
-
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/bootstrap.min.css">
 
         <!-- Font Awesome CSS -->
@@ -136,65 +109,107 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/tooplate-artxibition.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/views/client/homepage/assets/css/your-stylesheet.css">
 
+
     </head>
 
     <body>
 
         <!-- ***** Preloader Start ***** -->
         <!-- ***** Header Area Start ***** -->
-
-        <jsp:include page="../component/Header.jsp" />
-
+        <div class="header-wrapper">
+            <jsp:include page="../component/Navbar.jsp" />
+        </div>
         <!-- ***** Header Area End ***** -->
 
         <!-- ***** About Us Page ***** -->
-        <div class="page-heading-shows-events">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2>Bài viết sự kiện</h2>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
+        <div  style="width: unset">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="anh">Bài viết</h2>
+                    <h2 class="anh">Lịch sử mua vé</h2>
                     <div class="blog-posts">
-                        <c:choose>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
 
-                            <c:when test="${not empty blogsPage}">
-                                <c:forEach var="blog" items="${blogsPage}">
 
-                                    <div class="blog-post">
-                                        <h3>${blog.title}</h3>
-                                        <p><strong>Tác giả:</strong> ${blog.author}</p>
-                                        <p><strong>Ngày đăng:</strong> ${blog.publishDate}</p>
-                                        <img src="${blog.image}" alt="${blog.title}">
-                                        <a href="blogdetail?blog_id=${blog.blog_id}" class="view-button">Chi tiết</a>
-                                    </div>
+                                    <th>Sự kiện</th>
+                                    <th>Ảnh</th>
+                                    <th>Loại vé </th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng tiền</th> 
+                                    <th>Trạng thái</th>
+                                    <th>Ngày mua</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="book" items="${booking}">
+                                    <tr>
+
+
+                                        <td style=" word-wrap: break-word; width: 300px;">${book.ticket.event.name}</td>
+
+                                        <!--img-->
+                                        <td>
+                                            <img src="${book.ticket.event.img_event}" width="300" height="auto" alt="alt"/>
+                                        </td>
+
+                                        <!--area-->
+                                        <td>${book.ticket.area.nameArea}</td>
+                                        <!--quantity-->
+                                        <td>${book.quantity}</td>
+                                        <!--total-->
+                                        <td>
+                                            <fmt:formatNumber value="${book.totalAmount}" type="currency" currencySymbol="₫" />
+                                        </td>
+
+                                        <!--status-->
+                                        <td>
+
+                                            <c:if test="${book.status == 'expired'}">
+                                                <span class="badge badge-danger">
+                                                    Hết Hạn
+                                                </span>
+                                            </c:if>
+                                            <c:if test="${book.status == 'active'}">
+                                                <span class="badge badge-success">
+                                                    Chưa hết hạn
+                                                </span>
+                                            </c:if>
+                                            <c:if test="${book.status == 'cancel'}">
+                                                <span class="badge badge-success">
+                                                    Sự kiện bị hủy
+                                                </span>
+                                            </c:if>
+                                        </td>
+
+
+
+                                        <!-- Chuyển đổi chuỗi ngày thành đối tượng ngày -->
+                                        <fmt:parseDate value="${book.bookingDate}" var="parsedDate" pattern="yyyy-MM-dd" />
+
+                                        <!-- Định dạng đối tượng ngày thành dd/MM/yyyy -->
+                                        <fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy" var="formattedDate" />
+
+
+
+                                        <!--date-->
+                                        <td>${formattedDate}</td>
+                                    </tr>
                                 </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <p>No blogs found.</p>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
 
-                    <div class="pagination">
-                        <c:if test="${currentPage > 1}">
-                            <a href="blog?page=${currentPage - 1}">Previous</a>
-                        </c:if>
-                        <c:forEach var="i" begin="1" end="${totalPages}">
-                            <a href="blog?page=${i}" class="${i == currentPage ? 'active' : ''}">${i}</a>
-                        </c:forEach>
-                        <c:if test="${currentPage < totalPages}">
-                            <a href="blog?page=${currentPage + 1}">Next</a>
-                        </c:if>
-                    </div>
+                                <c:if test="${fn:length(booking) == 0}">
+                                <td colspan="7" style="text-align: center"> <h3>Không có vé nào được mua</h3></td>
 
+                            </c:if>
+                            </tbody>
+                        </table>
+
+
+
+
+
+                    </div>
                 </div>
             </div>
         </div>

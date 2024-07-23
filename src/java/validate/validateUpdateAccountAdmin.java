@@ -11,12 +11,14 @@ import java.io.StringWriter;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -116,19 +118,34 @@ public class validateUpdateAccountAdmin implements Filter {
         String[] pathSegments = pathInfo.split("/");
         String id = pathSegments[pathSegments.length - 1];
         //end
-        String role = req.getParameter("role");
-        if (username.isBlank() || role.isBlank()) {
+
+        System.out.println(password);
+        // check permission
+        ServletContext servletContext = filterConfig.getServletContext();
+        List<String> permission = (List<String>) servletContext.getAttribute("permission");
+        if (!permission.contains("edit_account")) {
+            res.sendRedirect("http://localhost:8080/views/client/404Page/404Page.html");
+            return;
+        }
+        //end
+        if (username.isBlank() || password.isBlank()) {
 
             HttpSession session = req.getSession();
             session.setAttribute("error", "Vui lòng nhập tất cả các trường");
             res.sendRedirect("/admin/account/editform/" + id);
             return;
         }
-        //TODO
-//        check xem role co ton tai hay khong tranh truong hop F12 sua lai
+
         if (username.contains(" ") || password.contains(" ")) {
             HttpSession session = req.getSession();
-            session.setAttribute("error", "Không được phép chứa dấu cách");
+            session.setAttribute("error", "Tên tài khoản và mật khẩu kshông được phép chứa dấu cách");
+            res.sendRedirect("/admin/account/editform/" + id);
+            return;
+        }
+
+        if (username.length() < 6 || password.length() < 6) {
+            HttpSession session = req.getSession();
+            session.setAttribute("error", "Tên tài khoản và mật khẩu phải lớn hơn 6 kí tự");
             res.sendRedirect("/admin/account/editform/" + id);
             return;
         }

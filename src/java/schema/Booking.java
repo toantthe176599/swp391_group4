@@ -21,7 +21,8 @@ public class Booking {
     private Date bookingDate;
     private String areaId;
     private AreaEvent detailArea;
-    
+    private Ticket ticket;
+    private String status;
 
     public Booking() {
     }
@@ -34,8 +35,16 @@ public class Booking {
         this.paymentMethod = paymentMethod;
         this.bookingDate = bookingDate;
     }
-    
-    
+
+    public Booking(String bookingId, String accountId, String ticketId, double totalAmount, String paymentMethod, Date bookingDate, String status) {
+        this.bookingId = bookingId;
+        this.accountId = accountId;
+        this.ticketId = ticketId;
+        this.totalAmount = totalAmount;
+        this.paymentMethod = paymentMethod;
+        this.bookingDate = bookingDate;
+        this.status = status;
+    }
 
     public String getAreaId() {
         return areaId;
@@ -103,6 +112,26 @@ public class Booking {
 
     public void setBookingDate(Date bookingDate) {
         this.bookingDate = bookingDate;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setDetailArea(AreaEvent detailArea) {
+        this.detailArea = detailArea;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

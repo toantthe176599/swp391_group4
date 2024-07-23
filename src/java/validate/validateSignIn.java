@@ -114,25 +114,16 @@ public class validateSignIn implements Filter {
         String userName = req.getParameter("Username");
         String password = req.getParameter("Password");
         String referer = req.getHeader("Referer");
+        HttpSession session = req.getSession();
         if (userName == null || password == null || userName.trim().equals("") || password.trim().equals("")) {
 
-            HttpSession session = req.getSession();
-
-            session.setAttribute("error", "Please enter all field");
+            session.setAttribute("error", "Vui lòng điền tất cả các trường");
             res.sendRedirect(referer);
             return;
         }
 
-        if (userName.trim().length() < 6 || userName.contains(" ")) {
-            HttpSession session = req.getSession();
-            session.setAttribute("error", "Username must at least 6 character and do not has spacce");
-            res.sendRedirect(referer);
-            return;
-        }
-
-        if (password.trim().length() < 6 || password.contains(" ")) {
-            HttpSession session = req.getSession();
-            session.setAttribute("error", "Password must at least 6 character");
+        if (userName.contains(" ") || password.contains(" ")) {
+            session.setAttribute("error", "Tên tài khoản hoặc mật khẩu không được chứa khoảng trắng");
             res.sendRedirect(referer);
             return;
         }

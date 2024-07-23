@@ -71,9 +71,30 @@ public class editAccount extends HttpServlet {
         String id = pathSegments[pathSegments.length - 1];
         //end 
 
+        String redirect = "/admin/account/editform/" + id;
+        HttpSession session = req.getSession();
+
+        if (password.length() < 6) {
+            session.setAttribute("success", "Mật khẩu phải có độ dài lớn hơn 6!");
+            res.sendRedirect("/admin/account/editform/" + id);
+            return;
+        }
+
+        if (password.length() > 200) {
+            session.setAttribute("success", "Mật khẩu phải có độ dài nhỏ hơn 200 kí tự!");
+            res.sendRedirect("/admin/account/editform/" + id);
+            return;
+        }
+
+        if (password.contains(" ") || userName.contains(" ")) {
+            session.setAttribute("success", "Tài khoản hoặc mật khẩu không được chứa khoảng trắng");
+            res.sendRedirect("/admin/account/editform/" + id);
+            return;
+        }
+
         queryUser queryUse = queryUser.createQueryUSer();
         boolean updateAccount = queryUse.updateAccountById(id, userName, password, role);
-        HttpSession session = req.getSession();
+
         if (!updateAccount) {
             session.setAttribute("error", "Cập nhật thất bại!");
             res.sendRedirect("/admin/account/editform/" + id);

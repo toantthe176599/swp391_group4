@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.client.event;
+package controller.client.profile;
 
+import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,23 +12,17 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.queryAreaPosition;
-import model.queryEvent;
 import model.queryFooter;
 import model.queryUser;
-import schema.AreaEvent;
-import schema.Event;
 import schema.Footer_client;
-import schema.AreaEvent;
-import schema.Event;
+import schema.InformationUser;
 
 /**
  *
- * @author Admin
+ * @author linhl
  */
-public class areaDetailController extends HttpServlet {
+public class renderUpdateProfileFormClient extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +41,10 @@ public class areaDetailController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet areaDetailController</title>");
+            out.println("<title>Servlet renderUpdateProfileFormClient</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet areaDetailController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet renderUpdateProfileFormClient at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,7 +62,7 @@ public class areaDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        // get id user
         String token = "";
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
@@ -82,55 +77,22 @@ public class areaDetailController extends HttpServlet {
         queryUser qUser = queryUser.createQueryUSer();
         String idUser = qUser.getIdByToken(token);
         //end 
-        HttpSession session = request.getSession();
-        if (idUser.isBlank()) {
-            session.setAttribute("error", "Vui lòng đăng nhập");
-            response.sendRedirect("/");
-            return;
-        }
 
-        String eventId = request.getParameter("eventId");
-        //get detail event from db
-        queryEvent qEvent = queryEvent.createInstance();
-        Event event = qEvent.getAnEventById(eventId);
-        request.setAttribute("event", event);
-        //end
-        //get all area of event
-        queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();
-        List<AreaEvent> listArea = qAreaPosition.getAllAreaOfAnEventById(eventId);
-        request.setAttribute("area", listArea);
+        //get user information
+        InformationUser inforUser = qUser.getInforByID(idUser);
+
+        request.setAttribute("infor", inforUser);
         //end
 
         queryFooter query = new queryFooter();
         List<Footer_client> footers = query.getAllFooter();
         request.setAttribute("footers", footers);
 
-        // Chuyển tiếp yêu cầu tới JSP để hiển thị thông tin sự kiện và vùng
-        request.getRequestDispatcher("/views/client/homepage/areaDetailClient.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/client/homepage/update-information.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

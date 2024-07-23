@@ -95,7 +95,7 @@ public class signUp extends HttpServlet {
         // send OTP to gmail user
         queryOTP otp = queryOTP.createInstance();
         final String OTP = randomToken.generateRandomDigitString(8);
-        res.getWriter().print(userName);
+
         otp.addOtp(userName, email, password, OTP);
         sendMail.sendEmailTo(email, "Your OTP", "your OTP is " + OTP + " it will be exprired in 3 minutes");
         req.getRequestDispatcher("/views/client/pages/OTPFormSignUp.jsp").forward(req, res);

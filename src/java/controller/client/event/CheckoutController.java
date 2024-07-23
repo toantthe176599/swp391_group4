@@ -17,6 +17,7 @@ import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import model.queryAreaPosition;
+import model.queryEventClient;
 import model.queryUser;
 import schema.AreaEvent;
 import schema.Booking;
@@ -82,16 +83,18 @@ public class CheckoutController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String eventId = request.getParameter("eventId");
+        // check status event
+        queryEventClient qClient = new queryEventClient();
+
+        String status = qClient.getStatusEvent(eventId);
+        if (!status.equals("active")) {
+            response.sendRedirect("/homepage");
+            return;
+        }
+        //end check status event
 
         try {
-            queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();
-            List<AreaEvent> listArea = qAreaPosition.getAllAreaOfAnEventById(eventId);
-            HttpSession session = request.getSession();
-            int totalPay = 0;
-            int index = 0;
-            List<Booking> bookings = new ArrayList<>();
-            HttpServletRequest req = (HttpServletRequest) request;
-            HttpServletResponse res = (HttpServletResponse) response;
+            // check login
             Cookie cookie[] = request.getCookies();
 
             String token = "";
@@ -100,11 +103,30 @@ public class CheckoutController extends HttpServlet {
                     token = i.getValue();
                 }
             }
+
             queryUser queryUserDao = queryUser.createQueryUSer();
+
+            String idUser = queryUserDao.getIdByToken(token);
+            //end  check login
+
+            queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();
+            List<AreaEvent> listArea = qAreaPosition.getAllAreaOfAnEventById(eventId);
+            HttpSession session = request.getSession();
+            int totalPay = 0;
+            int index = 0;
+            List<Booking> bookings = new ArrayList<>();
+
+            if (idUser.isBlank()) {
+                session.setAttribute("error", "Vui lòng đăng nhập");
+                response.sendRedirect("/");
+                return;
+            }
+
             account accountLogin = queryUserDao.getUserByToken(token);
 
             for (AreaEvent areaEvent : listArea) {
                 String quantity = request.getParameter("quantityInput-" + index);
+                System.out.println("quantity: " + quantity);
                 int quantityNumber = Integer.parseInt(quantity);
                 if (quantityNumber > 0) {
                     Booking book = new Booking();
@@ -125,8 +147,9 @@ public class CheckoutController extends HttpServlet {
             session.setAttribute("listArea", listArea);
             session.setAttribute("eventId", eventId);
             response.sendRedirect("vnpay?amount=" + totalPay);
-        } catch (Exception e) {
 
+        } catch (Exception e) {
+            System.out.println(e);
             response.sendRedirect("areaDetailController?eventId=" + eventId);
         }
     }

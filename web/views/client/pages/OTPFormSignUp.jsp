@@ -11,21 +11,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="../../../public/client/css/loginForm.css"/>
-        <title>Confirm OTP</title>
+        <title>Xác thực OTP</title>
 
     </head>
     <body>
         <div class="wrapper">
             <div class="sign-panels">
                 <ul class="flash_msg">
-                    <!--			<li class="msg s_success">
-                                                    <span><i class="fas fa-check"></i></span>
-                                                    <div class="text">
-                                                            <div class="title">Success</div>
-                                                            <div class="content">Anyone with access can view your invited visitors.</div>
-                                                    </div>
-                                                    <span class="alink"><i class="fas fa-times"></i></span>
-                                            </li>-->
+
 
                     <c:if test="${sessionScope.error != null}">
                         <li class="msg s_warning" style="margin-bottom: 0">
@@ -45,18 +38,18 @@
 
                 <div class="recover-password">
                     <div class="title">
-                        <span>Verification email</span>
-                        <p>Enter the OTP </p>
+                        <span>Xác thực email</span>
+                        <p>Nhập OTP</p>
                     </div>
 
 
 
                     <div class="notification">
-                        <p>Good job. An email containing information was sent to
-                            <span class="reset-mail"></span>. Please take the OTP in your email. Thanks!</p>
+                        <p>
+                            <span class="reset-mail"></span>Vui lòng kiểm tra email để lấy mã xác thực OTP</p>
                         <form action="/confirmEmail" method="POST">
-                            <input type="text" placeholder="Enter the OTP here" id="resetPassword" name="OTP" required> 
-                            <input type="submit" value="Submit" style="background-color:#ec581e; color: white " > 
+                            <input type="text" placeholder="Nhập mã OTP" id="resetPassword" name="OTP" required> 
+                            <input type="submit" value="Gửi" style="background-color:#ec581e; color: white " > 
                         </form>
                     </div>
 

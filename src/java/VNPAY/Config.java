@@ -1,4 +1,3 @@
-
 package VNPAY;
 
 /**
@@ -132,6 +131,5 @@ public class Config {
         }
         return sb.toString();
     }
-    
-   
+
 }

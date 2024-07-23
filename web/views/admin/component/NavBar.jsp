@@ -14,8 +14,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
-            <img src="https://preview.webpixels.io/web/img/logos/clever-primary.svg" alt="...">
+        <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="/admin/dashboard">
+            <img src="https://scontent.fhan14-3.fna.fbcdn.net/v/t1.15752-9/449601047_1156146512267329_8204449363145448204_n.png?_nc_cat=111&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGqe6XFZJIn6HsRENTQD75LJoQNGWIPHZQmhA0ZYg8dlCsjrqVTgoMrY12bgXj86bokf02vtKP1dXeChs3gHnJ_&_nc_ohc=3Tvpd2eJz8QQ7kNvgFITuWc&_nc_ht=scontent.fhan14-3.fna&oh=03_Q7cD1QGXONmRIUIsvmZwbdOe8D5uKUmO4fzhAzkGCcTFCGYe1g&oe=66BB09F1" alt="...">
         </a>
         <!-- User menu (mobile) -->
         <div class="navbar-user d-lg-none">
@@ -53,7 +53,7 @@
         <c:set var="permission" value="${applicationScope.permission}"  />
 
 
-      
+
         <!-- Collapse -->
         <div class="collapse navbar-collapse" id="sidebarCollapse">
             <!-- Navigation -->
@@ -105,7 +105,7 @@
                     </li>
                 </c:if>
 
-                    
+
                 <c:if test="${fn:contains(permission, 'view_inforwebsite')}">
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/footer">
@@ -115,6 +115,12 @@
                     </li>
                 </c:if>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="/homepage">
+                        <i class="bi bi-globe"></i> Đi đến trang web
+                    </a>
+
+                </li>
             </ul>
             <!-- Divider -->
             <hr class="navbar-divider my-5 opacity-20">

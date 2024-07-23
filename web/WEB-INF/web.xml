@@ -13,10 +13,6 @@
         <filter-class>validate.validateResetPassword</filter-class>
     </filter>
     <filter>
-        <filter-name>validateHomepage</filter-name>
-        <filter-class>validate.validateHomepage</filter-class>
-    </filter>
-    <filter>
         <filter-name>filterWebJSP</filter-name>
         <filter-class>validate.filterWebJSP</filter-class>
     </filter>
@@ -87,10 +83,6 @@
     <filter-mapping>
         <filter-name>filterWebJSP</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>validateHomepage</filter-name>
-        <url-pattern>/homepage</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>validateResetPassword</filter-name>
@@ -302,11 +294,27 @@
     </servlet>
     <servlet>
         <servlet-name>CancelEvent</servlet-name>
-        <servlet-class>controller.client.event.CancelEvent</servlet-class>
+        <servlet-class>controller.admin.mangageTicket.CancelEvent</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Transaction</servlet-name>
         <servlet-class>controller.admin.dashboard.Transaction</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HistoryTicketController</servlet-name>
+        <servlet-class>controller.client.event.HistoryTicketController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RenderProfileClient</servlet-name>
+        <servlet-class>controller.client.profile.RenderProfileClient</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>renderUpdateProfileFormClient</servlet-name>
+        <servlet-class>controller.client.profile.renderUpdateProfileFormClient</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateProfileClient</servlet-name>
+        <servlet-class>controller.client.profile.updateProfile</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>renderAuthForm</servlet-name>
@@ -528,7 +536,27 @@
         <servlet-name>Transaction</servlet-name>
         <url-pattern>/admin/dashboard/transaction/*</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoryTicketController</servlet-name>
+        <url-pattern>/history-ticket</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RenderProfileClient</servlet-name>
+        <url-pattern>/RenderProfileClient</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>renderUpdateProfileFormClient</servlet-name>
+        <url-pattern>/client/homepage/updateProfileClient/form</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateProfileClient</servlet-name>
+        <url-pattern>/client/homepage/updateProfileClient</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>views/client/pages/authForm.jsp</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/views/client/404Page/404Page.html</location>
+    </error-page>
 </web-app>

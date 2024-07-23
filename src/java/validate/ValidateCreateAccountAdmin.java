@@ -132,8 +132,20 @@ public class ValidateCreateAccountAdmin implements Filter {
             return;
         }
 
+        if (userName.contains(" ") || password.contains(" ") || rePassword.contains(" ") || email.contains(" ") || role.contains(" ")) {
+            session.setAttribute("error", "Các trường không được phép có khoảng trắng");
+            res.sendRedirect("/admin/account/create/form");
+            return;
+        }
+
         if (!password.equals(rePassword)) {
             session.setAttribute("error", "Mật khẩu không khớp!");
+            res.sendRedirect("/admin/account/create/form");
+            return;
+        }
+
+        if (userName.length() < 6 || password.length() < 6 || rePassword.length() < 6) {
+            session.setAttribute("error", "Tên tài khoản và mật khẩu phải có ít nhất 6 kí tự");
             res.sendRedirect("/admin/account/create/form");
             return;
         }

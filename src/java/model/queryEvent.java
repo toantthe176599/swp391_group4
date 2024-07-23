@@ -335,6 +335,28 @@ public class queryEvent extends DBContext {
     }
     //end
 
+    //get lowest price ticket of an event
+    public String lowestTicketPrice(String eventId) {
+        String sql = "SELECT MIN(CAST(price AS FLOAT)) AS MinPrice\n"
+                + "FROM Area_position\n"
+                + "WHERE event_id =  ?";
+        try {
+            PreparedStatement pt = connection.prepareStatement(sql);
+            pt.setString(1, eventId);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                return rs.getString("MinPrice");
+            }
+        } catch (Exception e) {
+            System.out.println(e + " error at lowestTicketPrice in queryEvent");
+        }
+        return "";
+    }
+//SELECT MIN(CAST(price AS FLOAT)) AS MinPrice
+//FROM Area_position
+//WHERE event_id = 'VU5WVWlHN01USmwyQXh6RURiMFR4Y3RLNA=='
+    //end
+
     public static void main(String[] args) throws ParseException {
         queryEvent test = queryEvent.createInstance();
         System.out.println(test.checkBelongEvent("QjloTHVOVTRKWkld1RRc1pCdjB1T2tHRA==", "d2RwVzdKZWV6UXFOZzBYMXdjeVFtYXY3OVdPRDZj"));

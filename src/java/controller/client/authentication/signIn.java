@@ -62,7 +62,7 @@ public class signIn extends HttpServlet {
 
         // check username and password is correct
         queryUser qrUser = queryUser.createQueryUSer();
-        System.out.println(email);
+
         String token = qrUser.checkLogintWithRegularAccount(email, password);
         HttpSession session = req.getSession();
         if (token.equals("")) { // false redirect to login page with message
@@ -77,6 +77,13 @@ public class signIn extends HttpServlet {
         if (status.equals("inactive")) { // inacvie redirect back
 
             session.setAttribute("error", "Tài khoản đã bị khóa!");
+            res.sendRedirect("/form");
+            return;
+        }
+
+        if (status.equals("deleted")) { // deleted account
+
+            session.setAttribute("error", "Tài khoản đã bị xóa!");
             res.sendRedirect("/form");
             return;
         }

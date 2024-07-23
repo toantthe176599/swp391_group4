@@ -73,24 +73,25 @@ public class eventDetailController extends HttpServlet {
         // Lấy eventId từ request parameter
         String eventId = request.getParameter("eventId");
 
-      
+        //get detail event from db
+        queryEvent qEvent = queryEvent.createInstance();
+        Event event = qEvent.getAnEventById(eventId);
+        request.setAttribute("event", event);
+        
+        queryFooter query = new queryFooter();
+        List<Footer_client> footers = query.getAllFooter();
+        request.setAttribute("footers", footers);
 
-            //get detail event from db
-            queryEvent qEvent = queryEvent.createInstance();
-            Event event = qEvent.getAnEventById(eventId);
-            request.setAttribute("event", event);
-            response.getWriter().print(event.getImg_event());
-            response.getWriter().print(event.getImg_position());
-            
-             queryFooter query = new queryFooter();
-            List<Footer_client> footers = query.getAllFooter();
-            request.setAttribute("footers", footers);
+        //get all area of event
+        queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();
+        List<AreaEvent> listArea = qAreaPosition.getAllAreaOfAnEventById(eventId);
+        request.setAttribute("area", listArea);
+        //end
 
-            //get all area of event
-            queryAreaPosition qAreaPosition = queryAreaPosition.createInstanceAreaPosition();
-            List<AreaEvent> listArea = qAreaPosition.getAllAreaOfAnEventById(eventId);
-            request.setAttribute("area", listArea);
-            //end
+        // get lowest price of an event
+        String lowestPrice = qEvent.lowestTicketPrice(eventId);
+        request.setAttribute("lowest", lowestPrice);
+        //end
 
         // Chuyển tiếp yêu cầu tới JSP để hiển thị thông tin sự kiện và vùng
         request.getRequestDispatcher("/views/client/homepage/eventDetailClient.jsp").forward(request, response);

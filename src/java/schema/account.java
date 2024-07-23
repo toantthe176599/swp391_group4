@@ -4,14 +4,14 @@
  */
 package schema;
 
-
-
 /**
  *
  * @author LENOVO
  */
 public class account {
+
     private String id, email, username, password, token, role, status;
+    private String img;
 
     public account() {
     }
@@ -24,9 +24,19 @@ public class account {
         this.token = token;
         this.role = role;
         this.status = status;
+
     }
 
-    
+    public account(String id, String email, String username, String password, String token, String role, String status, String img) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.token = token;
+        this.role = role;
+        this.status = status;
+        this.img = img;
+    }
 
     public String getRole() {
         return role;
@@ -44,8 +54,6 @@ public class account {
         this.status = status;
     }
 
-    
-
     public String getUsername() {
         return username;
     }
@@ -53,9 +61,6 @@ public class account {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    
-   
 
     public String getId() {
         return id;
@@ -88,6 +93,9 @@ public class account {
     public void setToken(String token) {
         this.token = token;
     }
-    
-    
+
+    public String getImg() {
+        return img;
+    }
+
 }

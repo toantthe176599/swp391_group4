@@ -64,6 +64,7 @@ https://www.tooplate.com/view/2125-artxibition
                 background: linear-gradient(rgb(39, 39, 42) 48.04%, rgb(0, 0, 0) 100%);
                 color: rgb(255, 255, 255);
                 margin-top: -90px;
+
             }
             .iVXoTn .content {
                 width: 100%;
@@ -74,6 +75,7 @@ https://www.tooplate.com/view/2125-artxibition
                 background: linear-gradient(rgb(39, 39, 42) 48.04%, rgb(0, 0, 0) 100%);
                 overflow: hidden;
                 display: flex;
+                max-height: 500px;
             }
 
             @media (min-width: 1024px) {
@@ -190,6 +192,7 @@ https://www.tooplate.com/view/2125-artxibition
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 3;
+                color:white;
             }
             p {
                 margin: 0px;
@@ -218,6 +221,7 @@ https://www.tooplate.com/view/2125-artxibition
                 padding-left: 0.5rem;
             }
             .iVXoTn .content .text-wrapper .text .info #venue {
+                margin-left: 3px;
                 display: flex;
                 -webkit-box-align: center;
                 align-items: center;
@@ -285,9 +289,9 @@ https://www.tooplate.com/view/2125-artxibition
 
             .eYXroU {
 
-                width: 80%;
+                width: fit-content;
                 border-radius: 31px;
-                margin-top: -100px;
+
                 padding: 45px 3rem;
                 background-color: rgb(255 255 255);
                 overflow: hidden;
@@ -300,12 +304,13 @@ https://www.tooplate.com/view/2125-artxibition
             }
             .eYXroU #content {
                 padding: 0.75rem 0px;
-                margin-top: 24px;
+
+
             }
             p {
-                font-size: 16px;
+                font-size: 19px;
                 line-height: 25px;
-                color: white;
+                color: black;
 
 
             }
@@ -341,13 +346,11 @@ https://www.tooplate.com/view/2125-artxibition
 
         <!-- ***** Pre HEader ***** -->
 
-        <jsp:include page="../component/Header.jsp" />
-
-
 
         <!-- ***** Header Area Start ***** -->
-
-
+        <div class="header-wrapper">
+            <jsp:include page="../component/Navbar.jsp" />
+        </div>
         <!-- ***** Header Area End ***** -->
 
         <!-- ***** About Us Page ***** -->
@@ -390,17 +393,22 @@ https://www.tooplate.com/view/2125-artxibition
                                     <path d="M4.333.333C4.702.333 5 .632 5 1v.667h4V1a.667.667 0 011.333 0v.667H11a2.667 2.667 0 012.667 2.667v1.333H.333V4.334A2.667 2.667 0 013 1.667h.667V1c0-.368.298-.667.666-.667zM13.667 7H.333v5.334c0 .736.597 1.333 1.334 1.333h10.666c.737 0 1.334-.597 1.334-1.333V7z" fill="#fff"></path>
                                     </svg>
                                     <span id="date-text">${formattedDate} ${formattedTime}</span></p>
-                                <p id="venue"><svg width="22" height="28" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" id="location-icon" class="icon">
+                                <p id="venue"><svg width="30" height="28" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" id="location-icon" class="icon">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M4.031 3.307a10.514 10.514 0 0113.937 0c4.485 3.945 4.955 10.854 1.058 15.392l-7.015 8.17a1.333 1.333 0 01-2.023 0l-7.015-8.17C-.923 14.161-.454 7.252 4.031 3.307zM11 14.667A3.333 3.333 0 1011 8a3.333 3.333 0 000 6.666z" fill="#000"></path>
 
                                     </svg>
                                     <span class="venue-text">${event.destination}</span></p>
+                                <p id="venue">
+                                    <svg width="15" height="15" style="margin-left: -5px; margin-right: 5px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72V368c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V432c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg>
+                                    <span class="venue-text" >${event.artist}</span></p>
+
                             </div>
                             <div class="price">
                                 <div id="ticket-price">
                                     <span>Giá từ</span>
-                                    <a href="#ticket-info" id="price-value">
-                                        <span>1.000.000 đ</span>
+                                    <a href="/areaDetailController?eventId=${event.id}" id="price-value">
+                                        <span><fmt:formatNumber value="${lowest}" type="currency" currencySymbol="₫" currencyCode="VND" />
+                                        </span>
                                         <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M.293.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L5.586 7 .293 1.707a1 1 0 010-1.414z" fill="#2DC275"></path></svg>
                                     </a>
                                 </div>
@@ -421,80 +429,71 @@ https://www.tooplate.com/view/2125-artxibition
 
 
             <div class="style__Wrapper-sc-12c1ml7-0 eYXroU">
-                <h4 id="title" class="style__Title-sc-12c1ml7-1 kYOHji">Giới thiệu</h4>
+
                 <div id="content" class="style__Content-sc-12c1ml7-2 digqDr">
                     <div class="style__WrapperIntro-sc-e7oelh-0 giRCXh" style="height: auto;">
                         <div class="style__ContentIntro-sc-e7oelh-1 czloHV">
 
+                            <p class="ql-align-justify"> ${event.description}</p>
 
-
-
-                            <p class="ql-align-justify"> 
-                                <c:out value="${event.description}"  escapeXml="false"/>
-                            </p>
 
 
 
 
                         </div>
-                        <div rotate="false" class="style__IconHandleHeight-sc-e7oelh-3 eVsDpA">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 9l6 6 6-6" stroke="#2A2D34" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round">
 
-                            </path>
-                            </svg>
-                        </div>
                     </div>
                 </div>
             </div>
 
 
-            <!-- *** Subscribe *** -->
+
 
         </div>
 
 
         <!-- *** Subscribe *** -->
 
-    </div>
 
-    <!-- *** Footer *** -->
 
-    <jsp:include page="../component/Footer.jsp" />
+        <!-- *** Footer *** -->
+        <!-- *** Footer *** --> <jsp:include page="../component/Footer.jsp" />
 
-    <!-- jQuery -->
-    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/jquery-2.1.0.min.js"></script>
 
-    <!-- Bootstrap JS -->
-    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/bootstrap.min.js"></script>
 
-    <!-- ScrollReveal JS -->
-    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/scrollreveal.min.js"></script>
+        <!-- jQuery -->
+        <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/jquery-2.1.0.min.js"></script>
 
-    <!-- Waypoints JS -->
-    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/waypoints.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/bootstrap.min.js"></script>
 
-    <!-- CounterUp JS -->
-    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/jquery.counterup.min.js"></script>
+        <!-- ScrollReveal JS -->
+        <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/scrollreveal.min.js"></script>
 
-    <!-- ImgFix JS -->
-    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/imgfix.min.js"></script>
+        <!-- Waypoints JS -->
+        <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/waypoints.min.js"></script>
 
-    <!-- MixItUp JS -->
-    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/mixitup.js"></script>
+        <!-- CounterUp JS -->
+        <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/jquery.counterup.min.js"></script>
 
-    <!-- Accordions JS -->
-    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/accordions.js"></script>
+        <!-- ImgFix JS -->
+        <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/imgfix.min.js"></script>
 
-    <!-- Owl Carousel JS -->
-    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/owl-carousel.js"></script>
+        <!-- MixItUp JS -->
+        <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/mixitup.js"></script>
 
-    <!-- Custom JS -->
-    <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/custom.js"></script>
+        <!-- Accordions JS -->
+        <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/accordions.js"></script>
 
-    <!-- Global Init -->
-    <script src="assets/js/custom.js"></script>
+        <!-- Owl Carousel JS -->
+        <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/owl-carousel.js"></script>
 
-</body>
+        <!-- Custom JS -->
+        <script src="${pageContext.request.contextPath}/views/client/homepage/assets/js/custom.js"></script>
+
+        <!-- Global Init -->
+        <script src="assets/js/custom.js"></script>
+
+    </body>
 
 </html>
